@@ -1,22 +1,17 @@
 import logo from "./logo.svg";
 import "./App.css";
-import axios from "axios";
+// import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PlacesAutoComplete from "./PlacesAutocomplete";
+
 function App() {
-  const getResults = async () => {
-    const { data } = await axios.get(`/events`);
-    console.log(data, "the data");
-  };
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-        <button onClick={getResults}>get food events in ny</button>
-      </header>
+    <div className="center">
+      <Router>
+        <Routes>
+          <Route path="/" element={<PlacesAutoComplete />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
