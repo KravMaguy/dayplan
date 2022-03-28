@@ -1,0 +1,57 @@
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: rgba(255, 254, 254, 0.87);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: out 2.5s infinite ease-out;
+}
+
+.dot-shadow {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+
+  box-shadow: 0 0 3px 3px #8b888879;
+}
+@keyframes out {
+  50% {
+    box-shadow: 0px 0px 0px 0px rgba(85, 69, 230, 0.753);
+  }
+  100% {
+    box-shadow: 0px 0px 0px 30px rgba(255, 255, 255, 0);
+  }
+}
+
+.dot-child {
+  height: 20px;
+  width: 20px;
+  background-color: rgba(171, 79, 189, 0.753);
+  border-radius: 50%;
+  animation: pulse-dot 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+}
+
+@-webkit-keyframes pulse-dot {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
