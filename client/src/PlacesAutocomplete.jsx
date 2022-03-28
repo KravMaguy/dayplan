@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
+import { Link } from "react-router-dom";
 import "./Marker.css";
 
 import Map from "./Map";
-
-const PlacesAutoComplete = () => {
+const containerStyle = {
+  width: "100%",
+  height: `calc(90vh - 62px)`,
+  position: "absolute",
+  bottom: 0,
+  boxShadow: "rgb(0 0 0 / 9%) 0px -3px 5px",
+};
+const PlacesAutoComplete = ({ center, setCenter }) => {
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
-  const [center, setCenter] = useState({
-    lat: 40.7579746792255,
-    lng: -73.98546749996966,
-  });
+
   const [userCenter, setUserCenter] = useState(null);
 
   const resetMapCenter = (chosenLocation) => {
@@ -34,6 +38,7 @@ const PlacesAutoComplete = () => {
   return (
     <>
       <div class="constrained top-container">
+        {userCenter && <Link to={"/plan"}>lets go!</Link>}
         <GooglePlacesAutocomplete
           selectProps={{
             placeholder: "Type or Search Location",
@@ -49,6 +54,7 @@ const PlacesAutoComplete = () => {
         center={center}
         zoom={zoom}
         setZoom={setZoom}
+        containerStyle={containerStyle}
       >
         {userCenter && (
           <OverlayView

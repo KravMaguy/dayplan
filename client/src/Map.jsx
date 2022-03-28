@@ -1,19 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
-const containerStyle = {
-  width: "100%",
-  height: `calc(90vh - 62px)`,
-  position: "absolute",
-  bottom: 0,
-  boxShadow: "rgb(0 0 0 / 9%) 0px -3px 5px",
-};
-
 export default function Map(props) {
   const [map, setMap] = useState(null); // map instance
   const onLoadMap = useCallback(setMap, []); // set map once map has loaded
 
-  const { center, zoom, setZoom } = props;
+  const { center, zoom, setZoom, containerStyle } = props;
 
   return (
     <GoogleMap
