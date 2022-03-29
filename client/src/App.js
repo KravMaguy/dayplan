@@ -4,8 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PlacesAutoComplete from "./PlacesAutocomplete";
 import DragPlan from "./DragPlan";
 import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+import AuthenticatedApp from "./AuthenticatedApp";
+import UnauthenticatedApp from "./UnauthenticatedApp";
 
 function App() {
+  const [cookies] = useCookies();
+
+  const isAuthenticated = cookies.isAuthenticated === "true";
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const center = state.center;
@@ -21,7 +27,8 @@ function App() {
 
   return (
     <div className="center">
-      <h1>state = greater than 0 and less than 10</h1>
+      {isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      <h1>above is login</h1>
       <p>state: {state.count}</p>
       <button onClick={handleIncrement}>Increment</button>{" "}
       <button onClick={handleDecrement}>Decrement</button>
