@@ -4,16 +4,22 @@ import { geocodeByAddress } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
 import { Link } from "react-router-dom";
 import "./Marker.css";
+import { useDispatch, useSelector } from "react-redux";
 
 import Map from "./Map";
+
 const containerStyle = {
   width: "100%",
-  height: `calc(90vh - 62px)`,
+  height: `calc(75vh - 62px)`,
   position: "absolute",
   bottom: 0,
   boxShadow: "rgb(0 0 0 / 9%) 0px -3px 5px",
 };
-const PlacesAutoComplete = ({ center, setCenter }) => {
+const PlacesAutoComplete = ({ center }) => {
+  const dispatch = useDispatch();
+  // const state = useSelector((state) => state);
+  // const center = state.center;
+
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
 
@@ -22,7 +28,12 @@ const PlacesAutoComplete = ({ center, setCenter }) => {
   const resetMapCenter = (chosenLocation) => {
     const { lat, lng } = chosenLocation[0].geometry.location;
     const newCenter = { lat: lat(), lng: lng() };
-    setCenter(newCenter);
+    // setCenter(newCenter);
+    dispatch({
+      type: "SET_CENTER",
+      payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
+    });
+
     setZoom(13);
     setUserCenter(newCenter);
   };
