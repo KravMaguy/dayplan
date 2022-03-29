@@ -1,12 +1,12 @@
-require("./db");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const path = require("path");
 const dotenv = require("dotenv");
-dotenv.config();
-
 const mongoose = require("mongoose");
+dotenv.config();
+require("./db");
+
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
