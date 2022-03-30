@@ -29,10 +29,9 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // callbackURL: isDevelopment
-      //   ? `http://localhost:${PORT}/auth/google/callback`
-      //   : `${process.env.BASE_URL}/auth/google/callback`,
-      callbackURL: `http://localhost:${PORT}/auth/google/callback`,
+      callbackURL: isDevelopment
+        ? `http://localhost:${PORT}/auth/google/callback`
+        : `${process.env.BASE_URL}/auth/google/callback`,
     },
     function (accessToken, refreshToken, profile, cb) {
       console.log("gogole profile =", accessToken, refreshToken);
