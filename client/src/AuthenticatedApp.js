@@ -6,6 +6,7 @@ export default function AuthenticatedApp() {
   const [isFetching, setIsFetching] = useState(false);
 
   function handleFetchCalendar() {
+    console.log("handle fetch calendare running");
     setIsFetching(true);
     fetch("/calendar/list")
       .then((res) => res.json())
@@ -20,6 +21,7 @@ export default function AuthenticatedApp() {
       .then((user) => setUser(user))
       .catch(console.error);
   }, []);
+  console.log(user, "tkjahdflkjas");
   return (
     <div>
       <a

@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 dotenv.config();
 require("./db");
-
+console.log("run serever");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
@@ -20,7 +20,7 @@ const axios = require("axios");
 axios.defaults.headers.common["Authorization"] = `Bearer ${process.env.TOKEN}`;
 axios.defaults.baseURL = "https://api.yelp.com/v3/";
 // const PORT = process.env.PORT || 3001;
-const BUILD_FOLDER = path.join(__dirname, "..", "build");
+const BUILD_FOLDER = path.join(__dirname, "client", "build");
 const isDevelopment = process.env.NODE_ENV === "development";
 
 const User = mongoose.model("User");

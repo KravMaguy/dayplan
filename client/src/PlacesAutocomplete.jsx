@@ -7,14 +7,12 @@ import "./Marker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBusinesses } from "./redux/reducer.js";
 import Map from "./Map";
+import { MdLocationOff, MdLocationOn } from "react-icons/md";
 
 const containerStyle = {
-  width: "100%",
-  height: `calc(75vh - 62px)`,
-  position: "absolute",
-  bottom: 0,
-  boxShadow: "rgb(0 0 0 / 9%) 0px -3px 5px",
+  height: `50vh`,
 };
+
 const PlacesAutoComplete = ({ center }) => {
   const dispatch = useDispatch();
   const businesses = useSelector((state) => state.businesses);
@@ -56,42 +54,53 @@ const PlacesAutoComplete = ({ center }) => {
 
   return (
     <>
-      <div class="constrained top-container">
-        <button onClick={getYelp}>get yelp places</button>
-        {userCenter && <Link to={"/plan"}>lets go!</Link>}
-        <GooglePlacesAutocomplete
-          selectProps={{
-            placeholder: "Type or Search Location",
-            value,
-            onChange: (val) => handleSelect(val),
-          }}
-          apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
-        />
-      </div>
-
-      <Map
-        containerClass="map-container"
-        center={center}
-        zoom={zoom}
-        setZoom={setZoom}
-        containerStyle={containerStyle}
-      >
-        {userCenter && (
-          <OverlayView
-            position={{
-              lat: userCenter.lat,
-              lng: userCenter.lng,
+      <div style={{ position: "fixed", width: "100vw", bottom: 0 }}>
+        <div class="constrained top-container">
+          <button onClick={getYelp}>get yelp places</button>
+          {userCenter && <Link to={"/plan"}>lets go!</Link>}
+          <GooglePlacesAutocomplete
+            selectProps={{
+              placeholder: "Type or Search Location",
+              value,
+              onChange: (val) => handleSelect(val),
             }}
-            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-          >
-            <div class="dot-shadow">
-              <div class="dot">
-                <div class="dot-child"></div>
+            apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
+          />
+          <div onClick={() => {}} className="icon">
+            <span>
+              <MdLocationOn
+                size={18}
+                className="location-icon"
+                color={"green"}
+              />
+            </span>
+          </div>
+        </div>
+
+        <Map
+          containerClass="map-container"
+          center={center}
+          zoom={zoom}
+          setZoom={setZoom}
+          containerStyle={containerStyle}
+        >
+          {userCenter && (
+            <OverlayView
+              position={{
+                lat: userCenter.lat,
+                lng: userCenter.lng,
+              }}
+              mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            >
+              <div class="dot-shadow">
+                <div class="dot">
+                  <div class="dot-child"></div>
+                </div>
               </div>
-            </div>
-          </OverlayView>
-        )}
-      </Map>
+            </OverlayView>
+          )}
+        </Map>
+      </div>
     </>
   );
 };

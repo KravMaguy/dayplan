@@ -9,7 +9,7 @@ export default function Map(props) {
 
   return (
     <GoogleMap
-      options={{ clickableIcons: true }}
+      options={{ clickableIcons: true, disableDefaultUI: true }}
       mapContainerStyle={containerStyle}
       center={center}
       zoom={zoom}
