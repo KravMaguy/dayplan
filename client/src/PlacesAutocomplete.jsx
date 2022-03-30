@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
 import { Link } from "react-router-dom";
 import "./Marker.css";
 import { useDispatch, useSelector } from "react-redux";
-
+import { fetchBusinesses } from "./redux/reducer.js";
 import Map from "./Map";
 
 const containerStyle = {
@@ -17,9 +17,10 @@ const containerStyle = {
 };
 const PlacesAutoComplete = ({ center }) => {
   const dispatch = useDispatch();
-  // const state = useSelector((state) => state);
+  const businesses = useSelector((state) => state.businesses);
   // const center = state.center;
 
+  console.log("the buisnesses ", businesses);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
 
@@ -46,9 +47,17 @@ const PlacesAutoComplete = ({ center }) => {
       .catch((error) => console.error(error));
   };
 
+  const getYelp = () => {
+    const term = "restaurants";
+    const place = "chicago";
+    const terms = { term, place };
+    dispatch(fetchBusinesses(terms));
+  };
+
   return (
     <>
       <div class="constrained top-container">
+        <button onClick={getYelp}>get yelp places</button>
         {userCenter && <Link to={"/plan"}>lets go!</Link>}
         <GooglePlacesAutocomplete
           selectProps={{

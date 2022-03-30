@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+app.use(express.json());
+
 const PORT = process.env.PORT || 5000;
 const path = require("path");
 const dotenv = require("dotenv");
@@ -27,9 +29,10 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: isDevelopment
-        ? `http://localhost:${PORT}/auth/google/callback`
-        : `${process.env.BASE_URL}/auth/google/callback`,
+      // callbackURL: isDevelopment
+      //   ? `http://localhost:${PORT}/auth/google/callback`
+      //   : `${process.env.BASE_URL}/auth/google/callback`,
+      callbackURL: `http://localhost:${PORT}/auth/google/callback`,
     },
     function (accessToken, refreshToken, profile, cb) {
       console.log("gogole profile =", accessToken, refreshToken);
@@ -96,6 +99,23 @@ app.get("/api/users", checkAuthMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id);
 
   res.json(user.google);
+});
+
+app.post("/api/", async (req, res) => {
+  const body = req.body;
+  console.log("reached api route server");
+  console.log(body, "the body in req");
+  const { term, place } = body;
+  axios
+    .get(
+      "businesses/search?term=" +
+        term +
+        "&location=" +
+        place +
+        "&limit=4&sortby=distance"
+    )
+    .then((response) => res.json(response.data))
+    .catch((err) => res.status(err.response.status).send(err.message));
 });
 
 const isAuthenticatedCookie = (req, res, next) => {

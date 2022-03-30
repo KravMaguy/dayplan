@@ -27,11 +27,11 @@ function App() {
 
   return (
     <div className="center">
-      {isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      {/* {isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />}
       <h1>above is login</h1>
       <p>state: {state.count}</p>
       <button onClick={handleIncrement}>Increment</button>{" "}
-      <button onClick={handleDecrement}>Decrement</button>
+      <button onClick={handleDecrement}>Decrement</button> */}
       <Router>
         <Routes>
           <Route
