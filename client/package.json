@@ -14,7 +14,6 @@
     "react-beautiful-dnd": "^13.1.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
-    "react-geocode": "^0.2.3",
     "react-google-places-autocomplete": "^3.3.4",
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.6",

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { geocodeByAddress } from "react-google-places-autocomplete";
+import {
+  geocodeByAddress,
+  geocodeByLatLng,
+} from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
 import { Link } from "react-router-dom";
 import "./Marker.css";
@@ -8,23 +11,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBusinesses } from "./redux/reducer.js";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
-import Geocode from "react-geocode";
-Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
-Geocode.enableDebug();
 const containerStyle = {
   height: `100vh`,
 };
 
 const PlacesAutoComplete = () => {
   const dispatch = useDispatch();
-  const businesses = useSelector((state) => state.businesses);
   const center = useSelector((state) => state.center);
-
-  // console.log("the buisnesses ", businesses);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
-
   const [userCenter, setUserCenter] = useState(null);
+  const [inputValue, setInputValue] = useState("");
 
   const resetMapCenter = (chosenLocation) => {
     const { lat, lng } = chosenLocation[0].geometry.location;
@@ -52,16 +49,11 @@ const PlacesAutoComplete = () => {
     dispatch(fetchBusinesses(terms));
   };
 
-  console.log({ value });
-
   const runGetLocation = () => {
     console.log("getLocation run");
     try {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        // setuserCoordinates({ latitude, longitude });
-        // setCenter({ lat: latitude, lng: longitude });
-
         const newCenter = { lat: latitude, lng: longitude };
         dispatch({
           type: "SET_CENTER",
@@ -69,26 +61,17 @@ const PlacesAutoComplete = () => {
         });
         setZoom(13);
         setUserCenter(newCenter);
-
-        Geocode.fromLatLng(latitude, longitude).then(
-          (response) => {
-            const address = response.results[0].formatted_address;
-            if (address) {
-              // setPlace(address);
-              setValue(response.results[0]);
-
-              console.log({ address });
-            }
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
+        geocodeByLatLng({ lat: newCenter.lat, lng: newCenter.lng })
+          .then((results) => {
+            setInputValue(results[0].formatted_address);
+          })
+          .catch((error) => console.error(error));
       });
     } catch (error) {
       console.error(error);
     }
   };
+  console.log({ inputValue });
   return (
     <>
       <div style={{ position: "fixed", width: "100vw", bottom: 0 }}>
@@ -97,8 +80,12 @@ const PlacesAutoComplete = () => {
           {userCenter && <Link to={"/plan"}>lets go!</Link>}
           <GooglePlacesAutocomplete
             selectProps={{
-              placeholder: "Type or Search Location",
+              inputValue,
               value,
+              onInputChange: (newInputValue, meta) => {
+                setInputValue(newInputValue);
+              },
+              placeholder: "Type or Search Location",
               onChange: (val) => handleSelect(val),
             }}
             apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
