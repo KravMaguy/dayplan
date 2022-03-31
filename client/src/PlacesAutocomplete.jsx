@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBusinesses } from "./redux/reducer.js";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
+import Login from "./Login";
+
 const containerStyle = {
   height: `100vh`,
 };
@@ -74,7 +76,11 @@ const PlacesAutoComplete = () => {
   console.log({ inputValue });
   return (
     <>
-      <div style={{ position: "fixed", width: "100vw", bottom: 0 }}>
+      <Login />
+      <div
+        className="my$$$classbox"
+        style={{ position: "fixed", width: "100vw", bottom: 0 }}
+      >
         <div class="constrained top-container">
           <button onClick={getYelp}>get yelp places</button>
           {userCenter && <Link to={"/plan"}>lets go!</Link>}

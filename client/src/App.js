@@ -9,6 +9,8 @@ function App() {
     <div className="center">
       <Router>
         <Routes>
+          {/* <Route path="/" exact element={<Login />} /> */}
+
           <Route path="/" element={<PlacesAutoComplete />} />
           <Route path="/plan" element={<DragPlan />} />
         </Routes>

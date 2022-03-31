@@ -17,7 +17,7 @@ body {
   text-align: center;
 }
 
-.App-logo {
+/* .App-logo {
   margin-top: 10vh;
   height: 50vmin;
   pointer-events: none;
@@ -456,6 +456,9 @@ input:valid + span:after {
   margin-bottom: 20px;
 }
 
+.navbar.container {
+  margin-bottom: 0px;
+}
 .example {
   display: inline-block;
   width: 90%;
@@ -611,6 +614,7 @@ input:valid + span:after {
   box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
   min-width: 66px;
 }
+*/
 
 /* old app css above */
 
