@@ -16,7 +16,6 @@ const Login = () => {
     }
   };
 
-  console.log("process: ", process.env);
   return (
     <>
       <div class="header header-fixed shadow">

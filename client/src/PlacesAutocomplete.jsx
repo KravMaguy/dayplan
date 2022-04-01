@@ -12,6 +12,7 @@ import { fetchBusinesses } from "./redux/reducer.js";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
+import { getUserPosition } from "./redux/reducer.js";
 
 //calc does not work thought 60px(height of header) i.e. height calc(100vh-60px) does not work, replace later with getMediaQuery hook
 const containerStyle = {
@@ -20,21 +21,41 @@ const containerStyle = {
 const PlacesAutoComplete = () => {
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
+  const state = useSelector((state) => state);
+  const userCoordinates = useSelector((state) => state.position);
+  const userCenter = useSelector((state) => state.userCenter);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
-  const [userCenter, setUserCenter] = useState(null);
+  // const [userCenter, setUserCenter] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  const [userCoordinates, setUserCoordinates] = useState(null);
+  // const [userCoordinates, setUserCoordinates] = useState(null);
+
+  useEffect(() => {
+    if (!userCoordinates) return;
+    geocodeByLatLng({
+      lat: userCoordinates.center.lat,
+      lng: userCoordinates.center.lng,
+    })
+      .then((results) => {
+        console.log("we have results");
+        setInputValue(results[0].formatted_address);
+      })
+      .catch((error) => console.error(error));
+  }, [userCoordinates]);
 
   const resetMapCenter = (chosenLocation) => {
+    setZoom(13);
     const { lat, lng } = chosenLocation[0].geometry.location;
     const newCenter = { lat: lat(), lng: lng() };
     dispatch({
       type: "SET_CENTER",
       payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
     });
-    setZoom(13);
-    setUserCenter(newCenter);
+    dispatch({
+      type: "SET_USER_CENTER",
+      payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
+    });
+    // setUserCenter(newCenter);
   };
 
   const handleSelect = (val) => {
@@ -52,30 +73,29 @@ const PlacesAutoComplete = () => {
     dispatch(fetchBusinesses(terms));
   };
 
-  const runGetLocation = () => {
-    console.log("getLocation run");
-    try {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setUserCoordinates({ latitude, longitude });
-        const newCenter = { lat: latitude, lng: longitude };
-        dispatch({
-          type: "SET_CENTER",
-          payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
-        });
-        setZoom(13);
-        setUserCenter(newCenter);
-        geocodeByLatLng({ lat: newCenter.lat, lng: newCenter.lng })
-          .then((results) => {
-            setInputValue(results[0].formatted_address);
-          })
-          .catch((error) => console.error(error));
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  console.log({ inputValue });
+  // const runGetLocation = () => {
+  //   console.log("getLocation run");
+  //   try {
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       const { latitude, longitude } = position.coords;
+  //       setUserCoordinates({ latitude, longitude });
+  //       const newCenter = { lat: latitude, lng: longitude };
+  //       dispatch({
+  //         type: "SET_CENTER",
+  //         payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
+  //       });
+  //       setZoom(13);
+  //       setUserCenter(newCenter);
+  //       geocodeByLatLng({ lat: newCenter.lat, lng: newCenter.lng })
+  //         .then((results) => {
+  //           setInputValue(results[0].formatted_address);
+  //         })
+  //         .catch((error) => console.error(error));
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   return (
     <div className="user-destination-page">
       <Login />
@@ -100,7 +120,11 @@ const PlacesAutoComplete = () => {
           <div className="icon">
             {!userCoordinates ? (
               <MdLocationOff
-                onClick={runGetLocation}
+                // onClick={runGetLocation}
+                onClick={() => {
+                  setZoom(13);
+                  dispatch(getUserPosition());
+                }}
                 size={18}
                 className="location-icon"
                 fill={"grey"}
@@ -125,8 +149,8 @@ const PlacesAutoComplete = () => {
           {userCenter && (
             <OverlayView
               position={{
-                lat: userCenter.lat,
-                lng: userCenter.lng,
+                lat: userCenter.center.lat,
+                lng: userCenter.center.lng,
               }}
               mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             >
