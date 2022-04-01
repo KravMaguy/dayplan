@@ -287,6 +287,11 @@ svg {
   margin: 0.2rem;
 }
 
+.bg-grey-plan-controls,
+svg {
+  fill: #d3d3d3;
+}
+
 #radios label {
   position: relative;
 }

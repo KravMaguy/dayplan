@@ -10,7 +10,6 @@ const Login = () => {
   const userCenter = useSelector((state) => state.userCenter);
   const location = useLocation();
   const { pathname } = location;
-  console.log(pathname, "path location");
   return (
     <>
       <div class="header header-fixed shadow">

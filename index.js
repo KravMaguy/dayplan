@@ -94,6 +94,15 @@ function checkAuthMiddleware(req, res, next) {
   next();
 }
 
+app.get("/autocomplete/:text", async (req, res) => {
+  console.log(req.params, "the params");
+  const { text } = req.params;
+  axios
+    .get(`/autocomplete?text=${text}`)
+    .then((response) => res.json(response.data))
+    .catch((err) => res.status(err.response.status).send(err.message));
+});
+
 app.get("/api/users", checkAuthMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id);
 

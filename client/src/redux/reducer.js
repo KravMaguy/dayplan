@@ -29,10 +29,13 @@ const initialState = {
   status: "idle",
   error: "",
   userCenter: null,
+  categories: [],
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case "SET_CATEGORIES":
+      return { ...state, categories: action.payload };
     case "SET_USER_CENTER":
       return { ...state, userCenter: action.payload };
     case "SET_CENTER":

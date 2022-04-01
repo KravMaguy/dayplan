@@ -5,7 +5,6 @@ import {
   geocodeByLatLng,
 } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
-import { Link } from "react-router-dom";
 import "./Marker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBusinesses } from "./redux/reducer.js";
@@ -21,28 +20,25 @@ const containerStyle = {
 const PlacesAutoComplete = () => {
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
-  const state = useSelector((state) => state);
   const userCoordinates = useSelector((state) => state.position);
   const userCenter = useSelector((state) => state.userCenter);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
-  // const [userCenter, setUserCenter] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  // const [userCoordinates, setUserCoordinates] = useState(null);
-
-  useEffect(() => {
-    if (!userCoordinates) return;
-    geocodeByLatLng({
-      lat: userCoordinates.center.lat,
-      lng: userCoordinates.center.lng,
-    })
-      .then((results) => {
-        console.log("we have results");
-        setInputValue(results[0].formatted_address);
-      })
-      .catch((error) => console.error(error));
-  }, [userCoordinates]);
-
+  console.log({ value });
+  // useEffect(() => {
+  //   if (!userCoordinates) return;
+  //   geocodeByLatLng({
+  //     lat: userCoordinates.center.lat,
+  //     lng: userCoordinates.center.lng,
+  //   })
+  //     .then((results) => {
+  //       console.log("we have results");
+  //       setInputValue(results[0].formatted_address);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, [userCoordinates]);
+  console.log(inputValue, "inputbal");
   const resetMapCenter = (chosenLocation) => {
     setZoom(13);
     const { lat, lng } = chosenLocation[0].geometry.location;
