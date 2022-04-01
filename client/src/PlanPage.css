@@ -73,7 +73,7 @@
 
 .plan-directions-container {
   overflow-y: auto;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 120px);
   transition: all 0.4s;
   /* border-bottom: 10px solid lightgrey; */
 }
@@ -383,7 +383,6 @@ button.map-controls:disabled {
   position: relative;
   /* overflow: hidden; */
   box-sizing: border-box;
-  position: absolute;
   bottom: 0;
   left: 0;
 }
@@ -689,5 +688,5 @@ a.pill:active {
 }
 
 .open-map-control-size {
-  height: calc(100vh - 168px);
+  height: calc(100vh - 198px);
 }

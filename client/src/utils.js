@@ -93,41 +93,7 @@ export const maObjs = [
     display_phone: "(773) 728-5300",
     distance: 4634.187809691016,
   },
-  {
-    id: "aGCUksjACc8-AYhpz_F7QA",
-    alias: "ultimate-martial-arts-lincolnwood",
-    name: "Ultimate Martial Arts",
-    image_url:
-      "https://s3-media2.fl.yelpcdn.com/bphoto/oR9SeKioxjdvPd5iO1Yj4A/o.jpg",
-    is_closed: false,
-    url: "https://www.yelp.com/biz/ultimate-martial-arts-lincolnwood?adjust_creative=CbTAfRmoCY_s6Ex6jqjcQg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=CbTAfRmoCY_s6Ex6jqjcQg",
-    review_count: 54,
-    categories: [
-      {
-        alias: "martialarts",
-        title: "Martial Arts",
-      },
-    ],
-    rating: 4,
-    coordinates: {
-      latitude: 42.0118849,
-      longitude: -87.7271591,
-    },
-    transactions: [],
-    location: {
-      address1: "3922 W Touhy Ave",
-      address2: "",
-      address3: "",
-      city: "Lincolnwood",
-      zip_code: "60712",
-      country: "US",
-      state: "IL",
-      display_address: ["3922 W Touhy Ave", "Lincolnwood, IL 60712"],
-    },
-    phone: "+18476793330",
-    display_phone: "(847) 679-3330",
-    distance: 1656.674952110059,
-  },
+
   {
     id: "8JPoLXa-9BKrim-7D-1jaQ",
     alias: "redzovic-jiu-jitsu-lincoln-square-chicago",

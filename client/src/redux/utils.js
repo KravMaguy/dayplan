@@ -13,12 +13,3 @@ export function getPosition() {
     );
   });
 }
-
-export const getPolicyLocation = async (key, lat, long) => {
-  const reverseGeoUrl = "https://us1.locationiq.com/v1/reverse.php";
-  const geoUrl = `${reverseGeoUrl}?key=${key}&lat=${lat}&lon=${long}&format=json`;
-  const res = await axios.get(geoUrl);
-  const { data } = res;
-  const { county } = data.address;
-  return county;
-};

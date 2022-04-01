@@ -8,6 +8,7 @@ import Map from "./Map";
 import { restaurantObjects, maObjs } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
+import Login from "./Login";
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
   strokeWeight: 6,
@@ -216,183 +217,187 @@ const DragPlan = ({ data }) => {
 
   return (
     <>
-      <div className="row map-plan-row">
-        <div className="col col-left side-p-10">
-          <div className="plan-map-container">
-            <div className="map-card-controls">
-              <div style={{ display: "flex" }}>
-                <button
-                  className="map-controls"
-                  style={currIdx <= 0 ? dimStyle : null}
-                  disabled={currIdx <= 0 ? true : false}
-                  onClick={() => prevDestination()}
-                >
-                  {currIdx === startingSearchIndex + 1
-                    ? "Full Plan"
-                    : "Previous"}
-                </button>
-                <button
-                  style={currIdx >= derivedData.length - 1 ? dimStyle : null}
-                  className="map-controls plan-next-btn"
-                  disabled={currIdx >= derivedData.length - 1 ? true : false}
-                  onClick={() => nextDestination()}
-                >
-                  {currIdx === startingSearchIndex ? "Start" : "Next"}
+      <Login />
+      <div class="whole-page" style={{ position: "relative", top: "60px" }}>
+        {" "}
+        <div className="row map-plan-row">
+          <div className="col col-left side-p-10">
+            <div className="plan-map-container">
+              <div className="map-card-controls">
+                <div style={{ display: "flex" }}>
+                  <button
+                    className="map-controls"
+                    style={currIdx <= 0 ? dimStyle : null}
+                    disabled={currIdx <= 0 ? true : false}
+                    onClick={() => prevDestination()}
+                  >
+                    {currIdx === startingSearchIndex + 1
+                      ? "Full Plan"
+                      : "Previous"}
+                  </button>
+                  <button
+                    style={currIdx >= derivedData.length - 1 ? dimStyle : null}
+                    className="map-controls plan-next-btn"
+                    disabled={currIdx >= derivedData.length - 1 ? true : false}
+                    onClick={() => nextDestination()}
+                  >
+                    {currIdx === startingSearchIndex ? "Start" : "Next"}
+                  </button>
+                </div>
+
+                <button className="pure-material-button-text pink-bg">
+                  <a
+                    alt="view this plan on google maps"
+                    target="blank"
+                    style={{ display: "flex" }}
+                    href={`https://www.google.com/maps/dir/${getLocStr()}`}
+                  >
+                    <span class="map-link-text-hide">on</span>
+                    <img
+                      alt="google-directions-link"
+                      style={{ height: "31px" }}
+                      src={gmappng}
+                    />
+                  </a>
                 </button>
               </div>
-
-              <button className="pure-material-button-text pink-bg">
-                <a
-                  alt="view this plan on google maps"
-                  target="blank"
-                  style={{ display: "flex" }}
-                  href={`https://www.google.com/maps/dir/${getLocStr()}`}
-                >
-                  <span class="map-link-text-hide">on</span>
-                  <img
-                    alt="google-directions-link"
-                    style={{ height: "31px" }}
-                    src={gmappng}
-                  />
-                </a>
-              </button>
-            </div>
-            <main
-              className={`map-wrapper ${
-                open ? "closed-map-control-size" : "open-map-control-size"
-              }`}
-            >
-              <Map
-                center={center}
-                zoom={zoom}
-                setZoom={setZoom}
-                containerStyle={containerStyle}
+              <main
+                className={`map-wrapper ${
+                  open ? "closed-map-control-size" : "open-map-control-size"
+                }`}
               >
-                {!response && !path && destination && origin && (
-                  <DirectionsService
-                    options={{
-                      origin: origin,
-                      destination: destination,
-                      waypoints: getWayPoints(),
-                      travelMode: travelMode,
-                    }}
-                    callback={(response) => {
-                      if (response !== null) {
-                        if (response.status === "OK") {
-                          setResponse(response);
-                        } else {
-                          setPath([origin, destination]);
+                <Map
+                  center={center}
+                  zoom={zoom}
+                  setZoom={setZoom}
+                  containerStyle={containerStyle}
+                >
+                  {!response && !path && destination && origin && (
+                    <DirectionsService
+                      options={{
+                        origin: origin,
+                        destination: destination,
+                        waypoints: getWayPoints(),
+                        travelMode: travelMode,
+                      }}
+                      callback={(response) => {
+                        if (response !== null) {
+                          if (response.status === "OK") {
+                            setResponse(response);
+                          } else {
+                            setPath([origin, destination]);
+                          }
                         }
-                      }
-                    }}
-                  />
-                )}
+                      }}
+                    />
+                  )}
 
-                {response !== null && (
-                  <DirectionsRenderer
-                    options={{
-                      suppressMarkers: !getWayPoints() ? true : false,
+                  {response !== null && (
+                    <DirectionsRenderer
+                      options={{
+                        suppressMarkers: !getWayPoints() ? true : false,
 
-                      directions: response,
-                      polylineOptions: {
-                        strokeColor:
-                          currIdx === startingSearchIndex
-                            ? "black"
-                            : "#604ca6c7",
-                        strokeOpacity:
-                          currIdx !== startingSearchIndex
-                            ? pathVisibilityDefaults.strokeOpacity
-                            : null,
-                        strokeWeight:
-                          currIdx !== startingSearchIndex
-                            ? pathVisibilityDefaults.strokeWeight
-                            : null,
-                      },
-                    }}
-                    directions={response}
-                    panel={document.getElementById(`panel-${currIdx}`)}
-                  />
-                )}
-                {!getWayPoints() &&
-                  wayPoints.map((waypoint, idx) => {
-                    const letter = String.fromCharCode(
-                      "A".charCodeAt(0) + currIdx + idx - 1
-                    );
-                    return (
-                      <Marker
-                        key={letter}
-                        position={{
-                          lat: waypoint.lat,
-                          lng: waypoint.lng,
-                        }}
-                        label={{ text: letter, color: "white" }}
-                      />
-                    );
-                  })}
-              </Map>
-            </main>
+                        directions: response,
+                        polylineOptions: {
+                          strokeColor:
+                            currIdx === startingSearchIndex
+                              ? "black"
+                              : "#604ca6c7",
+                          strokeOpacity:
+                            currIdx !== startingSearchIndex
+                              ? pathVisibilityDefaults.strokeOpacity
+                              : null,
+                          strokeWeight:
+                            currIdx !== startingSearchIndex
+                              ? pathVisibilityDefaults.strokeWeight
+                              : null,
+                        },
+                      }}
+                      directions={response}
+                      panel={document.getElementById(`panel-${currIdx}`)}
+                    />
+                  )}
+                  {!getWayPoints() &&
+                    wayPoints.map((waypoint, idx) => {
+                      const letter = String.fromCharCode(
+                        "A".charCodeAt(0) + currIdx + idx - 1
+                      );
+                      return (
+                        <Marker
+                          key={letter}
+                          position={{
+                            lat: waypoint.lat,
+                            lng: waypoint.lng,
+                          }}
+                          label={{ text: letter, color: "white" }}
+                        />
+                      );
+                    })}
+                </Map>
+              </main>
+            </div>
           </div>
-        </div>
 
-        <DragPlanDirections
-          open={open}
-          setIsOpen={setIsOpen}
-          currIdx={currIdx}
-          setIdx={setIdx}
-          handleSelectBox={handleSelectBox}
-          response={response}
-          derivedData={derivedData}
-          setResponse={setResponse}
-          setOrigin={setOrigin}
-          setDestination={setDestination}
-          travelMode={travelMode}
-          setTravelMode={setTravelMode}
-          checkBicycling={checkBicycling}
-          checkWalking={checkWalking}
-          checkTransit={checkTransit}
-          checkDriving={checkDriving}
-          setDerivedData={setDerivedData}
-          data={data}
-          center={center}
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-        />
-      </div>
-      {!open && (
-        <div className="map-destination-links-container">
-          {derivedData.map(
-            (x, idx) =>
-              idx > 0 && (
-                <div className="css-1rhbuit-multiValue">
-                  <div className="css-12jo7m5">
-                    <a className="pill" target="_blank" href={x.url}>
-                      {x.name.length > 30
-                        ? x.name.slice(0, 29) + "..."
-                        : x.name}
-                    </a>
-                  </div>
-                  <div
-                    onClick={() => removeLocation(x.id)}
-                    role="button"
-                    className="css-xb97g8"
-                    aria-label={`remove ${x.name}`}
-                  >
-                    <svg
-                      height={14}
-                      width={14}
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                      focusable="false"
-                      className="css-tj5bde-Svg"
-                    >
-                      <path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z" />
-                    </svg>
-                  </div>
-                </div>
-              )
-          )}
+          <DragPlanDirections
+            open={open}
+            setIsOpen={setIsOpen}
+            currIdx={currIdx}
+            setIdx={setIdx}
+            handleSelectBox={handleSelectBox}
+            response={response}
+            derivedData={derivedData}
+            setResponse={setResponse}
+            setOrigin={setOrigin}
+            setDestination={setDestination}
+            travelMode={travelMode}
+            setTravelMode={setTravelMode}
+            checkBicycling={checkBicycling}
+            checkWalking={checkWalking}
+            checkTransit={checkTransit}
+            checkDriving={checkDriving}
+            setDerivedData={setDerivedData}
+            data={data}
+            center={center}
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+          />
         </div>
-      )}
+        {!open && (
+          <div className="map-destination-links-container">
+            {derivedData.map(
+              (x, idx) =>
+                idx > 0 && (
+                  <div className="css-1rhbuit-multiValue">
+                    <div className="css-12jo7m5">
+                      <a className="pill" target="_blank" href={x.url}>
+                        {x.name.length > 30
+                          ? x.name.slice(0, 29) + "..."
+                          : x.name}
+                      </a>
+                    </div>
+                    <div
+                      onClick={() => removeLocation(x.id)}
+                      role="button"
+                      className="css-xb97g8"
+                      aria-label={`remove ${x.name}`}
+                    >
+                      <svg
+                        height={14}
+                        width={14}
+                        viewBox="0 0 20 20"
+                        aria-hidden="true"
+                        focusable="false"
+                        className="css-tj5bde-Svg"
+                      >
+                        <path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z" />
+                      </svg>
+                    </div>
+                  </div>
+                )
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 };

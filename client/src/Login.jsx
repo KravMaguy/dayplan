@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { GoogleLogin } from "react-google-login";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+
 import "./Header.css";
 
 import axios from "axios";
 const Login = () => {
-  const responseGoogle = async (response) => {
-    if (response.profileObj) {
-      const { profileObj } = response;
-      try {
-        const data = await axios.post("/createlogin/", profileObj);
-        console.log("the data", data);
-      } catch (error) {
-        console.error("err: ", error);
-      }
-    }
-  };
-
+  const userCoordinates = useSelector((state) => state.position);
+  const userCenter = useSelector((state) => state.userCenter);
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(pathname, "path location");
   return (
     <>
       <div class="header header-fixed shadow">
         <div class="navbar container">
           <div class="logo">
-            {/* <a href='#home'> */}
             <img
               src="../fusion.png"
               style={{
@@ -32,19 +26,15 @@ const Login = () => {
                 left: "15px",
               }}
             />
-            {/* </a> */}
           </div>
-          {/* <GoogleLogin
-            clientId={process.env.REACT_APP_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            clientSecret={process.env.REACT_APP_CLIENT_SECRET}
-          /> */}
+          {(userCenter || userCoordinates) && (
+            <Link to={pathname !== "/plan" ? "/plan" : "/"}>
+              <button className="no-link pure-material-button-text">
+                {pathname !== "/plan" ? "Lets Go" : "Change Location"}
+              </button>
+            </Link>
+          )}
 
-          <button className="no-link pure-material-button-text">
-            Lets Go!
-          </button>
           <input type="checkbox" id="navbar-toggle" />
           <label for="navbar-toggle">
             <i></i>
