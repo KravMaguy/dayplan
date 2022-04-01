@@ -13,10 +13,10 @@ import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
 
+//calc does not work thought 60px(height of header) i.e. height calc(100vh-60px) does not work, replace later with getMediaQuery hook
 const containerStyle = {
-  height: `100vh`,
+  height: `${window.innerHeight - 60}px`,
 };
-
 const PlacesAutoComplete = () => {
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
@@ -24,6 +24,7 @@ const PlacesAutoComplete = () => {
   const [value, setValue] = useState(null);
   const [userCenter, setUserCenter] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [userCoordinates, setUserCoordinates] = useState(null);
 
   const resetMapCenter = (chosenLocation) => {
     const { lat, lng } = chosenLocation[0].geometry.location;
@@ -56,6 +57,7 @@ const PlacesAutoComplete = () => {
     try {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
+        setUserCoordinates({ latitude, longitude });
         const newCenter = { lat: latitude, lng: longitude };
         dispatch({
           type: "SET_CENTER",
@@ -75,15 +77,14 @@ const PlacesAutoComplete = () => {
   };
   console.log({ inputValue });
   return (
-    <>
+    <div className="user-destination-page">
       <Login />
       <div
-        className="my$$$classbox"
+        className="destination-page-map-container"
         style={{ position: "fixed", width: "100vw", bottom: 0 }}
       >
         <div class="constrained top-container">
-          <button onClick={getYelp}>get yelp places</button>
-          {userCenter && <Link to={"/plan"}>lets go!</Link>}
+          {/* {userCenter && <Link to={"/plan"}>lets go!</Link>} */}
           <GooglePlacesAutocomplete
             selectProps={{
               inputValue,
@@ -91,19 +92,26 @@ const PlacesAutoComplete = () => {
               onInputChange: (newInputValue, meta) => {
                 setInputValue(newInputValue);
               },
-              placeholder: "Type or Search Location",
+              placeholder: "Search for things to do by location",
               onChange: (val) => handleSelect(val),
             }}
             apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
           />
-          <div className="icon" onClick={runGetLocation}>
-            <span>
-              <MdLocationOn
+          <div className="icon">
+            {!userCoordinates ? (
+              <MdLocationOff
+                onClick={runGetLocation}
                 size={18}
                 className="location-icon"
-                color={"green"}
+                fill={"grey"}
               />
-            </span>
+            ) : (
+              <MdLocationOn
+                fill={"green"}
+                size={18}
+                className="location-icon"
+              />
+            )}
           </div>
         </div>
 
@@ -131,7 +139,7 @@ const PlacesAutoComplete = () => {
           )}
         </Map>
       </div>
-    </>
+    </div>
   );
 };
 

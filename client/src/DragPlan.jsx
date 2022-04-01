@@ -7,6 +7,7 @@ import gmappng from "./gmappng.png";
 import Map from "./Map";
 import { restaurantObjects, maObjs } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
+import { useDispatch, useSelector } from "react-redux";
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
   strokeWeight: 6,
@@ -23,7 +24,9 @@ const dimStyle = {
 };
 const startingSearchIndex = 0;
 
-const DragPlan = ({ center, data }) => {
+const DragPlan = ({ data }) => {
+  const center = useSelector((state) => state.center);
+
   if (!data) {
     data = maObjs;
   }

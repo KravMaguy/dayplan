@@ -305,6 +305,11 @@ div {
   border-bottom: "1px solid purple";
 } */
 
+.shadow {
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
 input[type="number"] {
   width: 100px;
 }
@@ -630,7 +635,9 @@ input:valid + span:after {
   margin: 0 auto;
   z-index: 1;
   position: relative;
-  top: 15vh;
+  top: 100px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 @media screen and (min-width: 600px) {
@@ -660,16 +667,22 @@ input:valid + span:after {
 .icon {
   position: absolute;
   left: 0rem;
-  top: 0.3rem;
-  width: 2.6rem;
-  height: 2.6rem;
+  top: 0rem;
+  width: 45px;
+  background: #7d7d7d75;
+  height: 3.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
-  color: rgb(51 51 51 / 60%);
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 75%);
+  clip-path: inset(0px -10px 0px 0px);
 }
 
 .css-1hwfws3 {
-  padding-left: 33px !important;
+  margin-left: 50px !important;
+}
+
+.user-destination-page {
 }

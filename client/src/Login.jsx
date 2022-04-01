@@ -35,13 +35,17 @@ const Login = () => {
             />
             {/* </a> */}
           </div>
-          <GoogleLogin
+          {/* <GoogleLogin
             clientId={process.env.REACT_APP_CLIENT_ID}
             buttonText="Login"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             clientSecret={process.env.REACT_APP_CLIENT_SECRET}
-          />
+          /> */}
+
+          <button className="no-link pure-material-button-text">
+            Lets Go!
+          </button>
           <input type="checkbox" id="navbar-toggle" />
           <label for="navbar-toggle">
             <i></i>

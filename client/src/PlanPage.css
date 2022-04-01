@@ -281,7 +281,7 @@ table.adp-directions tr:hover .adp-maneuver {
 }
 
 svg {
-  fill: rgb(242, 242, 242);
+  /* fill: rgb(242, 242, 242); */
   height: 1.6rem;
   width: 1.6rem;
   margin: 0.2rem;
