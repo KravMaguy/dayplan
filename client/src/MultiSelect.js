@@ -63,14 +63,14 @@ export default function MultiSelectAsync() {
           margin: "0 auto",
         }}
       >
-        <h1 style={{ marginBottom: "20px" }}>
+        {/* <h1 style={{ marginBottom: "20px" }}>
           <span class="wrap">
             <span class="inner">
               Create a day plan based around popular activities, festivals,
               local buisnesses, or whatever you feel like.
             </span>
           </span>
-        </h1>
+        </h1> */}
 
         <AsyncSelect
           cacheOptions

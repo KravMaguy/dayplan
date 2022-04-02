@@ -152,18 +152,3 @@
   font-weight: normal;
   font-size: 1em;
 }
-
-h1 {
-  font: bold 30px sans-serif;
-  letter-spacing: -1px;
-  color: #000;
-}
-
-.wrap {
-  box-shadow: -10px 0 0 10px #fff, 10px 0 0 10px #fff;
-}
-
-.inner {
-  background: rgba(166, 161, 161, 0.854);
-  position: relative;
-}

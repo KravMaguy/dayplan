@@ -1,0 +1,35 @@
+.grid-container {
+  display: grid;
+  /* grid-template-columns: auto auto auto; */
+  background-color: #2196f3;
+  padding: 10px;
+  position: absolute;
+  bottom: 0px;
+  width: 90%;
+  position: fixed;
+  left: 50%;
+  bottom: 0px;
+  transform: translate(-50%, -50%);
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+}
+
+.last-double-columns {
+  grid-column: 2 / span 2;
+}
+
+.homepage-title {
+  font: bold 30px sans-serif;
+  letter-spacing: -1px;
+  color: #000;
+  margin-top: 90px;
+}
+
+.homepage-title-inner {
+  background: rgba(166, 161, 161, 0.854);
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
