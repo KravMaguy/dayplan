@@ -67,7 +67,7 @@ const DragPlanDirections = ({
 }) => {
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
-  console.log(data, "data");
+  // console.log(data, "data");
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -171,7 +171,7 @@ const DragPlanDirections = ({
     setIdx(0);
     setResponse(null);
   };
-  console.log({ collapsed });
+  // console.log({ collapsed });
   return (
     <div className="col plan-col-right">
       <div
@@ -300,7 +300,7 @@ const DragPlanDirections = ({
                   >
                     {derivedData.slice(1).map((location, idx, arr) => {
                       let previous = arr[idx - 1];
-                      console.log(location, "location");
+                      // console.log(location, "location");
                       return (
                         <Draggable
                           className="draggable-element"

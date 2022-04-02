@@ -111,18 +111,20 @@ app.get("/api/users", checkAuthMiddleware, async (req, res) => {
 
 app.post("/api/", async (req, res) => {
   const body = req.body;
-  console.log("reached api route server");
-  console.log(body, "the body in req");
-  const { term, place } = body;
+  const { center } = body;
+  const { lat, lng } = center;
   axios
     .get(
-      "businesses/search?term=" +
-        term +
-        "&location=" +
-        place +
-        "&limit=4&sortby=distance"
+      "businesses/search?term=restaurants,mma" +
+        "&latitude=" +
+        lat +
+        "&longitude=" +
+        lng +
+        "&sort_by=distance"
     )
-    .then((response) => res.json(response.data))
+    .then((response) => {
+      res.json(response.data);
+    })
     .catch((err) => res.status(err.response.status).send(err.message));
 });
 

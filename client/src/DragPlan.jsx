@@ -8,6 +8,8 @@ import Map from "./Map";
 import { restaurantObjects, maObjs } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
+import { getLocationDataByCategories } from "./redux/reducer.js";
+
 import Login from "./Login";
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
@@ -27,6 +29,10 @@ const startingSearchIndex = 0;
 
 const DragPlan = ({ data }) => {
   const center = useSelector((state) => state.center);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLocationDataByCategories());
+  }, [dispatch]);
 
   if (!data) {
     data = maObjs;

@@ -122,3 +122,24 @@ export function getUserPosition() {
     }
   };
 }
+
+/**get locations by user location and selected categories */
+
+export function getLocationDataByCategories() {
+  return async function (dispatch, getState) {
+    console.log(getState(), "state in the thunk should be called on mount");
+    try {
+      const center = getState().userCenter;
+      const { lat, lng } = center;
+      const { data } = await axios.post("/api/", center);
+      console.log(data, "returned data from the post in the thunk");
+
+      // dispatch({
+      //   type: "GET_LOCATIONS_BY_CATEGORIES",
+      //   payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
+      // });
+    } catch (error) {
+      // dispatch({ type: "location/error", payload: error.message });
+    }
+  };
+}

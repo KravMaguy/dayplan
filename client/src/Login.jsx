@@ -26,7 +26,7 @@ const Login = () => {
               PLAN
             </button>
           )}
-          {pathname === "/" && categories.length > 0 && (
+          {pathname === "/categories" && categories.length > 0 && (
             <button
               onClick={() => navigate("/location")}
               style={{ borderRadius: "2px" }}

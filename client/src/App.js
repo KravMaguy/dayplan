@@ -10,9 +10,8 @@ function App() {
     <div className="">
       <Router>
         <Routes>
-          <Route path="/cat" element={<MultiSelectAsync />} />
           <Route path="/" element={<HomePage />} />
-
+          <Route path="/categories" element={<MultiSelectAsync />} />
           <Route path="/location" element={<PlacesAutoComplete />} />
           <Route path="/plan" element={<DragPlan />} />
         </Routes>

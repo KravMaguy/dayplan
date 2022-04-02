@@ -29,6 +29,7 @@ export default function MultiSelectAsync() {
   const loadOptions = async (inputValue, { action }) => {
     const options = [];
     const { data } = await axios.get(`/autocomplete/${inputValue}`);
+    console.log(data, "the dadfsd");
     const myData = data.categories.map((category) =>
       options.push({ value: category.alias, label: category.title })
     );
@@ -71,6 +72,9 @@ export default function MultiSelectAsync() {
             </span>
           </span>
         </h1> */}
+        <h1 className="homepage-title">
+          <span class="homepage-title-inner">Select categories</span>
+        </h1>
 
         <AsyncSelect
           cacheOptions
