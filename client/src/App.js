@@ -10,8 +10,8 @@ function App() {
     <div className="center">
       <Router>
         <Routes>
-          <Route path="/category" element={<MultiSelectAsync />} />
-          <Route path="/" element={<PlacesAutoComplete />} />
+          <Route path="/" element={<MultiSelectAsync />} />
+          <Route path="/location" element={<PlacesAutoComplete />} />
           <Route path="/plan" element={<DragPlan />} />
         </Routes>
       </Router>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
@@ -54,22 +55,26 @@ export default function MultiSelectAsync() {
     <>
       <Login />
       <div
-        className="homepage-main"
+        className="constrained"
         style={{
           position: "relative",
           top: "90px",
-          width: "90%",
+          // width: "90%",
           margin: "0 auto",
         }}
       >
-        <p>
-          Create a day plan based around popular activities, festivals, local
-          buisnesses, or whatever you feel like.
-        </p>
-        <button>Lets go</button>
+        <h1 style={{ marginBottom: "20px" }}>
+          <span class="wrap">
+            <span class="inner">
+              Create a day plan based around popular activities, festivals,
+              local buisnesses, or whatever you feel like.
+            </span>
+          </span>
+        </h1>
+
         <AsyncSelect
           cacheOptions
-          defaultOptions
+          defaultValue={categories}
           placeholder={"What do you feel like doing?"}
           onInputChange={handleInputChange}
           loadOptions={checkLength() && loadOptions}

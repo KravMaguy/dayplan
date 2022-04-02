@@ -6,8 +6,10 @@ import "./Header.css";
 
 import axios from "axios";
 const Login = () => {
+  const navigate = useNavigate();
   const userCoordinates = useSelector((state) => state.position);
   const userCenter = useSelector((state) => state.userCenter);
+  const categories = useSelector((state) => state.categories);
   const location = useLocation();
   const { pathname } = location;
   return (
@@ -16,6 +18,8 @@ const Login = () => {
         <div class="navbar container">
           <div class="logo">
             <img
+              alt="homepage link"
+              onClick={() => navigate("/")}
               src="../fusion.png"
               style={{
                 size: "1.875em",
@@ -26,12 +30,23 @@ const Login = () => {
               }}
             />
           </div>
-          {(userCenter || userCoordinates) && (
-            <Link to={pathname !== "/plan" ? "/plan" : "/"}>
-              <button className="no-link pure-material-button-text">
-                {pathname !== "/plan" ? "Lets Go" : "Change Location"}
-              </button>
-            </Link>
+          {(userCenter || userCoordinates) && pathname === "/location" && (
+            <button
+              onClick={() => navigate("/plan")}
+              style={{ borderRadius: "2px" }}
+              class="map-controls"
+            >
+              PLAN
+            </button>
+          )}
+          {pathname === "/" && categories.length > 0 && (
+            <button
+              onClick={() => navigate("/location")}
+              style={{ borderRadius: "2px" }}
+              class="map-controls"
+            >
+              Set Location
+            </button>
           )}
 
           <input type="checkbox" id="navbar-toggle" />
