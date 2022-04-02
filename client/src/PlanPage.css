@@ -1,8 +1,4 @@
 /* day plan page css start */
-
-.col {
-}
-
 .col-left {
   width: 60%;
   float: left;
@@ -75,7 +71,6 @@
   overflow-y: auto;
   height: calc(100vh - 120px);
   transition: all 0.4s;
-  /* border-bottom: 10px solid lightgrey; */
 }
 
 /* .fadedScroller_fade {
@@ -281,7 +276,6 @@ table.adp-directions tr:hover .adp-maneuver {
 }
 
 svg {
-  /* fill: rgb(242, 242, 242); */
   height: 1.6rem;
   width: 1.6rem;
   margin: 0.2rem;
@@ -386,7 +380,6 @@ button.map-controls:disabled {
   flex: 1 1;
   flex-wrap: wrap;
   position: relative;
-  /* overflow: hidden; */
   box-sizing: border-box;
   bottom: 0;
   left: 0;
@@ -404,7 +397,6 @@ button.map-controls:disabled {
 .css-1s2u09g-control {
   overflow: hidden;
   white-space: nowrap;
-  /* width: 183.347px; */
 }
 
 .css-1rhbuit-multiValue {
@@ -665,18 +657,6 @@ a.pill:active {
     display: none;
   }
 }
-
-/* end cellphone responsive layout */
-/*
-.arrow-icon {
-   transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8); */
-/* position: absolute;
-  right: 0px; 
-}*/
-
-/* .open-arrow {
-  transform: rotate(-180deg);
-} */
 
 @media screen and (min-width: 880px) {
   .map-destination-links-container {
