@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
-export default function Map(props) {
+const Map = React.memo(function Map(props) {
   const [map, setMap] = useState(null); // map instance
   const onLoadMap = useCallback(setMap, []); // set map once map has loaded
 
@@ -26,4 +26,6 @@ export default function Map(props) {
       <>{props.children}</>
     </GoogleMap>
   );
-}
+});
+
+export default Map;

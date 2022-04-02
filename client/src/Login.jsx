@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-
+import HomePageLink from "./HomePageLink";
 import "./Header.css";
 
 import axios from "axios";
@@ -16,20 +16,7 @@ const Login = () => {
     <>
       <div class="header header-fixed shadow">
         <div class="navbar container">
-          <div class="logo">
-            <img
-              alt="homepage link"
-              onClick={() => navigate("/")}
-              src="../fusion.png"
-              style={{
-                size: "1.875em",
-                height: "2em",
-                position: "absolute",
-                top: "10px",
-                left: "15px",
-              }}
-            />
-          </div>
+          <HomePageLink navigate={navigate} />
           {(userCenter || userCoordinates) && pathname === "/location" && (
             <button
               onClick={() => navigate("/plan")}

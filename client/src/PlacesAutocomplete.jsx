@@ -97,7 +97,7 @@ const PlacesAutoComplete = () => {
       <Login />
       <div
         className="destination-page-map-container"
-        style={{ position: "fixed", width: "100vw", bottom: 0 }}
+        style={{ position: "absolute", width: "100vw", bottom: 0 }}
       >
         <div class="constrained top-container">
           {/* {userCenter && <Link to={"/plan"}>lets go!</Link>} */}
