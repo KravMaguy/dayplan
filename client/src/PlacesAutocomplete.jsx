@@ -12,12 +12,26 @@ import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
 import { getUserPosition } from "./redux/reducer.js";
+import useMediaQuery from "./UseMediaQuery";
 
 //calc does not work thought 60px(height of header) i.e. height calc(100vh-60px) does not work, replace later with getMediaQuery hook
-const containerStyle = {
-  height: `${window.innerHeight - 60}px`,
-};
+// const Height = useMediaQuery("(max-width: 560px)");
+
 const PlacesAutoComplete = () => {
+  const [height, setHeight] = useState(window.innerHeight);
+  const containerStyle = {
+    height: `${height - 60}px`,
+  };
+  console.log(height);
+  useEffect(() => {
+    const handleResize = () => {
+      setHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
   const userCoordinates = useSelector((state) => state.position);
