@@ -9,7 +9,7 @@ import { restaurantObjects, maObjs } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/reducer.js";
-
+import { useNavigate } from "react-router";
 import Login from "./Login";
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
@@ -27,16 +27,25 @@ const dimStyle = {
 };
 const startingSearchIndex = 0;
 
-const DragPlan = ({ data }) => {
-  const center = useSelector((state) => state.center);
+const DragPlan = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getLocationDataByCategories());
   }, [dispatch]);
+  const center = useSelector((state) => state.center);
+  const data = useSelector((state) => state.businesses.businesses);
+  console.log(data, "data at the top");
 
-  if (!data) {
-    data = maObjs;
-  }
+  // if (!data) {
+  //   data = maObjs;
+  // }
+
+  console.log(data, "the way it looks like");
+  console.log(
+    "the state ",
+    useSelector((state) => state)
+  );
   const [open, setIsOpen] = useState(false);
 
   const [zoom, setZoom] = useState(10);
@@ -49,32 +58,36 @@ const DragPlan = ({ data }) => {
   const [travelMode, setTravelMode] = useState("DRIVING");
   const [collapsed, setCollapsed] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const derivedData = data.map((x) => {
-      return {
-        id: x.id,
-        name: x.name,
-        coordinates: x.coordinates,
-        url: x.url,
-        address1: x.location?.address1,
-        city: x.location?.city,
-        zip: x.location?.zip,
+    if (data && data.length && data.length > 0) {
+      const derivedData = data.map((x) => {
+        return {
+          id: x.id,
+          name: x.name,
+          coordinates: x.coordinates,
+          url: x.url,
+          address1: x.location?.address1,
+          city: x.location?.city,
+          zip: x.location?.zip,
+        };
+      });
+      derivedData.unshift({
+        name: "starting Location",
+        coordinates: {
+          id: "starting id",
+          latitude: center.lat,
+          longitude: center.lng,
+        },
+      });
+      setDerivedData(derivedData);
+      const lastDestination = {
+        lat: derivedData[derivedData.length - 1].coordinates.latitude,
+        lng: derivedData[derivedData.length - 1].coordinates.longitude,
       };
-    });
-    derivedData.unshift({
-      name: "starting Location",
-      coordinates: {
-        id: "starting id",
-        latitude: center.lat,
-        longitude: center.lng,
-      },
-    });
-    setDerivedData(derivedData);
-    const lastDestination = {
-      lat: derivedData[derivedData.length - 1].coordinates.latitude,
-      lng: derivedData[derivedData.length - 1].coordinates.longitude,
-    };
-    setDestination(lastDestination);
+      setDestination(lastDestination);
+    }
   }, []);
 
   const getWayPoints = (param) => {

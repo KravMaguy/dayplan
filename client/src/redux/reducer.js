@@ -34,6 +34,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case "SET_BUISNESSES_BY_CATEGRORY":
+      return { ...state, businesses: action.payload };
     case "SET_CATEGORIES":
       return { ...state, categories: action.payload };
     case "SET_USER_CENTER":
@@ -58,7 +60,6 @@ export default function reducer(state = initialState, action) {
       };
     case "SET_ERROR":
       return { ...state, isFetching: false, error: action.payload };
-    //user location
     case formActionType.location_seeking:
       return { ...state, position: null, status: status.pending };
     case formActionType.location_found:
@@ -127,17 +128,15 @@ export function getUserPosition() {
 
 export function getLocationDataByCategories() {
   return async function (dispatch, getState) {
-    console.log(getState(), "state in the thunk should be called on mount");
     try {
-      const center = getState().userCenter;
-      const { lat, lng } = center;
-      const { data } = await axios.post("/api/", center);
-      console.log(data, "returned data from the post in the thunk");
-
-      // dispatch({
-      //   type: "GET_LOCATIONS_BY_CATEGORIES",
-      //   payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
-      // });
+      const { center } = getState().userCenter;
+      const categories = getState().categories;
+      const request = { center, categories };
+      const { data } = await axios.post("/api/", request);
+      dispatch({
+        type: "SET_BUISNESSES_BY_CATEGRORY",
+        payload: data,
+      });
     } catch (error) {
       // dispatch({ type: "location/error", payload: error.message });
     }

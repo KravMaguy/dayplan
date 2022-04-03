@@ -105,17 +105,22 @@ app.get("/autocomplete/:text", async (req, res) => {
 
 app.get("/api/users", checkAuthMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id);
-
   res.json(user.google);
 });
 
 app.post("/api/", async (req, res) => {
   const body = req.body;
-  const { center } = body;
+  const { center, categories } = body;
   const { lat, lng } = center;
+  let str = "";
+  categories.forEach((category) => {
+    str += category.value + ",";
+  });
+  str = str.slice(0, str.length - 1);
   axios
     .get(
-      "businesses/search?term=restaurants,mma" +
+      "businesses/search?term=" +
+        str +
         "&latitude=" +
         lat +
         "&longitude=" +

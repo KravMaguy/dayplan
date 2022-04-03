@@ -27,20 +27,18 @@ export default function MultiSelectAsync() {
     return categories.length < 2;
   };
   const loadOptions = async (inputValue, { action }) => {
-    const options = [];
     const { data } = await axios.get(`/autocomplete/${inputValue}`);
-    console.log(data, "the dadfsd");
-    const myData = data.categories.map((category) =>
-      options.push({ value: category.alias, label: category.title })
-    );
-    const data2 = data.terms.map((term) =>
-      options.push({
+    const categories = data.categories.map((category) => {
+      return { value: category.alias, label: category.title, def: "category" };
+    });
+    const terms = data.terms.map((term) => {
+      return {
         value: term.text,
         label: term.text,
-      })
-    );
-    console.log(options, "in loadoptions we have");
-    return options.filter((i) =>
+        def: "term",
+      };
+    });
+    return [...categories, ...terms].filter((i) =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   };
