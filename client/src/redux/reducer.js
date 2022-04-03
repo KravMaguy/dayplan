@@ -2,7 +2,7 @@ import axios from "axios";
 // import { getPosition, getPolicyLocation } from "./utils";
 // const key = process.env.REACT_APP_GEO_KEY;
 import { getPosition, getPolicyLocation } from "./utils";
-
+import { geocodeByLatLng } from "react-google-places-autocomplete";
 const status = {
   idle: "idle",
   pending: "pending",
@@ -71,6 +71,12 @@ export default function reducer(state = initialState, action) {
         status: status.rejected,
         error: action.payload,
       };
+
+    case "SET_USER_POSITION_GEOCODED_ADDRESS":
+      return {
+        ...state,
+        position: { ...state.position, geocodedAddress: action.payload },
+      };
     default:
       return state;
   }
@@ -118,6 +124,15 @@ export function getUserPosition() {
         type: "SET_USER_CENTER",
         payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
       });
+
+      geocodeByLatLng(newCenter)
+        .then((results) => {
+          return dispatch({
+            type: "SET_USER_POSITION_GEOCODED_ADDRESS",
+            payload: results,
+          });
+        })
+        .catch((error) => console.error(error));
     } catch (error) {
       dispatch({ type: "location/error", payload: error.message });
     }

@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import {
-  geocodeByAddress,
-  geocodeByLatLng,
-} from "react-google-places-autocomplete";
+import { geocodeByAddress } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
 import "./Marker.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBusinesses } from "./redux/reducer.js";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
 import { getUserPosition } from "./redux/reducer.js";
-import useMediaQuery from "./UseMediaQuery";
-
-//calc does not work thought 60px(height of header) i.e. height calc(100vh-60px) does not work, replace later with getMediaQuery hook
-// const Height = useMediaQuery("(max-width: 560px)");
-
 const PlacesAutoComplete = () => {
   const [height, setHeight] = useState(window.innerHeight);
   const containerStyle = {
     height: `${height - 60}px`,
   };
-  console.log(height);
   useEffect(() => {
     const handleResize = () => {
       setHeight(window.innerHeight);
@@ -35,24 +25,26 @@ const PlacesAutoComplete = () => {
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
   const userCoordinates = useSelector((state) => state.position);
+  const userCoordinatesGeoFormattedAddress = useSelector(
+    (state) => state.position?.geocodedAddress
+  );
+  console.log(userCoordinatesGeoFormattedAddress, "user cooasdf");
   const userCenter = useSelector((state) => state.userCenter);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  console.log({ value });
-  // useEffect(() => {
-  //   if (!userCoordinates) return;
-  //   geocodeByLatLng({
-  //     lat: userCoordinates.center.lat,
-  //     lng: userCoordinates.center.lng,
-  //   })
-  //     .then((results) => {
-  //       console.log("we have results");
-  //       setInputValue(results[0].formatted_address);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, [userCoordinates]);
-  console.log(inputValue, "inputbal");
+
+  useEffect(() => {
+    if (
+      userCoordinatesGeoFormattedAddress &&
+      userCoordinatesGeoFormattedAddress.length > 0
+    ) {
+      const formatted_address =
+        userCoordinatesGeoFormattedAddress[0].formatted_address;
+      setInputValue(formatted_address);
+    }
+  }, [userCoordinatesGeoFormattedAddress]);
+
   const resetMapCenter = (chosenLocation) => {
     setZoom(13);
     const { lat, lng } = chosenLocation[0].geometry.location;
@@ -65,7 +57,6 @@ const PlacesAutoComplete = () => {
       type: "SET_USER_CENTER",
       payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
     });
-    // setUserCenter(newCenter);
   };
 
   const handleSelect = (val) => {
@@ -76,36 +67,11 @@ const PlacesAutoComplete = () => {
       .catch((error) => console.error(error));
   };
 
-  const getYelp = () => {
-    const term = "restaurants";
-    const place = "chicago";
-    const terms = { term, place };
-    dispatch(fetchBusinesses(terms));
+  const runGetUserLocation = () => {
+    setZoom(13);
+    dispatch(getUserPosition());
   };
 
-  // const runGetLocation = () => {
-  //   console.log("getLocation run");
-  //   try {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       const { latitude, longitude } = position.coords;
-  //       setUserCoordinates({ latitude, longitude });
-  //       const newCenter = { lat: latitude, lng: longitude };
-  //       dispatch({
-  //         type: "SET_CENTER",
-  //         payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
-  //       });
-  //       setZoom(13);
-  //       setUserCenter(newCenter);
-  //       geocodeByLatLng({ lat: newCenter.lat, lng: newCenter.lng })
-  //         .then((results) => {
-  //           setInputValue(results[0].formatted_address);
-  //         })
-  //         .catch((error) => console.error(error));
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   return (
     <div className="user-destination-page">
       <Login />
@@ -114,7 +80,6 @@ const PlacesAutoComplete = () => {
         style={{ position: "absolute", width: "100vw", bottom: 0 }}
       >
         <div class="constrained top-container">
-          {/* {userCenter && <Link to={"/plan"}>lets go!</Link>} */}
           <GooglePlacesAutocomplete
             selectProps={{
               inputValue,
@@ -130,11 +95,7 @@ const PlacesAutoComplete = () => {
           <div className="icon">
             {!userCoordinates ? (
               <MdLocationOff
-                // onClick={runGetLocation}
-                onClick={() => {
-                  setZoom(13);
-                  dispatch(getUserPosition());
-                }}
+                onClick={() => runGetUserLocation()}
                 size={18}
                 className="location-icon"
                 fill={"grey"}
