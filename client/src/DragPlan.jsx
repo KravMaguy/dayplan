@@ -35,13 +35,12 @@ const DragPlan = () => {
   }, [dispatch]);
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.businesses.businesses);
-  console.log(data, "data at the top");
 
   // if (!data) {
   //   data = maObjs;
   // }
 
-  console.log(data, "the way it looks like");
+  // console.log(data, "the way it looks like");
   console.log(
     "the state ",
     useSelector((state) => state)
@@ -88,7 +87,7 @@ const DragPlan = () => {
       };
       setDestination(lastDestination);
     }
-  }, []);
+  }, [center.lat, center.lng, data]);
 
   const getWayPoints = (param) => {
     if (currIdx === startingSearchIndex) {
@@ -233,7 +232,7 @@ const DragPlan = () => {
       latlongArr[currIdx - 1].join(",") + "/" + latlongArr[currIdx].join(",")
     );
   };
-
+  console.log(derivedData, "derivedData what?");
   return (
     <>
       <Login />
