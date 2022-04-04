@@ -4,6 +4,7 @@ import { geocodeByAddress } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
 import "./Marker.css";
 import { useDispatch, useSelector } from "react-redux";
+import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
@@ -28,12 +29,10 @@ const PlacesAutoComplete = () => {
   const userCoordinatesGeoFormattedAddress = useSelector(
     (state) => state.position?.geocodedAddress
   );
-  console.log(userCoordinatesGeoFormattedAddress, "user cooasdf");
   const userCenter = useSelector((state) => state.userCenter);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
-
   useEffect(() => {
     if (
       userCoordinatesGeoFormattedAddress &&
@@ -41,6 +40,10 @@ const PlacesAutoComplete = () => {
     ) {
       const formatted_address =
         userCoordinatesGeoFormattedAddress[0].formatted_address;
+      console.log(
+        formatted_address,
+        "here is formatted inside first useEffect"
+      );
       setInputValue(formatted_address);
     }
   }, [userCoordinatesGeoFormattedAddress]);
@@ -63,13 +66,34 @@ const PlacesAutoComplete = () => {
     setValue(val);
     const { label } = val;
     geocodeByAddress(label)
-      .then((results) => resetMapCenter(results))
+      .then((results) => {
+        console.log(results, "results");
+        resetMapCenter(results);
+      })
       .catch((error) => console.error(error));
   };
 
   const runGetUserLocation = () => {
+    setValue(null);
     setZoom(13);
-    dispatch(getUserPosition());
+    if (!userCoordinates) {
+      return dispatch(getUserPosition());
+    }
+    const newCenter = {
+      lat: userCoordinates.center.lat,
+      lng: userCoordinates.center.lng,
+    };
+    dispatch({
+      type: "SET_CENTER",
+      payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
+    });
+    dispatch({
+      type: "SET_USER_CENTER",
+      payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
+    });
+    const formatted_address =
+      userCoordinatesGeoFormattedAddress[0].formatted_address;
+    setInputValue(formatted_address);
   };
 
   return (
@@ -79,26 +103,33 @@ const PlacesAutoComplete = () => {
         className="destination-page-map-container"
         style={{ position: "absolute", width: "100vw", bottom: 0 }}
       >
-        <div class="constrained top-container">
-          <GooglePlacesAutocomplete
-            selectProps={{
-              inputValue,
-              value,
-              onInputChange: (newInputValue, meta) => {
-                setInputValue(newInputValue);
-              },
-              placeholder: "Search for things to do by location",
-              onChange: (val) => handleSelect(val),
-            }}
-            apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
-          />
-          <div className="icon">
+        <div class="constrained top-container-searchbox">
+          <div class="3453$" style={{ width: "100%" }}>
+            <GooglePlacesAutocomplete
+              selectProps={{
+                onFocus: () => console.log("focused"),
+                onBlur: () => console.log("blur"),
+                inputValue,
+                value,
+                onInputChange: (newInputValue, meta) => {
+                  setInputValue(newInputValue);
+                },
+                placeholder: "Search for things to do by location",
+                onChange: (val) => handleSelect(val),
+              }}
+              apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
+            />
+          </div>
+
+          <div
+            onClick={() => runGetUserLocation()}
+            className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
+          >
             {!userCoordinates ? (
               <MdLocationOff
-                onClick={() => runGetUserLocation()}
                 size={18}
                 className="location-icon"
-                fill={"grey"}
+                fill={"#d3d3d3"}
               />
             ) : (
               <MdLocationOn
@@ -117,11 +148,11 @@ const PlacesAutoComplete = () => {
           setZoom={setZoom}
           containerStyle={containerStyle}
         >
-          {userCenter && (
+          {userCoordinates && (
             <OverlayView
               position={{
-                lat: userCenter.center.lat,
-                lng: userCenter.center.lng,
+                lat: userCoordinates.center.lat,
+                lng: userCoordinates.center.lng,
               }}
               mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             >
@@ -132,6 +163,30 @@ const PlacesAutoComplete = () => {
               </div>
             </OverlayView>
           )}
+          {userCenter &&
+            userCenter.center.lat !== userCoordinates?.center.lat &&
+            userCenter.center.lng !== userCoordinates?.center.lng && (
+              // <OverlayView
+              //   position={{
+              //     lat: userCenter.center.lat,
+              //     lng: userCenter.center.lng,
+              //   }}
+              //   mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+              // >
+              //   <div class="dot-shadow">
+              //     <div class="dot">
+              //       <div class="dot-child"></div>
+              //     </div>
+              //   </div>
+              // </OverlayView>
+              <Marker
+                position={{
+                  lat: userCenter.center.lat,
+                  lng: userCenter.center.lng,
+                }}
+                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+              />
+            )}
         </Map>
       </div>
     </div>

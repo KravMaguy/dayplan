@@ -281,8 +281,7 @@ svg {
   margin: 0.2rem;
 }
 
-.bg-grey-plan-controls,
-svg {
+.bg-grey-plan-controls svg {
   fill: #d3d3d3;
 }
 
@@ -385,7 +384,7 @@ button.map-controls:disabled {
   left: 0;
 }
 
-.css-g1d714-ValueContainer {
+.css-mod-g1d714-ValueContainer {
   flex: 1 1;
   flex-wrap: wrap;
   padding: 2px 8px;
@@ -394,12 +393,12 @@ button.map-controls:disabled {
   box-sizing: border-box;
 }
 
-.css-1s2u09g-control {
+.css-mod-1s2u09g-control {
   overflow: hidden;
   white-space: nowrap;
 }
 
-.css-1rhbuit-multiValue {
+.css-mod-1rhbuit-multiValue {
   background-color: hsl(0, 0%, 90%);
   border-radius: 2px;
   display: -webkit-box;
@@ -413,7 +412,7 @@ button.map-controls:disabled {
     rgb(0 0 0 / 30%) 0px 8px 16px -8px;
 }
 
-.css-12jo7m5 {
+.css-mod-12jo7m5 {
   border-radius: 2px;
   color: hsl(0, 0%, 20%);
   font-size: 85%;
@@ -425,7 +424,7 @@ button.map-controls:disabled {
   box-sizing: border-box;
 }
 
-.css-xb97g8 {
+.css-mod-xb97g8 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -440,7 +439,7 @@ button.map-controls:disabled {
   box-sizing: border-box;
 }
 
-.css-tj5bde-Svg {
+.css-mod-tj5bde-Svg {
   display: inline-block;
   fill: currentColor;
   line-height: 1;
@@ -448,11 +447,11 @@ button.map-controls:disabled {
   stroke-width: 0;
 }
 
-div[role="button"].css-xb97g8 {
+div[role="button"].css-mod-xb97g8 {
   transition-duration: 0.4s;
 }
 
-div[role="button"].css-xb97g8:hover {
+div[role="button"].css-mod-xb97g8:hover {
   background-color: #e7370a;
   color: white;
 }

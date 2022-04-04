@@ -153,13 +153,15 @@ body {
   width: 90vw;
 }
 
-.top-container {
+.top-container-searchbox {
   margin: 0 auto;
   z-index: 1;
   position: relative;
+  display: flex;
+  flex-direction: row-reverse;
   top: 100px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
 }
 
 @media screen and (min-width: 600px) {
@@ -187,21 +189,31 @@ body {
 }
 
 .icon {
-  position: absolute;
+  /* position: absolute;
   left: 0rem;
-  top: 0rem;
-  width: 45px;
-  background: #7d7d7d75;
+  top: 0rem; */
+  width: 50px;
+  background: #7d7d7ddd;
   height: 3.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
-  box-shadow: 0 0 5px rgb(0 0 0 / 75%);
-  clip-path: inset(0px -10px 0px 0px);
+  /* box-shadow: 0 0 5px rgb(0 0 0 / 75%);
+  clip-path: inset(0px -10px 0px 0px); */
+  transition: all 2s;
 }
 
-.css-1hwfws3 {
-  margin-left: 50px !important;
+.icon-bg-green {
+  background: #34a853;
+}
+.css-yk16xz-control {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+.css-2b097c-container {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
 }
