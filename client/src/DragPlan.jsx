@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 
 import "./PlanPage.css";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
-import gmappng from "./gmappng.png";
+// import gmapgrey from "../gmapgrey.png";
 import Map from "./Map";
-import { restaurantObjects, maObjs } from "./utils";
+import { restaurantObjects, maObjs, mapStyle } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/reducer.js";
@@ -274,7 +274,7 @@ const DragPlan = () => {
                     <img
                       alt="google-directions-link"
                       style={{ height: "31px" }}
-                      src={gmappng}
+                      src="../gmapgrey.png"
                     />
                   </a>
                 </button>
@@ -285,6 +285,7 @@ const DragPlan = () => {
                 }`}
               >
                 <Map
+                  mapStyle={mapStyle}
                   center={center}
                   zoom={zoom}
                   setZoom={setZoom}

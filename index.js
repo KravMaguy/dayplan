@@ -125,7 +125,7 @@ app.post("/api/", async (req, res) => {
         lat +
         "&longitude=" +
         lng +
-        "&sort_by=distance"
+        "&sort_by=distance&limit=5"
     )
     .then((response) => {
       res.json(response.data);

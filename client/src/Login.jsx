@@ -14,14 +14,14 @@ const Login = () => {
   const { pathname } = location;
   return (
     <>
-      <div class="header header-fixed shadow">
-        <div class="navbar container">
+      <div className="header header-fixed shadow">
+        <div className="navbar container">
           <HomePageLink navigate={navigate} />
           {(userCenter || userCoordinates) && pathname === "/location" && (
             <button
               onClick={() => navigate("/plan")}
               style={{ borderRadius: "2px" }}
-              class="map-controls"
+              className="map-controls"
             >
               PLAN
             </button>
@@ -30,17 +30,17 @@ const Login = () => {
             <button
               onClick={() => navigate("/location")}
               style={{ borderRadius: "2px" }}
-              class="map-controls"
+              className="map-controls"
             >
               Set Location
             </button>
           )}
 
           <input type="checkbox" id="navbar-toggle" />
-          <label for="navbar-toggle">
+          <label htmlFor="navbar-toggle">
             <i></i>
           </label>
-          <nav class="menu">
+          <nav className="menu">
             <ul>
               <li>
                 <a href="#search">Search</a>

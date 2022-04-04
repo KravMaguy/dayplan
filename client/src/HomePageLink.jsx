@@ -2,7 +2,7 @@ import React from "react";
 const HomePageLink = ({ navigate }) => {
   return (
     <div
-      class="logo"
+      className="logo"
       onClick={() => {
         console.log("cicked");
         navigate("/");

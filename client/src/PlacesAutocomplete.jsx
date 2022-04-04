@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { geocodeByAddress } from "react-google-places-autocomplete";
@@ -9,6 +10,7 @@ import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
 import { getUserPosition } from "./redux/reducer.js";
+import { FaDirections } from "react-icons/fa";
 const PlacesAutoComplete = () => {
   const [height, setHeight] = useState(window.innerHeight);
   const containerStyle = {
@@ -33,6 +35,8 @@ const PlacesAutoComplete = () => {
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
+
+  console.log(value, "value does it exist");
   useEffect(() => {
     if (
       userCoordinatesGeoFormattedAddress &&
@@ -40,10 +44,6 @@ const PlacesAutoComplete = () => {
     ) {
       const formatted_address =
         userCoordinatesGeoFormattedAddress[0].formatted_address;
-      console.log(
-        formatted_address,
-        "here is formatted inside first useEffect"
-      );
       setInputValue(formatted_address);
     }
   }, [userCoordinatesGeoFormattedAddress]);
@@ -67,7 +67,6 @@ const PlacesAutoComplete = () => {
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
-        console.log(results, "results");
         resetMapCenter(results);
       })
       .catch((error) => console.error(error));
@@ -96,6 +95,9 @@ const PlacesAutoComplete = () => {
     setInputValue(formatted_address);
   };
 
+  const getLocationStringForAccuracy = () => {
+    return encodeURI(value.label);
+  };
   return (
     <div className="user-destination-page">
       <Login />
@@ -103,12 +105,12 @@ const PlacesAutoComplete = () => {
         className="destination-page-map-container"
         style={{ position: "absolute", width: "100vw", bottom: 0 }}
       >
-        <div class="constrained top-container-searchbox">
-          <div class="3453$" style={{ width: "100%" }}>
+        <div className="constrained top-container-searchbox">
+          <div className="search-wrap" style={{ width: "100%" }}>
             <GooglePlacesAutocomplete
               selectProps={{
-                onFocus: () => console.log("focused"),
-                onBlur: () => console.log("blur"),
+                // onFocus: () => console.log("focused"),
+                // onBlur: () => console.log("blur"),
                 inputValue,
                 value,
                 onInputChange: (newInputValue, meta) => {
@@ -156,9 +158,9 @@ const PlacesAutoComplete = () => {
               }}
               mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             >
-              <div class="dot-shadow">
-                <div class="dot">
-                  <div class="dot-child"></div>
+              <div className="dot-shadow">
+                <div className="dot">
+                  <div className="dot-child"></div>
                 </div>
               </div>
             </OverlayView>
@@ -166,19 +168,6 @@ const PlacesAutoComplete = () => {
           {userCenter &&
             userCenter.center.lat !== userCoordinates?.center.lat &&
             userCenter.center.lng !== userCoordinates?.center.lng && (
-              // <OverlayView
-              //   position={{
-              //     lat: userCenter.center.lat,
-              //     lng: userCenter.center.lng,
-              //   }}
-              //   mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-              // >
-              //   <div class="dot-shadow">
-              //     <div class="dot">
-              //       <div class="dot-child"></div>
-              //     </div>
-              //   </div>
-              // </OverlayView>
               <Marker
                 position={{
                   lat: userCenter.center.lat,
@@ -188,6 +177,32 @@ const PlacesAutoComplete = () => {
               />
             )}
         </Map>
+        {userCenter && (
+          <div className="place-preview-wrapper">
+            <div>
+              <img
+                style={{
+                  boxShadow: "rgb(0 0 0 / 20%) 0px 1px 2px",
+                }}
+                src={`https://maps.googleapis.com/maps/api/streetview?size=95x65&location=${getLocationStringForAccuracy()}&key=AIzaSyCuGmQqv14jujPuIzwRhDLMjXQIT98eQ9o`}
+              />
+            </div>
+
+            <div>
+              <h3>7833 N kedzie</h3>
+              <p>
+                Chicago, IL, 60645
+                <br />
+                42.00571,-87.71095
+              </p>
+            </div>
+            <div>
+              <FaDirections
+                filter={"drop-shadow(2px 3px 1px rgb(0 0 0 / 0.25))"}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
