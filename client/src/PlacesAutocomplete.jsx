@@ -177,9 +177,9 @@ const PlacesAutoComplete = () => {
               />
             )}
         </Map>
-        {userCenter && (
+        {userCenter && value && (
           <div className="place-preview-wrapper">
-            <div>
+            <div className="place-preview-img-container">
               <img
                 style={{
                   boxShadow: "rgb(0 0 0 / 20%) 0px 1px 2px",
@@ -189,11 +189,11 @@ const PlacesAutoComplete = () => {
             </div>
 
             <div>
-              <h3>7833 N kedzie</h3>
+              <h3>{value.label.split(",")[0]}</h3>
               <p>
-                Chicago, IL, 60645
+                {value.label.split(",")?.[1]}
                 <br />
-                42.00571,-87.71095
+                {`${userCenter.center.lat},${userCenter.center.lng}`}
               </p>
             </div>
             <div>

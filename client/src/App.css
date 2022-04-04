@@ -251,3 +251,8 @@ body {
 .place-preview-wrapper div:nth-of-type(3) {
   padding: 7px;
 }
+
+.place-preview-img-container {
+  min-height: 65px;
+  min-width: 95px;
+}
