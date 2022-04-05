@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     accessToken: String,
     refreshToken: String,
   },
+  plans: [],
 });
 
 mongoose.model("User", userSchema);

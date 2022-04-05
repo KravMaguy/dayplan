@@ -15,6 +15,22 @@ export default function AuthenticatedApp() {
       .finally(() => setIsFetching(false));
   }
 
+  function handleSavePlan() {
+    fetch("/saveplan", {
+      method: "POST",
+      body: JSON.stringify({
+        title: "foo",
+        body: "bar",
+        userId: 1,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+  }
+
   useEffect(() => {
     fetch("/api/users")
       .then((res) => res.json())
@@ -44,6 +60,7 @@ export default function AuthenticatedApp() {
           <div style={{ marginBottom: 20 }}>
             <img src={user.photo} alt="user avatar" />
           </div>
+          <button onClick={handleSavePlan}>save plan</button>
           <button disabled={isFetching} onClick={handleFetchCalendar}>
             Fetch Calendar data
           </button>
