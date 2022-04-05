@@ -1,23 +1,14 @@
+import React from "react";
 import "./App.css";
-import { useState } from "react";
-import MultiSelectAsync from "./MultiSelect";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PlacesAutoComplete from "./PlacesAutocomplete";
-import DragPlan from "./DragPlan";
-import HomePage from "./HomePage";
+import { useCookies } from "react-cookie";
+import AuthenticatedApp from "./AuthenticatedApp";
+import UnauthenticatedApp from "./UnauthenticatedApp";
 function App() {
-  return (
-    <div className="">
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/categories" element={<MultiSelectAsync />} />
-          <Route path="/location" element={<PlacesAutoComplete />} />
-          <Route path="/plan" element={<DragPlan />} />
-        </Routes>
-      </Router>
-    </div>
-  );
+  const [cookies] = useCookies();
+
+  const isAuthenticated = cookies.isAuthenticated === "true";
+
+  return isAuthenticated ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
 
 export default App;

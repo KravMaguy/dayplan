@@ -108,6 +108,12 @@ app.get("/api/users", checkAuthMiddleware, async (req, res) => {
   res.json(user.google);
 });
 
+app.post("/savePlan/", checkAuthMiddleware, async (req, res) => {
+  const user = await User.findById(req.user.id);
+  console.log("user found");
+  res.json(user.google);
+});
+
 app.post("/api/", async (req, res) => {
   const body = req.body;
   const { center, categories } = body;
