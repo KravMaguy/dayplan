@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import HomePageLink from "./HomePageLink";
 import "./Header.css";
 
@@ -12,11 +13,38 @@ const Login = () => {
   const categories = useSelector((state) => state.categories);
   const location = useLocation();
   const { pathname } = location;
+  const [user, setUser] = useState(null);
+  // const [data, setData] = useState(null);
+  // const [isFetching, setIsFetching] = useState(false);
+
+  const [cookies] = useCookies();
+
+  const isAuthenticated = cookies.isAuthenticated === "true";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetch("/api/users")
+        .then((res) => res.json())
+        .then((user) => {
+          setUser(user);
+          console.log({ user });
+        })
+        .catch(console.error);
+    }
+  }, [isAuthenticated]);
+
   return (
     <>
       <div className="header header-fixed shadow">
         <div className="navbar container">
-          <HomePageLink navigate={navigate} />
+          {user && isAuthenticated ? (
+            <>
+              <img src={user.photo} alt="user avatar" />
+              <h1>{user.username}</h1>
+            </>
+          ) : (
+            <HomePageLink navigate={navigate} />
+          )}
           {(userCenter || userCoordinates) && pathname === "/location" && (
             <button
               onClick={() => navigate("/plan")}
@@ -43,10 +71,17 @@ const Login = () => {
           <nav className="menu">
             <ul>
               <li>
-                <a href="#search">Search</a>
+                {isAuthenticated ? (
+                  <a href="/auth/logout">Logout</a>
+                ) : (
+                  <a href="/auth/google">login with google</a>
+                )}
               </li>
               <li>
-                <a href="#calendar">Calendar</a>
+                <a href="/categories">Categories</a>
+              </li>
+              <li>
+                <a href="/location">Location</a>
               </li>
               <li>
                 <a href="#map">Map</a>
