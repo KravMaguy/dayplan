@@ -10,7 +10,7 @@ import {
   IoIosArrowDropupCircle,
 } from "react-icons/io";
 import { RiDragDropLine } from "react-icons/ri";
-
+import { useDispatch } from "react-redux";
 // a little function to help you with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -67,7 +67,6 @@ const DragPlanDirections = ({
 }) => {
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
-  // console.log(data, "data");
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -93,6 +92,8 @@ const DragPlanDirections = ({
     setResponse(null);
   };
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!response) return;
     let totalDist = 0;
@@ -104,7 +105,15 @@ const DragPlanDirections = ({
     }
     setDistance(totalDist);
     setTime(totalTime);
-  }, [response]);
+    console.log(
+      "calc time useEffect run dispatch set_derived_data w payload data"
+    );
+
+    dispatch({
+      type: "SET_DERIVED_DATA",
+      payload: derivedData,
+    });
+  }, [response, dispatch]);
 
   const viewFullPlan = () => {
     if (currIdx === 0) return;
@@ -171,7 +180,6 @@ const DragPlanDirections = ({
     setIdx(0);
     setResponse(null);
   };
-  // console.log({ collapsed });
   return (
     <div className="col plan-col-right">
       <div
@@ -300,7 +308,6 @@ const DragPlanDirections = ({
                   >
                     {derivedData.slice(1).map((location, idx, arr) => {
                       let previous = arr[idx - 1];
-                      // console.log(location, "location");
                       return (
                         <Draggable
                           className="draggable-element"

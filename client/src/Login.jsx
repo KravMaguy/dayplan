@@ -6,6 +6,7 @@ import HomePageLink from "./HomePageLink";
 import "./Header.css";
 
 import axios from "axios";
+import { saveThisPlan } from "./redux/reducer";
 const Login = () => {
   const navigate = useNavigate();
   const userCoordinates = useSelector((state) => state.position);
@@ -16,10 +17,10 @@ const Login = () => {
   const [user, setUser] = useState(null);
   // const [data, setData] = useState(null);
   // const [isFetching, setIsFetching] = useState(false);
-
   const [cookies] = useCookies();
 
   const isAuthenticated = cookies.isAuthenticated === "true";
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -44,6 +45,15 @@ const Login = () => {
             </>
           ) : (
             <HomePageLink navigate={navigate} />
+          )}
+          {pathname === "/plan" && (
+            <button
+              onClick={() => dispatch(saveThisPlan())}
+              style={{ borderRadius: "2px" }}
+              className="map-controls"
+            >
+              SAVE THIS PLAN
+            </button>
           )}
           {(userCenter || userCoordinates) && pathname === "/location" && (
             <button
@@ -84,7 +94,7 @@ const Login = () => {
                 <a href="/location">Location</a>
               </li>
               <li>
-                <a href="#map">Map</a>
+                <a href="/plan">Plan</a>
               </li>
             </ul>
           </nav>

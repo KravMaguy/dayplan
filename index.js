@@ -110,11 +110,12 @@ app.get("/api/users", checkAuthMiddleware, async (req, res) => {
 
 app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id);
+  const body = req.body;
   if (user) {
-    const plan = { planA: "starbucks" };
-    user.plans.push(plan);
+    const { derivedData } = body;
+    user.plans.push(derivedData);
     await user.save();
-    res.json(user.google);
+    res.json(user);
   } else {
     res.json({ err: "theere was some errr" });
   }
@@ -137,7 +138,7 @@ app.post("/api/", async (req, res) => {
         lat +
         "&longitude=" +
         lng +
-        "&sort_by=distance&limit=5"
+        "&sort_by=distance&limit=4"
     )
     .then((response) => {
       res.json(response.data);

@@ -30,6 +30,7 @@ const initialState = {
   error: "",
   userCenter: null,
   categories: [],
+  derivedData: [],
 };
 
 export default function reducer(state = initialState, action) {
@@ -77,6 +78,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         position: { ...state.position, geocodedAddress: action.payload },
       };
+
+    case "SET_DERIVED_DATA":
+      return {
+        ...state,
+        derivedData: action.payload,
+      };
     default:
       return state;
   }
@@ -101,6 +108,18 @@ export function fetchBusinesses(terms) {
   };
 }
 
+export function saveThisPlan(derivedData) {
+  return async function (dispatch, getState) {
+    if (getState().derivedData.length < 1) return;
+    try {
+      const req = { derivedData: getState().derivedData };
+      const { data } = await axios.post("/saveplan", req);
+      console.log("response backend to thunk :", data);
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+}
 //below the fetch user location
 
 export function getUserPosition() {
