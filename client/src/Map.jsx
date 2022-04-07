@@ -3,7 +3,14 @@ import { GoogleMap } from "@react-google-maps/api";
 const google = window.google;
 const Map = React.memo(function Map(props) {
   const [map, setMap] = useState(null); // map instance
-  const onLoadMap = useCallback(setMap, []); // set map once map has loaded
+  // const onLoadMap = useCallback(setMap, []); // set map once map has loaded
+  const onLoad = React.useCallback(
+    function onLoad(map) {
+      console.log("instance: ", map.getCenter());
+      setMap(map);
+    },
+    [setMap]
+  );
 
   // useEffect(() => {
   //   if (map) {
@@ -40,7 +47,7 @@ const Map = React.memo(function Map(props) {
           setZoom(map.zoom);
         }
       }}
-      onLoad={onLoadMap}
+      onLoad={onLoad}
     >
       <>{props.children}</>
     </GoogleMap>

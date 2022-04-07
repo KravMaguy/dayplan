@@ -15,24 +15,30 @@ const options = {
 const PlanPreview = () => {
   const params = useParams();
   const [sharedPlan, setSharedPlan] = useState([]);
-  console.log({ sharedPlan });
-  const center = sharedPlan[0]?.coordinates;
-  console.log(center);
+  const [zoom, setZoom] = useState(10);
+  const [center, setCenter] = useState(null);
   useEffect(() => {
     const getUserData = async () => {
       const { data } = await axios.post("/get_shared_plan", { params });
       const { derivedData } = data;
       setSharedPlan(derivedData);
+      const center = {
+        latitude: derivedData[0].coordinates.latitude,
+        longitude: derivedData[0].coordinates.longitude,
+      };
+      setCenter(center);
     };
     getUserData();
   }, [params]);
-
+  const setNewCenter = (latitude, longitude) =>
+    setCenter({ latitude, longitude });
   return (
     <div className="map-container">
       <div className="map-wrapper">
-        {center && (
+        {center && sharedPlan.length > 0 && (
           <Map
-            zoom={10}
+            zoom={zoom}
+            setZoom={setZoom}
             center={{ lat: center.latitude, lng: center.longitude }}
             containerStyle={containerStyle}
           >
@@ -40,6 +46,12 @@ const PlanPreview = () => {
               {(clusterer) =>
                 sharedPlan.map((location, idx) => (
                   <Marker
+                    onClick={() =>
+                      setNewCenter(
+                        location.coordinates.latitude,
+                        location.coordinates.longitude
+                      )
+                    }
                     key={idx}
                     position={{
                       lat: location.coordinates.latitude,
