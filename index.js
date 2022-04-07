@@ -112,8 +112,9 @@ app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id);
   const body = req.body;
   if (user) {
-    const { derivedData } = body;
-    user.plans.push(derivedData);
+    console.log("reached save plan user exists");
+    const { id, derivedData } = body;
+    user.plans.push({ id, derivedData });
     await user.save();
     res.json(user);
   } else {
@@ -167,6 +168,22 @@ app.use(isAuthenticatedCookie, express.static(BUILD_FOLDER, options));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+app.post("/get_shared_plan", (req, res) => {
+  const { body } = req;
+  console.clear();
+  const { params } = body;
+  const { email, id } = params;
+  console.clear();
+  User.findOne({ email }, function (err, doc) {
+    if (err) {
+      return res.status(err.response.status).send(err.message);
+    } else {
+      const plan = doc.plans.find((plan) => plan.id === id);
+      return res.json(plan);
+    }
+  });
 });
 
 app.get("/events", async (req, res) => {

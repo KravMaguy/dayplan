@@ -3,6 +3,8 @@ import axios from "axios";
 // const key = process.env.REACT_APP_GEO_KEY;
 import { getPosition, getPolicyLocation } from "./utils";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
+import { v4 as uuidv4 } from "uuid";
+
 const status = {
   idle: "idle",
   pending: "pending",
@@ -112,7 +114,8 @@ export function saveThisPlan(derivedData) {
   return async function (dispatch, getState) {
     if (getState().derivedData.length < 1) return;
     try {
-      const req = { derivedData: getState().derivedData };
+      const id = uuidv4();
+      const req = { id, derivedData: getState().derivedData };
       const { data } = await axios.post("/saveplan", req);
       console.log("response backend to thunk :", data);
     } catch (error) {
