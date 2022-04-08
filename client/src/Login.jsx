@@ -39,10 +39,14 @@ const Login = () => {
       <div className="header header-fixed shadow">
         <div className="navbar container">
           {user && isAuthenticated ? (
-            <>
-              <img src={user.photo} alt="user avatar" />
+            <div>
+              <img
+                style={{ height: "60px" }}
+                src={user.photo}
+                alt="user avatar"
+              />
               <h1>{user.username}</h1>
-            </>
+            </div>
           ) : (
             <HomePageLink navigate={navigate} />
           )}

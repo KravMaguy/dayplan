@@ -23,7 +23,8 @@ const PlanPreview = () => {
   const [drawerOpen, setOpenDrawer] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [startLink, setStartLink] = useState(0);
-  console.log(sharedPlan);
+  const [reviews, setReviews] = useState(null);
+  console.log({ reviews });
   useEffect(() => {
     const getUserData = async () => {
       const { data } = await axios.post("/get_shared_plan", { params });
@@ -52,7 +53,7 @@ const PlanPreview = () => {
     const fetchBuisnessReviews = async () => {
       const id = sharedPlan[selectedIdx].id;
       const { data } = await axios.post("/get_buisness_reviews", { id });
-      console.log(data);
+      setReviews(data);
     };
     fetchBuisnessReviews();
   }, [selectedIdx]);
@@ -60,11 +61,6 @@ const PlanPreview = () => {
   const setNewCenter = (latitude, longitude) => {
     setCenter({ latitude, longitude });
   };
-
-  console.log(
-    sharedPlan?.[selectedIdx]?.location?.display_address.join(", "),
-    "the stuff"
-  );
 
   return (
     <>
@@ -87,56 +83,116 @@ const PlanPreview = () => {
                 className="drawer-image"
               />
               <div className="buisness-details">
-                <div className="yelp-stars-container">
-                  <div>
-                    <img
-                      className="yelp-stars"
-                      alt=""
-                      src="../../web_and_ios/large/large_0@2x.png"
-                      // style={{
-                      //   size: "1.875em",
-                      //   height: "2em",
-                      //   position: "absolute",
-                      //   top: "10px",
-                      //   left: "15px",
-                      // }}
-                    />
+                <div class={selectedIdx !== 0 && "scrollbar"}>
+                  <div class={selectedIdx !== 0 && "overflow"}>
+                    <div className="yelp-stars-container">
+                      <div>
+                        <img
+                          className="yelp-stars"
+                          alt=""
+                          src="../../web_and_ios/large/large_0@2x.png"
+                        />
+                      </div>
+
+                      <img
+                        className="yelp-dark-bg"
+                        alt=""
+                        src="../../yelp_logo_dark_bg.png"
+                      />
+                    </div>
+
+                    <h2>{sharedPlan[selectedIdx].name}</h2>
+
+                    <p>
+                      {selectedIdx === 0
+                        ? decodeURI(startLink)
+                        : sharedPlan?.[
+                            selectedIdx
+                          ]?.location?.display_address.join(", ")}
+                    </p>
+                    {selectedIdx !== 0 && (
+                      <>
+                        {" "}
+                        <div className="pill-categories-container">
+                          {sharedPlan?.[selectedIdx].categories.map(
+                            (category) => (
+                              <div className="buisness-pills">
+                                {category.title}
+                              </div>
+                            )
+                          )}
+                        </div>
+                        <div className="reviews-container">
+                          <h4
+                            style={{
+                              textDecoration: "underline",
+                              marginBottom: "5px",
+                            }}
+                          >
+                            Reviews
+                          </h4>
+                          {selectedIdx !== 0 &&
+                          reviews &&
+                          reviews?.reviews.length > 0 ? (
+                            <>
+                              {reviews.reviews.map((review) => {
+                                console.log({ review });
+                                return (
+                                  <div
+                                    style={{
+                                      marginTop: "20px",
+                                      marginBottom: "20px",
+                                    }}
+                                  >
+                                    <p>{review.user.name}</p>
+                                    <p>
+                                      {review.text}{" "}
+                                      <a
+                                        style={{ color: "#7fafff" }}
+                                        href={review.url}
+                                      >
+                                        (read more)
+                                      </a>
+                                    </p>
+                                  </div>
+                                );
+                              })}
+                            </>
+                          ) : (
+                            "loading..."
+                          )}
+                          {/* Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua. Faucibus interdum posuere lorem
+                          ipsum dolor sit. Eu facilisis sed odio morbi quis
+                          commodo. Aenean euismod elementum nisi quis eleifend
+                          quam adipiscing vitae. Viverra maecenas accumsan lacus
+                          vel facilisis volutpat. Arcu cursus vitae congue
+                          mauris rhoncus aenean vel elit. Pellentesque
+                          adipiscing commodo elit at. Eu ultrices vitae auctor
+                          eu augue ut lectus. Lacinia quis vel eros donec. At
+                          tellus at urna condimentum mattis pellentesque id
+                          nibh. Purus in mollis nunc sed. Ipsum dolor sit amet
+                          consectetur adipiscing elit pellentesque. Lorem ipsum
+                          dolor sit amet consectetur adipiscing elit duis
+                          tristique. Metus aliquam eleifend mi in. Ut sem
+                          viverra aliquet eget sit amet. Dictum non consectetur
+                          a erat nam. Donec ac odio tempor orci dapibus ultrices
+                          in iaculis. A condimentum vitae sapien pellentesque
+                          habitant morbi. Consectetur adipiscing elit duis
+                          tristique sollicitudin nibh. Nec tincidunt praesent
+                          semper feugiat nibh sed pulvinar proin. Augue interdum
+                          velit euismod in pellentesque massa placerat.
+                          Tincidunt eget nullam non nisi est sit amet facilisis
+                          magna. Maecenas volutpat blandit aliquam etiam. Purus
+                          semper eget duis at tellus at urna condimentum mattis.
+                          Gravida arcu ac tortor dignissim convallis aenean et
+                          tortor. Dolor sit amet consectetur adipiscing elit.
+                          Adipiscing vitae proin sagittis nisl. */}
+                        </div>
+                      </>
+                    )}
                   </div>
-
-                  <img
-                    className="yelp-dark-bg"
-                    alt=""
-                    src="../../yelp_logo_dark_bg.png"
-                    // style={{
-                    //   size: "1.875em",
-                    //   height: "2em",
-                    //   position: "absolute",
-                    //   top: "10px",
-                    //   left: "15px",
-                    // }}
-                  />
-                </div>
-
-                <h2>{sharedPlan[selectedIdx].name}</h2>
-
-                <p>
-                  {selectedIdx === 0
-                    ? decodeURI(startLink)
-                    : sharedPlan?.[selectedIdx]?.location?.display_address.join(
-                        ", "
-                      )}
-                </p>
-                <div className="pill-categories-container">
-                  {selectedIdx !== 0 &&
-                    sharedPlan?.[selectedIdx].categories.map((category) => (
-                      <div className="buisness-pills">{category.title}</div>
-                    ))}
-                </div>
-                <div className="reviews-container">
-                  {/* {selectedIdx !== 0 &&
-                    sharedPlan?.[selectedIdx].categories.map((category) => (
-                      <div className="buisness-pills">{category.title}</div>
-                    ))} */}
                 </div>
               </div>
             </div>
@@ -153,11 +209,12 @@ const PlanPreview = () => {
                 sharedPlan.map((location, idx) => (
                   <Marker
                     onClick={() => {
+                      setSelectedIdx(idx);
+
                       setNewCenter(
                         location.coordinates.latitude,
                         location.coordinates.longitude
                       );
-                      setSelectedIdx(idx);
                       setOpenDrawer(true);
                     }}
                     key={idx}
