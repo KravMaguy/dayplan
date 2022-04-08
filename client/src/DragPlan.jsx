@@ -70,6 +70,7 @@ const DragPlan = () => {
           address1: x.location?.address1,
           city: x.location?.city,
           zip: x.location?.zip,
+          ...x,
         };
       });
       derivedData.unshift({

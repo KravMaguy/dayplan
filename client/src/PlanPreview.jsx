@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { MarkerClusterer, Marker } from "@react-google-maps/api";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Map from "./Map";
 import axios from "axios";
 import "./planpreview.css";
+import { geocodeByLatLng } from "react-google-places-autocomplete";
 
 const containerStyle = {
   height: `100vh`,
@@ -19,6 +21,8 @@ const PlanPreview = () => {
   const [zoom, setZoom] = useState(10);
   const [center, setCenter] = useState(null);
   const [drawerOpen, setOpenDrawer] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState(null);
+  const [startLink, setStartLink] = useState(0);
   console.log(sharedPlan);
   useEffect(() => {
     const getUserData = async () => {
@@ -30,11 +34,23 @@ const PlanPreview = () => {
         longitude: derivedData[0].coordinates.longitude,
       };
       setCenter(center);
+      geocodeByLatLng({
+        lat: derivedData[0].coordinates.latitude,
+        lng: derivedData[0].coordinates.longitude,
+      })
+        .then((results) => {
+          console.log(encodeURI(results[0].formatted_address), "here the reus");
+          setStartLink(encodeURI(results[0].formatted_address));
+        })
+        .catch((error) => console.error(error));
     };
     getUserData();
   }, [params]);
-  const setNewCenter = (latitude, longitude) =>
+
+  const setNewCenter = (latitude, longitude) => {
     setCenter({ latitude, longitude });
+  };
+
   return (
     <>
       <div
@@ -45,7 +61,17 @@ const PlanPreview = () => {
       {center && sharedPlan.length > 0 && (
         <>
           <div id="drawer-nav" className={drawerOpen && "active"}>
-            <img decoding="async" src="" className="drawer-image" />
+            <img
+              loading="lazy"
+              src={
+                selectedIdx === 0
+                  ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
+                  : selectedIdx > 0
+                  ? sharedPlan[selectedIdx].image_url
+                  : ""
+              }
+              className="drawer-image"
+            />
           </div>
           <Map
             zoom={zoom}
@@ -58,11 +84,12 @@ const PlanPreview = () => {
                 sharedPlan.map((location, idx) => (
                   <Marker
                     onClick={() => {
-                      setOpenDrawer(true);
                       setNewCenter(
                         location.coordinates.latitude,
                         location.coordinates.longitude
                       );
+                      setSelectedIdx(idx);
+                      setOpenDrawer(true);
                     }}
                     key={idx}
                     position={{

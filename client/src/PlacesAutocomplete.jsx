@@ -184,7 +184,9 @@ const PlacesAutoComplete = () => {
                 style={{
                   boxShadow: "rgb(0 0 0 / 20%) 0px 1px 2px",
                 }}
-                src={`https://maps.googleapis.com/maps/api/streetview?size=95x65&location=${getLocationStringForAccuracy()}&key=AIzaSyCuGmQqv14jujPuIzwRhDLMjXQIT98eQ9o`}
+                src={`https://maps.googleapis.com/maps/api/streetview?size=95x65&location=${getLocationStringForAccuracy()}&key=${
+                  process.env.REACT_APP_GOOGLE_MAP_API_KEY
+                }`}
               />
             </div>
 
