@@ -47,9 +47,24 @@ const PlanPreview = () => {
     getUserData();
   }, [params]);
 
+  useEffect(() => {
+    if (selectedIdx === 0) return;
+    const fetchBuisnessReviews = async () => {
+      const id = sharedPlan[selectedIdx].id;
+      const { data } = await axios.post("/get_buisness_reviews", { id });
+      console.log(data);
+    };
+    fetchBuisnessReviews();
+  }, [selectedIdx]);
+
   const setNewCenter = (latitude, longitude) => {
     setCenter({ latitude, longitude });
   };
+
+  console.log(
+    sharedPlan?.[selectedIdx]?.location?.display_address.join(", "),
+    "the stuff"
+  );
 
   return (
     <>
@@ -60,19 +75,73 @@ const PlanPreview = () => {
       ></div>
       {center && sharedPlan.length > 0 && (
         <>
-          <div id="drawer-nav" className={drawerOpen && "active"}>
-            <img
-              loading="lazy"
-              src={
-                selectedIdx === 0
-                  ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
-                  : selectedIdx > 0
-                  ? sharedPlan[selectedIdx].image_url
-                  : ""
-              }
-              className="drawer-image"
-            />
-          </div>
+          {selectedIdx !== null && (
+            <div id="drawer-nav" className={drawerOpen && "active"}>
+              <img
+                loading="lazy"
+                src={
+                  selectedIdx === 0
+                    ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
+                    : sharedPlan[selectedIdx].image_url
+                }
+                className="drawer-image"
+              />
+              <div className="buisness-details">
+                <div className="yelp-stars-container">
+                  <div>
+                    <img
+                      className="yelp-stars"
+                      alt=""
+                      src="../../web_and_ios/large/large_0@2x.png"
+                      // style={{
+                      //   size: "1.875em",
+                      //   height: "2em",
+                      //   position: "absolute",
+                      //   top: "10px",
+                      //   left: "15px",
+                      // }}
+                    />
+                  </div>
+
+                  <img
+                    className="yelp-dark-bg"
+                    alt=""
+                    src="../../yelp_logo_dark_bg.png"
+                    // style={{
+                    //   size: "1.875em",
+                    //   height: "2em",
+                    //   position: "absolute",
+                    //   top: "10px",
+                    //   left: "15px",
+                    // }}
+                  />
+                </div>
+
+                <h2>{sharedPlan[selectedIdx].name}</h2>
+
+                <p>
+                  {selectedIdx === 0
+                    ? decodeURI(startLink)
+                    : sharedPlan?.[selectedIdx]?.location?.display_address.join(
+                        ", "
+                      )}
+                </p>
+                <div className="pill-categories-container">
+                  {selectedIdx !== 0 &&
+                    sharedPlan?.[selectedIdx].categories.map((category) => (
+                      <div className="buisness-pills">{category.title}</div>
+                    ))}
+                </div>
+                <div className="reviews-container">
+                  {/* {selectedIdx !== 0 &&
+                    sharedPlan?.[selectedIdx].categories.map((category) => (
+                      <div className="buisness-pills">{category.title}</div>
+                    ))} */}
+                </div>
+              </div>
+            </div>
+          )}
+
           <Map
             zoom={zoom}
             setZoom={setZoom}

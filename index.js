@@ -186,6 +186,14 @@ app.post("/get_shared_plan", (req, res) => {
   });
 });
 
+app.post("/get_buisness_reviews", async (req, res) => {
+  const { body } = req;
+  const { id } = body;
+  axios
+    .get(`businesses/${id}/reviews`)
+    .then((response) => res.json(response.data))
+    .catch((err) => res.status(err.response.status).send(err.message));
+});
 app.get("/events", async (req, res) => {
   axios
     .get(
