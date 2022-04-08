@@ -35,6 +35,7 @@ const PlacesAutoComplete = () => {
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [showSearchBar, setShowSearchBar] = useState(true);
 
   console.log(value, "value does it exist");
   useEffect(() => {
@@ -100,48 +101,53 @@ const PlacesAutoComplete = () => {
   };
   return (
     <div className="user-destination-page">
-      <Login />
+      <Login
+        showSearchBar={showSearchBar}
+        setShowSearchBar={setShowSearchBar}
+      />
       <div
         className="destination-page-map-container"
         style={{ position: "absolute", width: "100vw", bottom: 0 }}
       >
-        <div className="constrained top-container-searchbox">
-          <div className="search-wrap" style={{ width: "100%" }}>
-            <GooglePlacesAutocomplete
-              selectProps={{
-                // onFocus: () => console.log("focused"),
-                // onBlur: () => console.log("blur"),
-                inputValue,
-                value,
-                onInputChange: (newInputValue, meta) => {
-                  setInputValue(newInputValue);
-                },
-                placeholder: "Search for things to do by location",
-                onChange: (val) => handleSelect(val),
-              }}
-              apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
-            />
-          </div>
+        {showSearchBar && (
+          <div className="constrained top-container-searchbox">
+            <div className="search-wrap" style={{ width: "100%" }}>
+              <GooglePlacesAutocomplete
+                selectProps={{
+                  // onFocus: () => console.log("focused"),
+                  // onBlur: () => console.log("blur"),
+                  inputValue,
+                  value,
+                  onInputChange: (newInputValue, meta) => {
+                    setInputValue(newInputValue);
+                  },
+                  placeholder: "Search for things to do by location",
+                  onChange: (val) => handleSelect(val),
+                }}
+                apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
+              />
+            </div>
 
-          <div
-            onClick={() => runGetUserLocation()}
-            className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
-          >
-            {!userCoordinates ? (
-              <MdLocationOff
-                size={18}
-                className="location-icon"
-                fill={"#d3d3d3"}
-              />
-            ) : (
-              <MdLocationOn
-                fill={"green"}
-                size={18}
-                className="location-icon"
-              />
-            )}
+            <div
+              onClick={() => runGetUserLocation()}
+              className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
+            >
+              {!userCoordinates ? (
+                <MdLocationOff
+                  size={18}
+                  className="location-icon"
+                  fill={"#d3d3d3"}
+                />
+              ) : (
+                <MdLocationOn
+                  fill={"green"}
+                  size={18}
+                  className="location-icon"
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <Map
           containerClass="map-container"

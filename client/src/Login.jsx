@@ -7,7 +7,7 @@ import "./Header.css";
 
 import axios from "axios";
 import { saveThisPlan } from "./redux/reducer";
-const Login = () => {
+const Login = ({ setShowSearchBar, showSearchBar }) => {
   const navigate = useNavigate();
   const userCoordinates = useSelector((state) => state.position);
   const userCenter = useSelector((state) => state.userCenter);
@@ -78,7 +78,11 @@ const Login = () => {
             </button>
           )}
 
-          <input type="checkbox" id="navbar-toggle" />
+          <input
+            type="checkbox"
+            id="navbar-toggle"
+            onClick={() => setShowSearchBar(!showSearchBar)}
+          />
           <label htmlFor="navbar-toggle">
             <i></i>
           </label>
@@ -86,19 +90,19 @@ const Login = () => {
             <ul>
               <li>
                 {isAuthenticated ? (
-                  <a href="/auth/logout">Logout</a>
+                  <Link to="/auth/logout">Logout</Link>
                 ) : (
-                  <a href="/auth/google">login with google</a>
+                  <Link to="/auth/google">login with google</Link>
                 )}
               </li>
               <li>
-                <a href="/categories">Categories</a>
+                <Link to="/categories">Categories</Link>
               </li>
               <li>
-                <a href="/location">Location</a>
+                <Link to="/location">Location</Link>
               </li>
               <li>
-                <a href="/plan">Plan</a>
+                <Link to="/plan">Plan</Link>
               </li>
             </ul>
           </nav>
