@@ -1,9 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
-const google = window.google;
+// const google = window.google;
 const Map = React.memo(function Map(props) {
   const [map, setMap] = useState(null); // map instance
-  const onLoadMap = useCallback(setMap, [setMap]); // set map once map has loaded
+  const onLoad = useCallback(
+    function onLoad(map) {
+      setMap(map);
+    },
+    [setMap]
+  );
 
   // useEffect(() => {
   //   if (map) {
@@ -22,7 +27,6 @@ const Map = React.memo(function Map(props) {
   // }, [map]);
 
   const { center, zoom, setZoom, containerStyle, mapStyle, setCenter } = props;
-  console.log(setCenter, "the setcenter prop");
   return (
     <GoogleMap
       options={{
@@ -42,19 +46,12 @@ const Map = React.memo(function Map(props) {
         }
       }}
       onCenterChanged={() => {
-        if (map === null) {
+        if (map) {
+          // console.log(map.getCenter());
           return;
         }
-        if (map.center !== center) {
-          console.log(map.center.lat());
-          console.log(map.center.lng());
-          // const latitude=map.center.lat()
-          // const longitude=map.center.lng()
-          // setCenter({ latitude, longitude });
-          // setCenter({ lat: map.center.lat(), lng: map.center.lng() });
-        }
       }}
-      onLoad={onLoadMap}
+      onLoad={onLoad}
     >
       <>{props.children}</>
     </GoogleMap>

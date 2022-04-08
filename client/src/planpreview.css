@@ -1,0 +1,42 @@
+#drawer-nav {
+  z-index: 1;
+  height: 100vh;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #17141d;
+  color: white;
+  position: fixed;
+  right: 0;
+  transform: translateX(100%);
+  transition: transform 0.3s linear;
+  margin-left: 200px;
+}
+
+#drawer-nav.active {
+  transform: translateX(0);
+}
+
+#overlay {
+  transition: all 0.3s linear;
+}
+
+#overlay.active {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.drawer-image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 350px;
+  /* height: 300px; */
+  transform: translateY(0%) translateX(-50%);
+}

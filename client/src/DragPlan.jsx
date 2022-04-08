@@ -35,7 +35,7 @@ const DragPlan = () => {
   }, [dispatch]);
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.businesses.businesses);
-
+  console.log({ data });
   // if (!data) {
   //   data = maObjs;
   // }
