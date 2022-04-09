@@ -87,7 +87,11 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
           <input
             type="checkbox"
             id="navbar-toggle"
-            onClick={() => setShowSearchBar(!showSearchBar)}
+            onClick={() => {
+              if (pathname === "/location") {
+                setShowSearchBar(!showSearchBar);
+              }
+            }}
           />
           <label htmlFor="navbar-toggle">
             <i></i>
