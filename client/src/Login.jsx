@@ -5,7 +5,6 @@ import { useCookies } from "react-cookie";
 import HomePageLink from "./HomePageLink";
 import "./Header.css";
 
-import axios from "axios";
 import { saveThisPlan } from "./redux/reducer";
 const Login = ({ setShowSearchBar, showSearchBar }) => {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
 
   const isAuthenticated = cookies.isAuthenticated === "true";
   const dispatch = useDispatch();
-
+  const isSavingPlan = useSelector((state) => state.isSavingPlan);
   useEffect(() => {
     if (isAuthenticated) {
       fetch("/api/users")
@@ -38,27 +37,34 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
     <>
       <div className="header header-fixed shadow">
         <div className="navbar container">
-          {user && isAuthenticated ? (
-            <div>
-              <img
-                style={{ height: "60px" }}
-                src={user.photo}
-                alt="user avatar"
-              />
-              <h1>{user.username}</h1>
+          {isAuthenticated && user ? (
+            <div style={{ display: "flex" }}>
+              <>
+                <img
+                  style={{ height: "60px" }}
+                  src={user.photo}
+                  alt="user avatar"
+                />
+                <h1>{user.username}</h1>
+              </>
             </div>
           ) : (
             <HomePageLink navigate={navigate} />
           )}
-          {pathname === "/plan" && (
-            <button
-              onClick={() => dispatch(saveThisPlan())}
-              style={{ borderRadius: "2px" }}
-              className="map-controls"
-            >
-              SAVE THIS PLAN
-            </button>
-          )}
+          {pathname === "/plan" &&
+            (isAuthenticated ? (
+              <button
+                onClick={() => dispatch(saveThisPlan())}
+                style={{ borderRadius: "2px" }}
+                className={`button ${isSavingPlan && "loading"}`}
+              >
+                SAVE it
+              </button>
+            ) : (
+              <a className="button" href="/auth/google">
+                login with google
+              </a>
+            ))}
           {(userCenter || userCoordinates) && pathname === "/location" && (
             <button
               onClick={() => navigate("/plan")}
@@ -90,9 +96,9 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
             <ul>
               <li>
                 {isAuthenticated ? (
-                  <Link to="/auth/logout">Logout</Link>
+                  <a href="/auth/logout">Logout</a>
                 ) : (
-                  <Link to="/auth/google">login with google</Link>
+                  <a href="/auth/google">login with google</a>
                 )}
               </li>
               <li>

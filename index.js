@@ -116,7 +116,7 @@ app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
     const { id, derivedData } = body;
     user.plans.push({ id, derivedData });
     await user.save();
-    res.json(user);
+    res.json({ user, message: "success" });
   } else {
     res.json({ err: "theere was some errr" });
   }

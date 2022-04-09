@@ -26,6 +26,7 @@ const initialState = {
   // below is the yelp err
   // error: null,
   count: 0,
+  isSavingPlan: false,
   //fetch user location
   position: null,
   status: "idle",
@@ -86,6 +87,18 @@ export default function reducer(state = initialState, action) {
         ...state,
         derivedData: action.payload,
       };
+
+    case "SAVING_PLAN":
+      return {
+        ...state,
+        isSavingPlan: true,
+      };
+
+    case "PLAN_SUCCESSFULLY_SAVED":
+      return {
+        ...state,
+        isSavingPlan: false,
+      };
     default:
       return state;
   }
@@ -114,10 +127,14 @@ export function saveThisPlan(derivedData) {
   return async function (dispatch, getState) {
     if (getState().derivedData.length < 1) return;
     try {
+      dispatch({ type: "SAVING_PLAN" });
       const id = uuidv4();
       const req = { id, derivedData: getState().derivedData };
       const { data } = await axios.post("/saveplan", req);
       console.log("response backend to thunk :", data);
+      if (data.message === "success") {
+        dispatch({ type: "PLAN_SUCCESSFULLY_SAVED" });
+      }
     } catch (error) {
       console.log({ error });
     }

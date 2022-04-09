@@ -23,4 +23,4 @@ const HomePageLink = ({ navigate }) => {
   );
 };
 
-export default React.memo(HomePageLink);
+export default HomePageLink;
