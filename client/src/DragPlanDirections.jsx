@@ -370,7 +370,7 @@ const DragPlanDirections = ({
                                     <p>
                                       {previous
                                         ? previous.name
-                                        : "Your location"}
+                                        : "Starting Location"}
                                     </p>
                                   </div>
                                   <div style={{ display: "flex" }}>

@@ -136,11 +136,12 @@ export function getUserPosition() {
         type: "SET_CENTER",
         payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
       });
-      // const county = await getPolicyLocation(key, ...position);
       dispatch({
         type: "location/found",
         payload: { center: { lat: newCenter.lat, lng: newCenter.lng } },
       });
+
+      //because you are setting the user center here just use the user center as default plan location it will always be last updated either here or in the component
 
       dispatch({
         type: "SET_USER_CENTER",
@@ -149,10 +150,12 @@ export function getUserPosition() {
 
       geocodeByLatLng(newCenter)
         .then((results) => {
-          return dispatch({
+          dispatch({
             type: "SET_USER_POSITION_GEOCODED_ADDRESS",
             payload: results,
           });
+
+          dispatch(getLocationDataByCategories());
         })
         .catch((error) => console.error(error));
     } catch (error) {

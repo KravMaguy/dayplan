@@ -28,23 +28,32 @@ const dimStyle = {
 const startingSearchIndex = 0;
 
 const DragPlan = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getLocationDataByCategories());
-  }, [dispatch]);
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.businesses.businesses);
-  console.log({ data });
   // if (!data) {
   //   data = maObjs;
   // }
 
-  // console.log(data, "the way it looks like");
   console.log(
     "the state ",
     useSelector((state) => state)
   );
+  const navigate = useNavigate();
+
+  const userCenter = useSelector((state) => state.userCenter);
+  const categoryLength = useSelector((state) => state.categories.length);
+  useEffect(() => {
+    if (!categoryLength) {
+      navigate("/categories");
+    }
+  }, [categoryLength]);
+  useEffect(() => {
+    if (!userCenter) {
+      console.log("redirect back to autocomplete");
+      return navigate("/location");
+    }
+  }, [userCenter]);
+
   const [open, setIsOpen] = useState(false);
 
   const [zoom, setZoom] = useState(10);
@@ -56,8 +65,6 @@ const DragPlan = () => {
   const [path, setPath] = useState(null);
   const [travelMode, setTravelMode] = useState("DRIVING");
   const [collapsed, setCollapsed] = useState(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (data && data.length && data.length > 0) {
@@ -73,12 +80,14 @@ const DragPlan = () => {
           ...x,
         };
       });
+
+      //check this
       derivedData.unshift({
         name: "starting Location",
         coordinates: {
           id: "starting id",
-          latitude: center.lat,
-          longitude: center.lng,
+          latitude: userCenter.center.lat,
+          longitude: userCenter.center.lng,
         },
       });
       setDerivedData(derivedData);
@@ -286,10 +295,11 @@ const DragPlan = () => {
                 }`}
               >
                 <Map
-                  mapStyle={mapStyle}
+                  containerClass="map-container"
+                  // mapStyle={mapStyle}
                   center={center}
                   zoom={zoom}
-                  setZoom={setZoom}
+                  // setZoom={setZoom}
                   containerStyle={containerStyle}
                 >
                   {!response && !path && destination && origin && (

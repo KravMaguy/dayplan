@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
+import { useLocation } from "react-router";
 // const google = window.google;
 const Map = React.memo(function Map(props) {
   const [map, setMap] = useState(null); // map instance
@@ -9,7 +10,7 @@ const Map = React.memo(function Map(props) {
     },
     [setMap]
   );
-
+  const location = useLocation();
   // useEffect(() => {
   //   if (map) {
   // var request = {
@@ -25,6 +26,7 @@ const Map = React.memo(function Map(props) {
   // }
   //   }
   // }, [map]);
+  const { pathname } = location;
 
   const { center, zoom, setZoom, containerStyle, mapStyle, setCenter } = props;
   return (
@@ -41,7 +43,7 @@ const Map = React.memo(function Map(props) {
         if (map === null) {
           return;
         }
-        if (map.zoom !== zoom) {
+        if (map.zoom !== zoom && pathname !== "/plan") {
           setZoom(map.zoom);
         }
       }}

@@ -74,7 +74,7 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
               style={{ borderRadius: "2px" }}
               className="map-controls"
             >
-              Set Location
+              Starting Location
             </button>
           )}
 

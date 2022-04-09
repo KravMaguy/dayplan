@@ -11,11 +11,21 @@ import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import Login from "./Login";
 import { getUserPosition } from "./redux/reducer.js";
 import { FaDirections } from "react-icons/fa";
+import { getLocationDataByCategories } from "./redux/reducer.js";
+import { useNavigate } from "react-router";
+
 const PlacesAutoComplete = () => {
   const [height, setHeight] = useState(window.innerHeight);
   const containerStyle = {
     height: `${height - 60}px`,
   };
+  const categoryLength = useSelector((state) => state.categories.length);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!categoryLength) {
+      navigate("/categories");
+    }
+  }, [categoryLength]);
   useEffect(() => {
     const handleResize = () => {
       setHeight(window.innerHeight);
@@ -37,7 +47,6 @@ const PlacesAutoComplete = () => {
   const [inputValue, setInputValue] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(true);
 
-  console.log(value, "value does it exist");
   useEffect(() => {
     if (
       userCoordinatesGeoFormattedAddress &&
@@ -64,11 +73,13 @@ const PlacesAutoComplete = () => {
   };
 
   const handleSelect = (val) => {
+    console.log("in here yea?");
     setValue(val);
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
         resetMapCenter(results);
+        dispatch(getLocationDataByCategories());
       })
       .catch((error) => console.error(error));
   };
@@ -119,9 +130,10 @@ const PlacesAutoComplete = () => {
                   inputValue,
                   value,
                   onInputChange: (newInputValue, meta) => {
+                    console.log("on input change");
                     setInputValue(newInputValue);
                   },
-                  placeholder: "Search for things to do by location",
+                  placeholder: "plan things to do by location",
                   onChange: (val) => handleSelect(val),
                 }}
                 apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
@@ -183,6 +195,7 @@ const PlacesAutoComplete = () => {
               />
             )}
         </Map>
+        <div>make a plan of things to do around etc..</div>
         {userCenter && value && (
           <div className="place-preview-wrapper">
             <div className="place-preview-img-container">
