@@ -132,8 +132,10 @@ export function saveThisPlan(derivedData) {
       const req = { id, derivedData: getState().derivedData };
       const { data } = await axios.post("/saveplan", req);
       console.log("response backend to thunk :", data);
+      console.log(data.user.plans[data.user.plans.length - 1], "the last plan");
       if (data.message === "success") {
         dispatch({ type: "PLAN_SUCCESSFULLY_SAVED" });
+        dispatch({ type: "SHARE_PLAN_LINK", payload: "" });
       }
     } catch (error) {
       console.log({ error });

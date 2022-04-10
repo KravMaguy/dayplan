@@ -35,11 +35,13 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, cb) {
       console.log("gogole profile =", accessToken, refreshToken);
+      console.log(profile, "this is the profile");
       const update = {
         google: {
           id: profile.id,
           username: profile.displayName,
           photo: profile.photos[0].value,
+          email: profile.email,
           accessToken,
           refreshToken,
         },
@@ -169,17 +171,20 @@ app.use(isAuthenticatedCookie, express.static(BUILD_FOLDER, options));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
+console.log("here");
 
 app.post("/get_shared_plan", (req, res) => {
   const { body } = req;
   console.clear();
   const { params } = body;
   const { email, id } = params;
-  console.clear();
-  User.findOne({ email }, function (err, doc) {
+  // ({email: "hello@gmail.com"})
+  User.findOne({ email: "doesnotexist@gmail.com" }, function (err, doc) {
     if (err) {
+      console.log("theres an error");
       return res.status(err.response.status).send(err.message);
     } else {
+      console.log(doc, "this is the doc of the plan");
       const plan = doc.plans.find((plan) => plan.id === id);
       return res.json(plan);
     }
