@@ -10,12 +10,15 @@ const UserProfileLink = ({ name, photo }) => {
       <>
         {photo && name && (
           <>
-            <img
-              onClick={() => navigate("/")}
-              style={{ height: "60px" }}
-              src={photo}
-              alt="user avatar"
-            />
+            <div style={{ height: "60px", width: "60px" }}>
+              <img
+                onClick={() => navigate("/")}
+                src={photo}
+                alt="user avatar"
+                style={{ width: "inherit" }}
+              />
+            </div>
+
             <h1 style={{ position: "relative", left: "10px" }}>{name}</h1>
           </>
         )}
