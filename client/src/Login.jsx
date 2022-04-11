@@ -18,23 +18,34 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
   // const [data, setData] = useState(null);
   // const [isFetching, setIsFetching] = useState(false);
   const [cookies] = useCookies();
-
+  const [shareUrl, setShareUrl] = useState("");
+  console.log({ shareUrl });
   const isAuthenticated = cookies.isAuthenticated === "true";
   const dispatch = useDispatch();
   const isSavingPlan = useSelector((state) => state.isSavingPlan);
+  const planLink = useSelector((state) => state.planLink);
+  console.log({ user });
+  console.log({ shareUrl });
+  useEffect(() => {
+    if (!planLink || !user.email || !user) {
+      return;
+    }
+    setShareUrl(
+      window.location.origin + "/plans/" + user.email + "/" + planLink.id
+    );
+  }, [isSavingPlan, planLink]);
+
+  console.log(planLink, "planlink");
   useEffect(() => {
     if (isAuthenticated) {
       fetch("/api/users")
         .then((res) => res.json())
         .then((user) => {
           setUser(user);
-          console.log({ user });
         })
         .catch(console.error);
     }
   }, [isAuthenticated]);
-  console.log({ isAuthenticated });
-  console.log({ user });
   return (
     <>
       <div className="header header-fixed shadow">

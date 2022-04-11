@@ -34,6 +34,7 @@ const initialState = {
   userCenter: null,
   categories: [],
   derivedData: [],
+  planLink: "",
 };
 
 export default function reducer(state = initialState, action) {
@@ -99,6 +100,11 @@ export default function reducer(state = initialState, action) {
         ...state,
         isSavingPlan: false,
       };
+    case "SHARE_PLAN_LINK":
+      return {
+        ...state,
+        planLink: action.payload,
+      };
     default:
       return state;
   }
@@ -132,10 +138,10 @@ export function saveThisPlan(derivedData) {
       const req = { id, derivedData: getState().derivedData };
       const { data } = await axios.post("/saveplan", req);
       console.log("response backend to thunk :", data);
-      console.log(data.user.plans[data.user.plans.length - 1], "the last plan");
       if (data.message === "success") {
+        const plan = data.user.plans[data.user.plans.length - 1];
         dispatch({ type: "PLAN_SUCCESSFULLY_SAVED" });
-        dispatch({ type: "SHARE_PLAN_LINK", payload: "" });
+        dispatch({ type: "SHARE_PLAN_LINK", payload: plan });
       }
     } catch (error) {
       console.log({ error });
