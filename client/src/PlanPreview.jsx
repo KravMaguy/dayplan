@@ -79,6 +79,8 @@ const PlanPreview = () => {
                   selectedIdx === 0
                     ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
                     : sharedPlan[selectedIdx].image_url
+                    ? sharedPlan[selectedIdx].image_url
+                    : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
                 }
                 className="drawer-image"
               />
