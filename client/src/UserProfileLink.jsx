@@ -1,9 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { memo } from "react";
 const UserProfileLink = ({ name, photo }) => {
-  console.log("in the user profile");
-  console.log({ name });
-  console.log({ photo });
   const navigate = useNavigate();
   return (
     <div style={{ display: "flex", minHeight: "60px", minWidth: "200px" }}>
@@ -27,4 +23,4 @@ const UserProfileLink = ({ name, photo }) => {
   );
 };
 
-export default memo(UserProfileLink);
+export default UserProfileLink;
