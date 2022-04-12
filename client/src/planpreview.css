@@ -1,14 +1,16 @@
 #drawer-nav {
   z-index: 1;
-  height: 100vh;
+  height: calc(100vh - 62px);
   width: 350px;
   background-color: #4b4141;
   color: rgb(255, 255, 255);
   position: fixed;
   right: 0;
+  bottom: 0;
   transform: translateX(100%);
-  transition: transform 0.3s linear;
+  transition: transform 0.5s linear;
   margin-left: 200px;
+  border-left: 3px solid grey;
 }
 
 #drawer-nav.active {
@@ -16,7 +18,7 @@
 }
 
 #overlay {
-  transition: all 0.3s linear;
+  transition: all 0.8s linear;
 }
 
 #overlay.active {
@@ -33,7 +35,7 @@
   position: relative;
   top: 0;
   left: 50%;
-  width: 350px;
+  width: 347px;
   height: 200px;
   transform: translateY(0%) translateX(-50%);
 }
@@ -144,4 +146,19 @@ Not supports in Firefox and IE */
   min-height: 100vh;
   width: 90%;
   direction: ltr;
+}
+
+.plan-preview-map-container {
+  height: calc(100vh - 62px);
+  transition: width 0.5s linear;
+  position: absolute;
+  bottom: 0px;
+}
+
+.closed-preview-map-control-size {
+  width: calc(100% - 350px);
+}
+
+.open-preview-map-control-size {
+  width: 100vw;
 }

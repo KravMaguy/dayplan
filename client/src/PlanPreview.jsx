@@ -9,7 +9,9 @@ import { geocodeByLatLng } from "react-google-places-autocomplete";
 import Login from "./Login";
 
 const containerStyle = {
-  height: `100vh`,
+  height: "100%",
+  position: "relative",
+  bottom: "0",
 };
 const options = {
   imagePath:
@@ -166,34 +168,6 @@ const PlanPreview = () => {
                           ) : (
                             "loading..."
                           )}
-                          {/* Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Faucibus interdum posuere lorem
-                          ipsum dolor sit. Eu facilisis sed odio morbi quis
-                          commodo. Aenean euismod elementum nisi quis eleifend
-                          quam adipiscing vitae. Viverra maecenas accumsan lacus
-                          vel facilisis volutpat. Arcu cursus vitae congue
-                          mauris rhoncus aenean vel elit. Pellentesque
-                          adipiscing commodo elit at. Eu ultrices vitae auctor
-                          eu augue ut lectus. Lacinia quis vel eros donec. At
-                          tellus at urna condimentum mattis pellentesque id
-                          nibh. Purus in mollis nunc sed. Ipsum dolor sit amet
-                          consectetur adipiscing elit pellentesque. Lorem ipsum
-                          dolor sit amet consectetur adipiscing elit duis
-                          tristique. Metus aliquam eleifend mi in. Ut sem
-                          viverra aliquet eget sit amet. Dictum non consectetur
-                          a erat nam. Donec ac odio tempor orci dapibus ultrices
-                          in iaculis. A condimentum vitae sapien pellentesque
-                          habitant morbi. Consectetur adipiscing elit duis
-                          tristique sollicitudin nibh. Nec tincidunt praesent
-                          semper feugiat nibh sed pulvinar proin. Augue interdum
-                          velit euismod in pellentesque massa placerat.
-                          Tincidunt eget nullam non nisi est sit amet facilisis
-                          magna. Maecenas volutpat blandit aliquam etiam. Purus
-                          semper eget duis at tellus at urna condimentum mattis.
-                          Gravida arcu ac tortor dignissim convallis aenean et
-                          tortor. Dolor sit amet consectetur adipiscing elit.
-                          Adipiscing vitae proin sagittis nisl. */}
                         </div>
                       </>
                     )}
@@ -203,36 +177,44 @@ const PlanPreview = () => {
             </div>
           )}
 
-          <Map
-            zoom={zoom}
-            setZoom={setZoom}
-            center={{ lat: center.latitude, lng: center.longitude }}
-            containerStyle={containerStyle}
+          <div
+            className={`plan-preview-map-container ${
+              drawerOpen
+                ? "closed-preview-map-control-size"
+                : "open-preview-map-control-size"
+            }`}
           >
-            <MarkerClusterer options={options}>
-              {(clusterer) =>
-                sharedPlan.map((location, idx) => (
-                  <Marker
-                    onClick={() => {
-                      setSelectedIdx(idx);
+            <Map
+              zoom={zoom}
+              setZoom={setZoom}
+              center={{ lat: center.latitude, lng: center.longitude }}
+              containerStyle={containerStyle}
+            >
+              <MarkerClusterer options={options}>
+                {(clusterer) =>
+                  sharedPlan.map((location, idx) => (
+                    <Marker
+                      onClick={() => {
+                        setSelectedIdx(idx);
 
-                      setNewCenter(
-                        location.coordinates.latitude,
-                        location.coordinates.longitude
-                      );
-                      setOpenDrawer(true);
-                    }}
-                    key={idx}
-                    position={{
-                      lat: location.coordinates.latitude,
-                      lng: location.coordinates.longitude,
-                    }}
-                    clusterer={clusterer}
-                  />
-                ))
-              }
-            </MarkerClusterer>
-          </Map>
+                        setNewCenter(
+                          location.coordinates.latitude,
+                          location.coordinates.longitude
+                        );
+                        setOpenDrawer(true);
+                      }}
+                      key={idx}
+                      position={{
+                        lat: location.coordinates.latitude,
+                        lng: location.coordinates.longitude,
+                      }}
+                      clusterer={clusterer}
+                    />
+                  ))
+                }
+              </MarkerClusterer>
+            </Map>
+          </div>
         </>
       )}
     </>
