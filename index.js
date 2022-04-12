@@ -203,10 +203,6 @@ app.get("/events", async (req, res) => {
     .catch((err) => res.status(err.response.status).send(err.message));
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
 app.listen(process.env.PORT || PORT, () =>
   console.log(`listening at http://localhost:${PORT}`)
 );
