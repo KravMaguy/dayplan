@@ -95,15 +95,15 @@ export default function reducer(state = initialState, action) {
         isSavingPlan: true,
       };
 
-    case "PLAN_SUCCESSFULLY_SAVED":
-      return {
-        ...state,
-        isSavingPlan: false,
-      };
     case "SHARE_PLAN_LINK":
       return {
         ...state,
         planLink: action.payload,
+      };
+    case "PLAN_SUCCESSFULLY_SAVED":
+      return {
+        ...state,
+        isSavingPlan: false,
       };
     default:
       return state;
@@ -140,8 +140,8 @@ export function saveThisPlan(derivedData) {
       console.log("response backend to thunk :", data);
       if (data.message === "success") {
         const plan = data.user.plans[data.user.plans.length - 1];
-        dispatch({ type: "PLAN_SUCCESSFULLY_SAVED" });
         dispatch({ type: "SHARE_PLAN_LINK", payload: plan });
+        dispatch({ type: "PLAN_SUCCESSFULLY_SAVED" });
       }
     } catch (error) {
       console.log({ error });

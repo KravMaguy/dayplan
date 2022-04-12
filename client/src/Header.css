@@ -156,24 +156,11 @@
 /* header button loading while calling thunk awaiting reply from server also disable click etc.. */
 
 .button {
-  display: inline-block;
-  border: 0;
-  outline: 0;
-  padding: 12px 16px;
-  line-height: 1.4;
-  background: linear-gradient(#4d4d4d, #2f2f2f);
-  border-radius: 5px;
-  border: 1px solid black;
-  font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
-  color: white !important;
-  font-size: 1.2em;
-  cursor: pointer;
   /* Important part */
   position: relative;
   transition: padding-right 0.3s ease-out;
 }
 .button.loading {
-  background-color: #ccc;
   padding-right: 40px;
 }
 .button.loading:after {
@@ -204,9 +191,7 @@
   }
 }
 
-.hidden {
-  display: none;
-}
+/* share styles */
 
 svg {
   width: 20px;
@@ -247,7 +232,7 @@ button:hover,
   padding-right: 30px;
 }
 
-.share-button,
+/* .share-button, */
 .share-dialog {
   position: absolute;
   top: 50%;

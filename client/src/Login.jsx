@@ -16,18 +16,14 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
   const location = useLocation();
   const { pathname } = location;
   const [user, setUser] = useState(null);
-  // const [data, setData] = useState(null);
-  // const [isFetching, setIsFetching] = useState(false);
   const [cookies] = useCookies();
   const [shareUrl, setShareUrl] = useState("");
   const [isShowingShare, setIsShowingShare] = useState(false);
-  console.log({ shareUrl });
   const isAuthenticated = cookies.isAuthenticated === "true";
   const dispatch = useDispatch();
   const isSavingPlan = useSelector((state) => state.isSavingPlan);
   const planLink = useSelector((state) => state.planLink);
-  console.log({ user });
-  console.log({ shareUrl });
+
   useEffect(() => {
     if (!planLink || !user.email || !user) {
       return;
@@ -37,7 +33,6 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
     );
   }, [isSavingPlan, planLink]);
 
-  console.log(planLink, "planlink");
   useEffect(() => {
     if (isAuthenticated) {
       fetch("/api/users")
@@ -48,6 +43,12 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
         .catch(console.error);
     }
   }, [isAuthenticated]);
+
+  function makeLink() {
+    return shareUrl.slice(window.location.origin.length);
+  }
+
+  console.log("planLink :", planLink);
   return (
     <>
       <div className="header header-fixed shadow">
@@ -62,31 +63,30 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
             {pathname === "/plan" &&
               (isAuthenticated ? (
                 <>
-                  <button
-                    disabled={isSavingPlan}
-                    onClick={() => dispatch(saveThisPlan())}
-                    style={{ borderRadius: "2px" }}
-                    className={`button ${isSavingPlan && "loading"}`}
-                  >
-                    Save plan
-                  </button>
-
-                  {shareUrl && (
+                  {shareUrl ? (
+                    <button className="share-button" title="Share this article">
+                      <Link to={`${makeLink()}`}>Live Link</Link>
+                    </button>
+                  ) : (
                     <button
-                      onClick={() => setIsShowingShare(true)}
-                      class="share-button"
-                      type="button"
-                      title="Share this article"
+                      disabled={isSavingPlan}
+                      onClick={() => dispatch(saveThisPlan())}
+                      style={{ borderRadius: "2px" }}
+                      className={`button ${isSavingPlan && "loading"}`}
                     >
-                      <svg>
-                        <use href="#share-icon"></use>
-                      </svg>
-                      <span>Share</span>
+                      Save plan
                     </button>
                   )}
                 </>
               ) : (
                 <a className="button" href="/auth/google">
+                  {" "}
+                  onClick=
+                  {() =>
+                    alert(
+                      "sign in to your google account in order to use this feature"
+                    )
+                  }
                   Save
                 </a>
               ))}
@@ -138,6 +138,11 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
                 <li>
                   <Link to="/plan">Plan</Link>
                 </li>
+                {planLink && (
+                  <li>
+                    <Link to={`${makeLink()}`}>Live Link</Link>
+                  </li>
+                )}
               </ul>
             </nav>
           </div>

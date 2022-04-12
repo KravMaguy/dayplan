@@ -6,6 +6,7 @@ import Map from "./Map";
 import axios from "axios";
 import "./planpreview.css";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
+import Login from "./Login";
 
 const containerStyle = {
   height: `100vh`,
@@ -64,11 +65,13 @@ const PlanPreview = () => {
 
   return (
     <>
+      <Login />
       <div
         id="overlay"
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen && "active"}
       ></div>
+
       {center && sharedPlan.length > 0 && (
         <>
           {selectedIdx !== null && (
