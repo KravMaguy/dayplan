@@ -25,7 +25,7 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
   const planLink = useSelector((state) => state.planLink);
 
   useEffect(() => {
-    if (!planLink || !user.email || !user) {
+    if (!planLink || !user) {
       return;
     }
     setShareUrl(
@@ -48,9 +48,15 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
     return shareUrl.slice(window.location.origin.length);
   }
 
-  console.log("planLink :", planLink);
+  // console.log("planLink :", planLink);
+  console.log(pathname, "pathname");
   return (
     <>
+      <div
+        id="overlay"
+        onClick={() => setIsShowingShare(false)}
+        className={isShowingShare && "active"}
+      ></div>
       <div className="header header-fixed shadow">
         <div className="navbar container">
           {isAuthenticated ? (
@@ -60,11 +66,22 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
           )}
 
           <div style={{ display: "flex" }}>
+            {pathname.split("/")[1] === "plans" && (
+              <button
+                onClick={() => {
+                  setIsShowingShare(true);
+                }}
+                className="share-button"
+                title="Share this article"
+              >
+                Share
+              </button>
+            )}
             {pathname === "/plan" &&
               (isAuthenticated ? (
                 <>
                   {shareUrl ? (
-                    <button className="share-button" title="Share this article">
+                    <button className="share-button" title="See your plan live">
                       <Link to={`${makeLink()}`}>Live Link</Link>
                     </button>
                   ) : (
@@ -115,6 +132,7 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
                 if (pathname === "/location") {
                   setShowSearchBar(!showSearchBar);
                 }
+                setIsShowingShare(false);
               }}
             />
             <label htmlFor="navbar-toggle">
@@ -151,7 +169,7 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
 
       <div className={isShowingShare ? "share-dialog is-open" : "share-dialog"}>
         <header>
-          <h3 class="dialog-title">Share this pen</h3>
+          <h3 class="dialog-title">Share this plan</h3>
           <button class="close-button" onClick={() => setIsShowingShare(false)}>
             <svg>
               <use href="#close"></use>

@@ -38,7 +38,7 @@
   cursor: pointer;
   padding: 28px 20px;
   position: relative;
-  z-index: 3;
+  z-index: 1;
 }
 
 .navbar label i {
@@ -99,7 +99,7 @@
 .navbar nav {
   visibility: hidden;
   opacity: 0;
-  z-index: 2;
+  z-index: 0;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -254,7 +254,7 @@ button:hover,
 
 .share-dialog.is-open {
   display: block;
-  z-index: 2;
+  z-index: 1;
 }
 
 header {
