@@ -10,7 +10,7 @@ const HomePageLink = ({ navigate }) => {
     >
       <img
         alt="homepage link"
-        src="../fusion.png"
+        src="../../fusion.png"
         style={{
           size: "1.875em",
           height: "2em",

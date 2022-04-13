@@ -97,13 +97,6 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
                 </>
               ) : (
                 <a className="button" href="/auth/google">
-                  {" "}
-                  onClick=
-                  {() =>
-                    alert(
-                      "sign in to your google account in order to use this feature"
-                    )
-                  }
                   Save
                 </a>
               ))}

@@ -27,7 +27,6 @@ const PlanPreview = () => {
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [startLink, setStartLink] = useState(0);
   const [reviews, setReviews] = useState(null);
-  console.log({ reviews });
   useEffect(() => {
     const getUserData = async () => {
       const { data } = await axios.post("/get_shared_plan", { params });
@@ -43,7 +42,6 @@ const PlanPreview = () => {
         lng: derivedData[0].coordinates.longitude,
       })
         .then((results) => {
-          console.log(encodeURI(results[0].formatted_address), "here the reus");
           setStartLink(encodeURI(results[0].formatted_address));
         })
         .catch((error) => console.error(error));
@@ -64,6 +62,8 @@ const PlanPreview = () => {
   const setNewCenter = (latitude, longitude) => {
     setCenter({ latitude, longitude });
   };
+
+  console.log({ sharedPlan });
 
   return (
     <>
@@ -107,8 +107,11 @@ const PlanPreview = () => {
                         src="../../yelp_logo_dark_bg.png"
                       />
                     </div>
-
-                    <h2>{sharedPlan[selectedIdx].name}</h2>
+                    <h2>
+                      {String.fromCharCode("A".charCodeAt(0) + selectedIdx)}
+                      {". "}
+                      {sharedPlan[selectedIdx].name}
+                    </h2>
 
                     <p>
                       {selectedIdx === 0
@@ -143,7 +146,6 @@ const PlanPreview = () => {
                           reviews?.reviews.length > 0 ? (
                             <>
                               {reviews.reviews.map((review) => {
-                                console.log({ review });
                                 return (
                                   <div
                                     style={{
@@ -192,25 +194,29 @@ const PlanPreview = () => {
             >
               <MarkerClusterer options={options}>
                 {(clusterer) =>
-                  sharedPlan.map((location, idx) => (
-                    <Marker
-                      onClick={() => {
-                        setSelectedIdx(idx);
+                  sharedPlan.map((location, idx) => {
+                    const letter = String.fromCharCode("A".charCodeAt(0) + idx);
+                    return (
+                      <Marker
+                        label={{ text: letter, color: "white" }}
+                        onClick={() => {
+                          setSelectedIdx(idx);
 
-                        setNewCenter(
-                          location.coordinates.latitude,
-                          location.coordinates.longitude
-                        );
-                        setOpenDrawer(true);
-                      }}
-                      key={idx}
-                      position={{
-                        lat: location.coordinates.latitude,
-                        lng: location.coordinates.longitude,
-                      }}
-                      clusterer={clusterer}
-                    />
-                  ))
+                          setNewCenter(
+                            location.coordinates.latitude,
+                            location.coordinates.longitude
+                          );
+                          setOpenDrawer(true);
+                        }}
+                        key={idx}
+                        position={{
+                          lat: location.coordinates.latitude,
+                          lng: location.coordinates.longitude,
+                        }}
+                        clusterer={clusterer}
+                      />
+                    );
+                  })
                 }
               </MarkerClusterer>
             </Map>
