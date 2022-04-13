@@ -97,11 +97,12 @@ function checkAuthMiddleware(req, res, next) {
 }
 
 app.get("/autocomplete/:text", async (req, res) => {
-  console.log(req.params, "the params");
   const { text } = req.params;
   axios
     .get(`/autocomplete?text=${text}`)
-    .then((response) => res.json(response.data))
+    .then((response) => {
+      res.json(response.data);
+    })
     .catch((err) => res.status(err.response.status).send(err.message));
 });
 
@@ -127,23 +128,43 @@ app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
 app.post("/api/", async (req, res) => {
   const body = req.body;
   const { center, categories } = body;
+  // categories ,  [
+  //   { value: 'Mma Gyms', label: 'Mma Gyms', def: 'term' },
+  //   {
+  //     value: 'horsebackriding',
+  //     label: 'Horseback Riding',
+  //     def: 'category'
+  //   }
+  // ]
+  console.log("api route reached");
   const { lat, lng } = center;
-  let str = "";
+  let chosenCategories = "";
+  let terms = "";
   categories.forEach((category) => {
-    str += category.value + ",";
+    if (category.def === "term") {
+      terms += category.value + ",";
+    } else {
+      chosenCategories += category.value + ",";
+    }
   });
-  str = str.slice(0, str.length - 1);
+  terms = terms.slice(0, terms.length - 1);
+  chosenCategories = chosenCategories.slice(0, chosenCategories.length - 1);
+  const url =
+    "businesses/search?term=" +
+    terms +
+    "&categories=" +
+    chosenCategories +
+    "&latitude=" +
+    lat +
+    "&longitude=" +
+    lng +
+    "&sort_by=distance&limit=4";
+
+  console.log("the url: ", url);
   axios
-    .get(
-      "businesses/search?term=" +
-        str +
-        "&latitude=" +
-        lat +
-        "&longitude=" +
-        lng +
-        "&sort_by=distance&limit=4"
-    )
+    .get(url)
     .then((response) => {
+      // console.log(response.data, "response here");
       res.json(response.data);
     })
     .catch((err) => res.status(err.response.status).send(err.message));
