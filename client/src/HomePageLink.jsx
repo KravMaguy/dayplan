@@ -1,4 +1,5 @@
 import React from "react";
+import fusion from "./images/fusion.png";
 const HomePageLink = ({ navigate }) => {
   return (
     <div
@@ -10,7 +11,7 @@ const HomePageLink = ({ navigate }) => {
     >
       <img
         alt="homepage link"
-        src="../../fusion.png"
+        src={fusion}
         style={{
           size: "1.875em",
           height: "2em",

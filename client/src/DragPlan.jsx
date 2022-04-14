@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 
 import "./PlanPage.css";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
-// import gmapgrey from "../gmapgrey.png";
 import Map from "./Map";
 import { restaurantObjects, maObjs, mapStyle } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/reducer.js";
 import { useNavigate } from "react-router";
+import mapgreypng from "./images/gmapgrey.png";
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
   strokeWeight: 6,
@@ -279,7 +279,7 @@ const DragPlan = () => {
                     <img
                       alt="google-directions-link"
                       style={{ height: "31px" }}
-                      src="../gmapgrey.png"
+                      src={mapgreypng}
                     />
                   </a>
                 </button>
