@@ -194,15 +194,19 @@ export function getUserPosition() {
 export function getLocationDataByCategories() {
   return async function (dispatch, getState) {
     try {
+      console.log("in try");
       const { center } = getState().userCenter;
       const categories = getState().categories;
       const request = { center, categories };
-      const { data } = await axios.post("/api/", request);
+      console.log("the request :", request);
+      const data = await axios.post("/api/", request);
+      return console.log(data, "the data");
       dispatch({
         type: "SET_BUISNESSES_BY_CATEGRORY",
         payload: data,
       });
     } catch (error) {
+      console.log(error, "err");
       // dispatch({ type: "location/error", payload: error.message });
     }
   };

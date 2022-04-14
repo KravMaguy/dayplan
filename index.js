@@ -128,46 +128,42 @@ app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
 app.post("/api/", async (req, res) => {
   const body = req.body;
   const { center, categories } = body;
-  // categories ,  [
-  //   { value: 'Mma Gyms', label: 'Mma Gyms', def: 'term' },
-  //   {
-  //     value: 'horsebackriding',
-  //     label: 'Horseback Riding',
-  //     def: 'category'
-  //   }
-  // ]
-  console.log("api route reached");
   const { lat, lng } = center;
-  let chosenCategories = "";
-  let terms = "";
-  categories.forEach((category) => {
+  const mappedCategories = categories.map((category) => {
+    console.log(category);
+    let terms = "",
+      categoryStr = "";
     if (category.def === "term") {
       terms += category.value + ",";
     } else {
-      chosenCategories += category.value + ",";
+      categoryStr += category.value + ",";
     }
-  });
-  terms = terms.slice(0, terms.length - 1);
-  chosenCategories = chosenCategories.slice(0, chosenCategories.length - 1);
-  const url =
-    "businesses/search?term=" +
-    terms +
-    "&categories=" +
-    chosenCategories +
-    "&latitude=" +
-    lat +
-    "&longitude=" +
-    lng +
-    "&sort_by=distance&limit=4";
 
-  console.log("the url: ", url);
-  axios
-    .get(url)
-    .then((response) => {
-      // console.log(response.data, "response here");
-      res.json(response.data);
-    })
-    .catch((err) => res.status(err.response.status).send(err.message));
+    const url =
+      "businesses/search?term=" +
+      terms +
+      "&categories=" +
+      categoryStr +
+      "&latitude=" +
+      lat +
+      "&longitude=" +
+      lng +
+      "&sort_by=distance&limit=2";
+
+    console.log("the url: ", url);
+    return axios.get(url).catch((error) => {
+      return console.log("you reached a catch err her", error.message);
+    });
+  });
+
+  return res.json({ dataMsg: mappedCategories });
+
+  // axios
+  //   .get(url)
+  //   .then((response) => {
+  //     res.json(response.data);
+  //   })
+  //   .catch((err) => res.status(err.response.status).send(err.message));
 });
 
 const isAuthenticatedCookie = (req, res, next) => {

@@ -49,7 +49,6 @@ const Login = ({ setShowSearchBar, showSearchBar }) => {
   }
 
   // console.log("planLink :", planLink);
-  console.log(pathname, "pathname");
   return (
     <>
       <div
