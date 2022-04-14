@@ -25,7 +25,7 @@ export default function MultiSelectAsync() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
   const checkLength = () => {
-    return categories.length < 2;
+    return categories.length < 3;
   };
   const loadOptions = async (inputValue, { action }) => {
     const { data } = await axios.get(`/autocomplete/${inputValue}`);
@@ -93,7 +93,7 @@ export default function MultiSelectAsync() {
           noOptionsMessage={({ inputValue }) => {
             return checkLength()
               ? "no options found"
-              : "choose max 3 categories, remove an option or continue";
+              : "max categories allowed in free plan";
           }}
         />
       </div>

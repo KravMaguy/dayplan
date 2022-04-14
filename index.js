@@ -125,11 +125,12 @@ app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
   }
 });
 
-app.post("/api/", async (req, res) => {
+app.post("/api/", (req, res) => {
   const body = req.body;
   const { center, categories } = body;
   const { lat, lng } = center;
-  const mappedCategories = categories.map(async (category) => {
+  const max = 6;
+  const mappedCategories = categories.map((category) => {
     console.log(category);
     let terms = "",
       categoryStr = "";
@@ -150,8 +151,9 @@ app.post("/api/", async (req, res) => {
       lat +
       "&longitude=" +
       lng +
-      "&sort_by=distance&limit=2";
-    return await axios.get(url).catch((e) => console.log(e));
+      "&sort_by=distance&limit=" +
+      max / categories.length;
+    return axios.get(url).catch((e) => console.log(e));
   });
 
   Promise.all(mappedCategories)
