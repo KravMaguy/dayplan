@@ -29,15 +29,11 @@ const startingSearchIndex = 0;
 
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
-  const data = useSelector((state) => state.businesses.businesses);
+  const data = useSelector((state) => state.businesses);
   // if (!data) {
   //   data = maObjs;
   // }
 
-  console.log(
-    "the state ",
-    useSelector((state) => state)
-  );
   const navigate = useNavigate();
 
   const userCenter = useSelector((state) => state.userCenter);
@@ -49,7 +45,6 @@ const DragPlan = () => {
   }, [categoryLength]);
   useEffect(() => {
     if (!userCenter) {
-      console.log("redirect back to autocomplete");
       return navigate("/location");
     }
   }, [userCenter]);
@@ -68,18 +63,22 @@ const DragPlan = () => {
 
   useEffect(() => {
     if (data && data.length && data.length > 0) {
-      const derivedData = data.map((x) => {
-        return {
-          id: x.id,
-          name: x.name,
-          coordinates: x.coordinates,
-          url: x.url,
-          address1: x.location?.address1,
-          city: x.location?.city,
-          zip: x.location?.zip,
-          ...x,
-        };
-      });
+      const derivedData = [];
+      for (let i = 0; i < data.length; i++) {
+        const myData = data[i].businesses.map((x) => {
+          return {
+            id: x.id,
+            name: x.name,
+            coordinates: x.coordinates,
+            url: x.url,
+            address1: x.location?.address1,
+            city: x.location?.city,
+            zip: x.location?.zip,
+            ...x,
+          };
+        });
+        derivedData.push(...myData);
+      }
 
       //check this
       derivedData.unshift({
@@ -211,7 +210,6 @@ const DragPlan = () => {
 
   const removeLocation = (id) => {
     const index = derivedData.findIndex((obj) => obj.id === id);
-    console.log({ index });
     const origin = {
       lat: derivedData[0].coordinates.latitude,
       lng: derivedData[0].coordinates.longitude,
@@ -242,7 +240,6 @@ const DragPlan = () => {
       latlongArr[currIdx - 1].join(",") + "/" + latlongArr[currIdx].join(",")
     );
   };
-  console.log(derivedData, "derivedData what?");
   return (
     <>
       <Login />

@@ -151,9 +151,7 @@ app.post("/api/", async (req, res) => {
       "&longitude=" +
       lng +
       "&sort_by=distance&limit=2";
-    return await axios.get(url).catch((error) => {
-      return console.log(error.message);
-    });
+    return await axios.get(url).catch((e) => console.log(e));
   });
 
   Promise.all(mappedCategories)
