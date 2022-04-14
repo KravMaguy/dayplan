@@ -1,15 +1,17 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 import { useLocation } from "react-router";
-// const google = window.google;
+import { useGoogleMap } from "@react-google-maps/api";
+
 const Map = React.memo(function Map(props) {
-  const [map, setMap] = useState(null); // map instance
+  const [map, setMap] = useState(null);
   const onLoad = useCallback(
     function onLoad(map) {
       setMap(map);
     },
     [setMap]
   );
+
   const location = useLocation();
   // useEffect(() => {
   //   if (map) {
@@ -29,6 +31,13 @@ const Map = React.memo(function Map(props) {
   const { pathname } = location;
 
   const { center, zoom, setZoom, containerStyle, mapStyle, setCenter } = props;
+
+  React.useEffect(() => {
+    if (map) {
+      map.panTo(center);
+    }
+  }, [map, center]);
+
   return (
     <GoogleMap
       options={{
