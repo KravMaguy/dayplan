@@ -5,10 +5,12 @@ import PlacesAutoComplete from "./PlacesAutocomplete";
 import DragPlan from "./DragPlan";
 import HomePage from "./HomePage";
 import PlanPreview from "./PlanPreview";
+import Header from "./Header";
 function App() {
   return (
     <div className="">
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/categories" element={<MultiSelectAsync />} />

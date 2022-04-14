@@ -6,7 +6,6 @@ import Map from "./Map";
 import axios from "axios";
 import "./planpreview.css";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
-import Login from "./Login";
 
 const containerStyle = {
   height: "100%",
@@ -67,7 +66,6 @@ const PlanPreview = () => {
 
   return (
     <>
-      <Login />
       <div
         id="overlay"
         onClick={() => setOpenDrawer(false)}
@@ -109,7 +107,7 @@ const PlanPreview = () => {
                     </div>
                     <h2>
                       {String.fromCharCode("A".charCodeAt(0) + selectedIdx)}
-                      {". "}
+                      {") "}
                       {sharedPlan[selectedIdx].name}
                     </h2>
 
@@ -206,7 +204,9 @@ const PlanPreview = () => {
                             location.coordinates.latitude,
                             location.coordinates.longitude
                           );
-                          setOpenDrawer(true);
+                          setTimeout(() => {
+                            setOpenDrawer(true);
+                          }, 600);
                         }}
                         key={idx}
                         position={{

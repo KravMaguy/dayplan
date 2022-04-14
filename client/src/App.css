@@ -194,19 +194,13 @@ body {
 }
 
 .icon {
-  /* position: absolute;
-  left: 0rem;
-  top: 0rem; */
   width: 50px;
   background: silver;
-  height: 3.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border-bottom-left-radius: 3px;
   border-top-left-radius: 3px;
-  /* box-shadow: 0 0 5px rgb(0 0 0 / 75%);
-  clip-path: inset(0px -10px 0px 0px); */
   transition: all 2s;
 }
 

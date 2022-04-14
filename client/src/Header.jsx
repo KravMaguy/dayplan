@@ -8,7 +8,7 @@ import UserProfileLink from "./UserProfileLink";
 import "./Header.css";
 
 import { saveThisPlan } from "./redux/reducer";
-const Login = () => {
+const Header = () => {
   const navigate = useNavigate();
   const userCoordinates = useSelector((state) => state.position);
   const userCenter = useSelector((state) => state.userCenter);
@@ -301,4 +301,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Header;

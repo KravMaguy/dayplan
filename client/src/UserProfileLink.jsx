@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { memo } from "react";
 const UserProfileLink = ({ name, photo }) => {
   const navigate = useNavigate();
   return (
@@ -23,4 +24,4 @@ const UserProfileLink = ({ name, photo }) => {
   );
 };
 
-export default UserProfileLink;
+export default memo(UserProfileLink);

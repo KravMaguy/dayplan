@@ -5,7 +5,6 @@ import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
 
-import Login from "./Login";
 const animatedComponents = makeAnimated();
 const customStyles = {
   option: (provided, state) => ({
@@ -53,7 +52,6 @@ export default function MultiSelectAsync() {
 
   return (
     <>
-      <Login />
       <div
         className="constrained"
         style={{

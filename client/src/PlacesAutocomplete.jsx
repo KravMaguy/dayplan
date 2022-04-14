@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
-import Login from "./Login";
 import { getUserPosition } from "./redux/reducer.js";
 import { FaDirections } from "react-icons/fa";
 import { getLocationDataByCategories } from "./redux/reducer.js";
@@ -112,10 +111,6 @@ const PlacesAutoComplete = () => {
   };
   return (
     <div className="user-destination-page">
-      <Login
-      // showSearchBar={showSearchBar}
-      // setShowSearchBar={setShowSearchBar}
-      />
       <div
         className="destination-page-map-container"
         style={{ position: "absolute", width: "100vw", bottom: 0, zIndex: 0 }}

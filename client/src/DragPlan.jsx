@@ -10,7 +10,6 @@ import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/reducer.js";
 import { useNavigate } from "react-router";
-import Login from "./Login";
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
   strokeWeight: 6,
@@ -242,7 +241,6 @@ const DragPlan = () => {
   };
   return (
     <>
-      <Login />
       <div class="whole-page" style={{ position: "relative", top: "60px" }}>
         {" "}
         <div className="row map-plan-row">

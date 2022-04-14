@@ -1,10 +1,8 @@
-import Login from "./Login";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
 const HomePage = () => {
   return (
     <>
-      <Login />
       <div className="my-homepage">
         <h1
           className="homepage-title"
