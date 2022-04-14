@@ -129,7 +129,7 @@ app.post("/api/", async (req, res) => {
   const body = req.body;
   const { center, categories } = body;
   const { lat, lng } = center;
-  const mappedCategories = categories.map((category) => {
+  const mappedCategories = categories.map(async (category) => {
     console.log(category);
     let terms = "",
       categoryStr = "";
@@ -151,21 +151,17 @@ app.post("/api/", async (req, res) => {
       "&longitude=" +
       lng +
       "&sort_by=distance&limit=2";
-
-    console.log("the url: ", url);
-    return axios.get(url).catch((error) => {
-      return console.log("you reached a catch err her", error.message);
+    return await axios.get(url).catch((error) => {
+      return console.log(error.message);
     });
   });
 
-  return res.json({ dataMsg: mappedCategories });
-
-  // axios
-  //   .get(url)
-  //   .then((response) => {
-  //     res.json(response.data);
-  //   })
-  //   .catch((err) => res.status(err.response.status).send(err.message));
+  Promise.all(mappedCategories)
+    .then((values) => {
+      const data = values.map((val) => val.data);
+      res.json(data);
+    })
+    .catch((err) => res.status(err.response.status).send(err.message));
 });
 
 const isAuthenticatedCookie = (req, res, next) => {
