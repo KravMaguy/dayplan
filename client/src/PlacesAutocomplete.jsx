@@ -45,7 +45,7 @@ const PlacesAutoComplete = () => {
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  const [showSearchBar, setShowSearchBar] = useState(true);
+  // const [showSearchBar, setShowSearchBar] = useState(true);
 
   useEffect(() => {
     if (
@@ -113,14 +113,14 @@ const PlacesAutoComplete = () => {
   return (
     <div className="user-destination-page">
       <Login
-        showSearchBar={showSearchBar}
-        setShowSearchBar={setShowSearchBar}
+      // showSearchBar={showSearchBar}
+      // setShowSearchBar={setShowSearchBar}
       />
       <div
         className="destination-page-map-container"
-        style={{ position: "absolute", width: "100vw", bottom: 0 }}
+        style={{ position: "absolute", width: "100vw", bottom: 0, zIndex: 0 }}
       >
-        {showSearchBar && (
+        {true && (
           <div className="constrained top-container-searchbox">
             <div className="search-wrap" style={{ width: "100%" }}>
               <GooglePlacesAutocomplete
