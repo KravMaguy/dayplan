@@ -139,6 +139,8 @@ app.post("/api/", async (req, res) => {
       categoryStr += category.value + ",";
     }
 
+    terms = terms.slice(0, terms.length - 1);
+    categoryStr = categoryStr.slice(0, categoryStr.length - 1);
     const url =
       "businesses/search?term=" +
       terms +
