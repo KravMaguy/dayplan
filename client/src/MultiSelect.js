@@ -43,13 +43,6 @@ export default function MultiSelectAsync() {
     );
   };
 
-  const [inputValue, setInputValue] = useState("");
-  const handleInputChange = (newValue) => {
-    const inputValue = newValue.replace(/\W/g, "");
-    setInputValue(newValue);
-    return inputValue;
-  };
-
   return (
     <>
       <div
@@ -77,7 +70,6 @@ export default function MultiSelectAsync() {
           cacheOptions
           defaultValue={categories}
           placeholder={"What do you feel like doing?"}
-          onInputChange={handleInputChange}
           loadOptions={checkLength() && loadOptions}
           components={animatedComponents}
           isMulti

@@ -88,14 +88,16 @@ const Header = () => {
                       disabled={isSavingPlan}
                       onClick={() => dispatch(saveThisPlan())}
                       style={{ borderRadius: "2px" }}
-                      className={`button ${isSavingPlan && "loading"}`}
+                      className={`share-button button ${
+                        isSavingPlan && "loading"
+                      }`}
                     >
-                      Save plan
+                      Save
                     </button>
                   )}
                 </>
               ) : (
-                <a className="button" href="/auth/google">
+                <a className="share-button" href="/auth/google">
                   Save
                 </a>
               ))}
@@ -103,7 +105,7 @@ const Header = () => {
               <button
                 onClick={() => navigate("/plan")}
                 style={{ borderRadius: "2px" }}
-                className="button"
+                className="share-button"
               >
                 PLAN
               </button>
@@ -112,9 +114,9 @@ const Header = () => {
               <button
                 onClick={() => navigate("/location")}
                 style={{ borderRadius: "2px" }}
-                className="button"
+                className="share-button"
               >
-                Starting Location
+                Location
               </button>
             )}
             <input

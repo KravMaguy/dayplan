@@ -190,13 +190,14 @@ const PlacesAutoComplete = () => {
               />
             )}
         </Map>
-        <div>make a plan of things to do around etc..</div>
         {userCenter && value && (
           <div className="place-preview-wrapper">
             <div className="place-preview-img-container">
               <img
                 style={{
                   boxShadow: "rgb(0 0 0 / 20%) 0px 1px 2px",
+                  height: "65px",
+                  width: "95px",
                 }}
                 src={`https://maps.googleapis.com/maps/api/streetview?size=95x65&location=${getLocationStringForAccuracy()}&key=${
                   process.env.REACT_APP_GOOGLE_MAP_API_KEY
