@@ -78,7 +78,7 @@ const PlacesAutoComplete = () => {
     geocodeByAddress(label)
       .then((results) => {
         resetMapCenter(results);
-        dispatch(getLocationDataByCategories());
+        // dispatch(getLocationDataByCategories());
       })
       .catch((error) => console.error(error));
   };

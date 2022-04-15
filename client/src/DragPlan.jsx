@@ -32,6 +32,10 @@ const DragPlan = () => {
   // if (!data) {
   //   data = maObjs;
   // }
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLocationDataByCategories());
+  }, []);
 
   const navigate = useNavigate();
 

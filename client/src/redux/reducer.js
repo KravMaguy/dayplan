@@ -180,7 +180,7 @@ export function getUserPosition() {
             payload: results,
           });
 
-          dispatch(getLocationDataByCategories());
+          // dispatch(getLocationDataByCategories());
         })
         .catch((error) => console.error(error));
     } catch (error) {
