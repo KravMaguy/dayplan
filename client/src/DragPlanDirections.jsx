@@ -146,17 +146,34 @@ const DragPlanDirections = ({
 
   const resetForm = (e) => {
     e.preventDefault();
-    const derivedData = data.map((x) => {
-      return {
-        id: x.id,
-        name: x.name,
-        coordinates: x.coordinates,
-        url: x.url,
-        address1: x.location?.address1,
-        city: x.location?.city,
-        zip: x.location?.zip,
-      };
-    });
+    // const derivedData = data.map((x) => {
+    //   return {
+    //     id: x.id,
+    //     name: x.name,
+    //     coordinates: x.coordinates,
+    //     url: x.url,
+    //     address1: x.location?.address1,
+    //     city: x.location?.city,
+    //     zip: x.location?.zip,
+    //   };
+    // });
+    const derivedData = [];
+    for (let i = 0; i < data.length; i++) {
+      const myData = data[i].businesses.map((x) => {
+        return {
+          id: x.id,
+          name: x.name,
+          coordinates: x.coordinates,
+          url: x.url,
+          address1: x.location?.address1,
+          city: x.location?.city,
+          zip: x.location?.zip,
+          ...x,
+        };
+      });
+      derivedData.push(...myData);
+    }
+
     derivedData.unshift({
       name: "starting Location",
       coordinates: {

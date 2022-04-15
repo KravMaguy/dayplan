@@ -72,7 +72,7 @@ const PlanPreview = () => {
         className={drawerOpen && "active"}
       ></div>
 
-      {center && sharedPlan.length > 0 && (
+      {center && sharedPlan.length > 0 ? (
         <>
           {selectedIdx !== null && (
             <div id="drawer-nav" className={drawerOpen && "active"}>
@@ -222,6 +222,18 @@ const PlanPreview = () => {
             </Map>
           </div>
         </>
+      ) : (
+        <div
+          className="when-do-i-show"
+          style={{
+            position: "absolute",
+            bottom: "0px",
+            fontSize: "50px",
+            background: "green",
+          }}
+        >
+          Map loading...
+        </div>
       )}
     </>
   );
