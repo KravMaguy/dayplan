@@ -101,7 +101,7 @@ app.get("/autocomplete/:text", async (req, res) => {
   axios
     .get(`/autocomplete?text=${text}`)
     .then((response) => {
-      throw new Error("my bad");
+      // throw new Error("my bad");
 
       res.json(response.data);
     })

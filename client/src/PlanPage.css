@@ -51,7 +51,6 @@
   height: 40px;
   vertical-align: middle;
   color: rgb(0, 0, 0);
-  font-family: Roboto, Arial, sans-serif;
   font-size: 18px;
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
@@ -119,7 +118,7 @@ html {
   border: 2px solid #5c7863;
   color: rgb(255, 255, 255);
   text-align: center;
-  font: 16px Arial, sans-serif;
+  font: 16px;
   display: inline-block;
 }
 
@@ -135,7 +134,7 @@ html {
 }
 
 .text {
-  font: 18px Arial, sans-serif;
+  font: 18px;
   padding: 5px;
   /* line-height: 0.9; */
 }
@@ -472,14 +471,6 @@ div[role="button"].css-mod-xb97g8:hover {
   text-transform: uppercase;
   color: rgb(var(--pure-material-primary-rgb, 255, 255, 255));
   background-color: transparent;
-  font-family: var(
-    --pure-material-font,
-    "Roboto",
-    "Segoe UI",
-    BlinkMacSystemFont,
-    system-ui,
-    -apple-system
-  );
   font-size: 14px;
   font-weight: 500;
   line-height: 36px;

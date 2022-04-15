@@ -64,7 +64,9 @@ export default function MultiSelectAsync() {
           </span>
         </h1> */}
         <h1 className="homepage-title">
-          <span class="homepage-title-inner">Select categories</span>
+          <span class="homepage-title-inner">
+            What do you want your plan to be about?
+          </span>
         </h1>
 
         <AsyncSelect

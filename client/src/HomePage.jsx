@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import "./HomePage.css";
-import redux from "./images/redux.png";
-import node from "./images/node.png";
-import react from "./images/react.png";
-import npm from "./images/npm.png";
-import mongodb from "./images/mongodb.png";
+// import redux from "./images/redux.png";
+// import node from "./images/node.png";
+// import react from "./images/react.png";
+// import npm from "./images/npm.png";
+// import mongodb from "./images/mongodb.png";
 
 const HomePage = () => {
   return (
@@ -20,7 +20,7 @@ const HomePage = () => {
             <Link to={"/categories"}>Get Started</Link>
           </span>
         </h1>
-        <div class="grid-container">
+        {/* <div class="grid-container">
           <div class="grid-item">
             <img alt="redux" style={{ height: "100px" }} src={redux} />
           </div>
@@ -42,7 +42,7 @@ const HomePage = () => {
           <div class="grid-item last-double-columns">
             <img alt="mongodb" style={{ height: "100px" }} src={mongodb} />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

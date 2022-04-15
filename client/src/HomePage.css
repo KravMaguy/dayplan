@@ -22,9 +22,10 @@
 }
 
 .homepage-title {
-  font: bold 30px sans-serif;
+  font: bold 30px;
   letter-spacing: -1px;
   color: #000;
+  margin-bottom: 15px;
 }
 
 .homepage-title-inner {

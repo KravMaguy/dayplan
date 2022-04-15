@@ -71,7 +71,7 @@ const Header = () => {
                   setIsShowingShare(true);
                 }}
                 className="share-button"
-                title="Share this article"
+                title="Share this plan"
               >
                 Share
               </button>
@@ -97,9 +97,11 @@ const Header = () => {
                   )}
                 </>
               ) : (
-                <a className="share-button" href="/auth/google">
-                  Save
-                </a>
+                <button className="share-button">
+                  <a className="share-button" href="/auth/google">
+                    Save
+                  </a>
+                </button>
               ))}
             {(userCenter || userCoordinates) && pathname === "/location" && (
               <button
@@ -107,7 +109,7 @@ const Header = () => {
                 style={{ borderRadius: "2px" }}
                 className="share-button"
               >
-                PLAN
+                PLAN!
               </button>
             )}
             {pathname === "/categories" && categories.length > 0 && (
@@ -117,6 +119,15 @@ const Header = () => {
                 className="share-button"
               >
                 Location
+              </button>
+            )}
+            {pathname === "/" && (
+              <button
+                onClick={() => navigate("/categories")}
+                style={{ borderRadius: "2px" }}
+                className="share-button"
+              >
+                Go!
               </button>
             )}
             <input

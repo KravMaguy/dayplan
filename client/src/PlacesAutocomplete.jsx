@@ -128,7 +128,7 @@ const PlacesAutoComplete = () => {
                     console.log("on input change");
                     setInputValue(newInputValue);
                   },
-                  placeholder: "plan things to do by location",
+                  placeholder: "plan for things to do around...",
                   onChange: (val) => handleSelect(val),
                 }}
                 apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
