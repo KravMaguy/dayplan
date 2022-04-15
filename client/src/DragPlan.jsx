@@ -88,8 +88,8 @@ const DragPlan = () => {
         name: "starting Location",
         coordinates: {
           id: "starting id",
-          latitude: userCenter.center.lat,
-          longitude: userCenter.center.lng,
+          latitude: center.lat,
+          longitude: center.lng,
         },
       });
       setDerivedData(derivedData);
@@ -98,8 +98,12 @@ const DragPlan = () => {
         lng: derivedData[derivedData.length - 1].coordinates.longitude,
       };
       setDestination(lastDestination);
+      dispatch({
+        type: "SET_CENTER",
+        payload: { center: { lat: center.lat, lng: center.lng } },
+      });
     }
-  }, [center.lat, center.lng, data]);
+  }, [center.lat, center.lng, data, dispatch]);
 
   const getWayPoints = (param) => {
     if (currIdx === startingSearchIndex) {

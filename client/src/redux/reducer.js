@@ -45,6 +45,7 @@ export default function reducer(state = initialState, action) {
       return { ...state, categories: action.payload };
     case "SET_USER_CENTER":
       return { ...state, userCenter: action.payload };
+
     case "SET_CENTER":
       return {
         ...state,
@@ -52,7 +53,9 @@ export default function reducer(state = initialState, action) {
           lat: action.payload.center.lat,
           lng: action.payload.center.lng,
         },
+        businesses: {},
       };
+
     case "SET_IS_FETCHING":
       return { ...state, isFetching: action.payload };
     case "SET_SEARCH_RESULT":
