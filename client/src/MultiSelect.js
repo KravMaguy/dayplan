@@ -28,6 +28,7 @@ export default function MultiSelectAsync() {
   };
   const loadOptions = async (inputValue, { action }) => {
     const { data } = await axios.get(`/autocomplete/${inputValue}`);
+    console.log(data, "the data");
     const categories = data.categories.map((category) => {
       return { value: category.alias, label: category.title, def: "category" };
     });

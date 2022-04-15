@@ -101,9 +101,11 @@ app.get("/autocomplete/:text", async (req, res) => {
   axios
     .get(`/autocomplete?text=${text}`)
     .then((response) => {
+      throw new Error("my bad");
+
       res.json(response.data);
     })
-    .catch((err) => res.status(err.response.status).send(err.message));
+    .catch((err) => res.send({ message: err.message }));
 });
 
 app.get("/api/users", checkAuthMiddleware, async (req, res) => {
