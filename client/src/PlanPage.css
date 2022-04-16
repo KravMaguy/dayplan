@@ -51,6 +51,7 @@
   height: 40px;
   vertical-align: middle;
   color: rgb(0, 0, 0);
+  font-family: Roboto, Arial, sans-serif;
   font-size: 18px;
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
@@ -118,12 +119,12 @@ html {
   border: 2px solid #5c7863;
   color: rgb(255, 255, 255);
   text-align: center;
-  font: 16px;
+  font: 16px Arial, sans-serif;
   display: inline-block;
 }
 
 .red-bg {
-  background: #ee675c;
+  background: #ee685c;
 }
 .greyish-bg {
   background: #5491f5;
@@ -134,7 +135,7 @@ html {
 }
 
 .text {
-  font: 18px;
+  font: 18px Arial, sans-serif;
   padding: 5px;
   /* line-height: 0.9; */
 }
@@ -584,8 +585,7 @@ a.pill:active {
 /* dnd text */
 .dnd-text {
   background: grey;
-  font-size: 1.2em;
-  font-weight: bold;
+
   padding: 10px;
   color: white;
   text-shadow: rgb(0 0 0) 1px 1px 2px;

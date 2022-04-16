@@ -11,6 +11,7 @@ import {
 } from "react-icons/io";
 import { RiDragDropLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
+import { geocodeByLatLng } from "react-google-places-autocomplete";
 // a little function to help you with reordering the result
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -91,8 +92,21 @@ const DragPlanDirections = ({
     setDestination(destination);
     setResponse(null);
   };
-
+  const [startLink, setStartLink] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (derivedData.length > 0) {
+      geocodeByLatLng({
+        lat: derivedData[0]?.coordinates.latitude,
+        lng: derivedData[0]?.coordinates.longitude,
+      })
+        .then((results) => {
+          setStartLink(results[0].formatted_address);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [derivedData]);
 
   useEffect(() => {
     if (!response) return;
@@ -113,7 +127,7 @@ const DragPlanDirections = ({
       type: "SET_DERIVED_DATA",
       payload: derivedData,
     });
-  }, [response, dispatch]);
+  }, [response, dispatch, derivedData]);
 
   const viewFullPlan = () => {
     if (currIdx === 0) return;
@@ -312,8 +326,12 @@ const DragPlanDirections = ({
           </div>
           <div className={open && "hidden"}>
             <div className="dnd-text">
-              <RiDragDropLine style={{ opacity: 0.9 }} />
-              {`Drag and Drop`}
+              {/* <RiDragDropLine style={{ opacity: 0.9 }} />
+              {`Drag and Drop`} */}
+              <div class="demo-card__title">
+                <div class="numberCircle red-bg white-border">A</div>
+                <span class="text">{startLink}</span>
+              </div>
             </div>
 
             <DragDropContext onDragEnd={onDragEnd}>
