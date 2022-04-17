@@ -158,52 +158,23 @@ const DragPlanDirections = ({
     TRANSIT: "Commute",
   };
 
+  const [originalData, setOriginalData] = useState(null);
+  useEffect(() => {
+    if (!originalData && derivedData.length > 0) {
+      setOriginalData(derivedData);
+    }
+  }, [derivedData, data]);
+
   const resetForm = (e) => {
     e.preventDefault();
-    // const derivedData = data.map((x) => {
-    //   return {
-    //     id: x.id,
-    //     name: x.name,
-    //     coordinates: x.coordinates,
-    //     url: x.url,
-    //     address1: x.location?.address1,
-    //     city: x.location?.city,
-    //     zip: x.location?.zip,
-    //   };
-    // });
-    const derivedData = [];
-    for (let i = 0; i < data.length; i++) {
-      const myData = data[i].businesses.map((x) => {
-        return {
-          id: x.id,
-          name: x.name,
-          coordinates: x.coordinates,
-          url: x.url,
-          address1: x.location?.address1,
-          city: x.location?.city,
-          zip: x.location?.zip,
-          ...x,
-        };
-      });
-      derivedData.push(...myData);
-    }
-
-    derivedData.unshift({
-      name: "starting Location",
-      coordinates: {
-        id: "starting id",
-        latitude: center.lat,
-        longitude: center.lng,
-      },
-    });
-    setDerivedData(derivedData);
+    setDerivedData(originalData);
     const origin = {
-      lat: derivedData[0].coordinates.latitude,
-      lng: derivedData[0].coordinates.longitude,
+      lat: originalData[0].coordinates.latitude,
+      lng: originalData[0].coordinates.longitude,
     };
     const lastDestination = {
-      lat: derivedData[derivedData.length - 1].coordinates.latitude,
-      lng: derivedData[derivedData.length - 1].coordinates.longitude,
+      lat: originalData[originalData.length - 1].coordinates.latitude,
+      lng: originalData[originalData.length - 1].coordinates.longitude,
     };
 
     setDestination(lastDestination);
