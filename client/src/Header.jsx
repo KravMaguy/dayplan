@@ -48,6 +48,7 @@ const Header = () => {
     return shareUrl.slice(window.location.origin.length);
   }
 
+  const [isChecked, setIsChecked] = useState(false);
   // console.log("planLink :", planLink);
   return (
     <>
@@ -131,9 +132,11 @@ const Header = () => {
               </button>
             )}
             <input
+              checked={isChecked}
               type="checkbox"
               id="navbar-toggle"
               onClick={() => {
+                setIsChecked(!isChecked);
                 if (pathname === "/location") {
                 }
                 setIsShowingShare(false);
@@ -151,17 +154,17 @@ const Header = () => {
                     <a href="/auth/google">login with google</a>
                   )}
                 </li>
-                <li>
+                <li onClick={() => setIsChecked(false)}>
                   <Link to="/categories">Categories</Link>
                 </li>
-                <li>
+                <li onClick={() => setIsChecked(false)}>
                   <Link to="/location">Location</Link>
                 </li>
-                <li>
+                <li onClick={() => setIsChecked(false)}>
                   <Link to="/plan">Plan</Link>
                 </li>
                 {planLink && (
-                  <li>
+                  <li onClick={() => setIsChecked(false)}>
                     <Link to={`${makeLink()}`}>Live Link</Link>
                   </li>
                 )}
