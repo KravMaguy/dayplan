@@ -64,8 +64,7 @@ export function getLocationDataByCategories() {
       const categories = getState().categories;
       const request = { center, categories };
       const { data } = await axios.post("/api/", request);
-      console.log({ data });
-      const testData = data[0].businesses.map((x) => {
+      const Data = data[0].businesses.map((x) => {
         return {
           id: x.id,
           name: x.name,
@@ -77,7 +76,7 @@ export function getLocationDataByCategories() {
           ...x,
         };
       });
-      testData.unshift({
+      Data.unshift({
         name: "Start",
         coordinates: {
           id: "Start",
@@ -85,12 +84,8 @@ export function getLocationDataByCategories() {
         },
       });
       dispatch({
-        type: "SET_TEST_DATA",
-        payload: testData,
-      });
-      dispatch({
-        type: "SET_BUISNESSES_BY_CATEGRORY",
-        payload: data,
+        type: "SET_DATA",
+        payload: Data,
       });
     } catch (error) {
       console.log(error, "err");

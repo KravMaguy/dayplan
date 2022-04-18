@@ -12,31 +12,23 @@ export const formActionType = {
 };
 
 const initialState = {
-  testData: [],
-  businesses: {},
+  data: [],
   center: { lat: 42.009933, lng: -87.70515 },
   isFetching: false,
-  // below is the yelp err
-  // error: null,
   count: 0,
   isSavingPlan: false,
-  //fetch user location
   position: null,
   status: "idle",
   error: "",
   userCenter: null,
   categories: [],
-  derivedData: [],
   planLink: "",
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case "SET_TEST_DATA":
-      return { ...state, testData: action.payload };
-
-    case "SET_BUISNESSES_BY_CATEGRORY":
-      return { ...state, businesses: action.payload };
+    case "SET_DATA":
+      return { ...state, data: action.payload };
     case "SET_CATEGORIES":
       return { ...state, categories: action.payload };
     case "SET_USER_CENTER":
@@ -49,7 +41,7 @@ export default function reducer(state = initialState, action) {
           lat: action.payload.center.lat,
           lng: action.payload.center.lng,
         },
-        businesses: {},
+        data: [],
       };
 
     case "SET_IS_FETCHING":

@@ -9,7 +9,6 @@ import {
   IoIosArrowDropdownCircle,
   IoIosArrowDropupCircle,
 } from "react-icons/io";
-import { useDispatch } from "react-redux";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 
 const travelModeStrings = {
@@ -65,8 +64,6 @@ const DragPlanDirections = ({
   checkWalking,
   checkTransit,
   checkDriving,
-  data,
-  center,
   collapsed,
   setCollapsed,
   open,
@@ -99,7 +96,6 @@ const DragPlanDirections = ({
     setResponse(null);
   };
   const [startLink, setStartLink] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (derivedData.length > 0) {
@@ -125,15 +121,7 @@ const DragPlanDirections = ({
     }
     setDistance(totalDist);
     setTime(totalTime);
-    console.log(
-      "calc time useEffect run dispatch set_derived_data w payload data"
-    );
-
-    dispatch({
-      type: "SET_DERIVED_DATA",
-      payload: derivedData,
-    });
-  }, [response, dispatch, derivedData]);
+  }, [response]);
 
   const viewFullPlan = () => {
     if (currIdx === 0) return;
@@ -295,8 +283,6 @@ const DragPlanDirections = ({
           </div>
           <div className={open && "hidden"}>
             <div className="dnd-text">
-              {/* <RiDragDropLine style={{ opacity: 0.9 }} />
-              {`Drag and Drop`} */}
               <div class="demo-card__title">
                 <div class="numberCircle red-bg white-border">A</div>
                 <span class="text">{startLink}</span>

@@ -27,15 +27,14 @@ const startingSearchIndex = 0;
 
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
-  const data = useSelector((state) => state.businesses);
+  const data = useSelector((state) => state.data);
   const userCenter = useSelector((state) => state.userCenter);
   const categoryLength = useSelector((state) => state.categories.length);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getLocationDataByCategories());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!categoryLength) {
@@ -61,44 +60,15 @@ const DragPlan = () => {
   const [collapsed, setCollapsed] = useState(null);
 
   useEffect(() => {
-    if (data && data.length && data.length > 0) {
-      const derivedData = [];
-      for (let i = 0; i < data.length; i++) {
-        const myData = data[i].businesses.map((x) => {
-          return {
-            id: x.id,
-            name: x.name,
-            coordinates: x.coordinates,
-            url: x.url,
-            address1: x.location?.address1,
-            city: x.location?.city,
-            zip: x.location?.zip,
-            ...x,
-          };
-        });
-        derivedData.push(...myData);
-      }
-
-      derivedData.unshift({
-        name: "starting Location",
-        coordinates: {
-          id: "starting id",
-          latitude: center.lat,
-          longitude: center.lng,
-        },
-      });
-      setDerivedData(derivedData);
+    if (data.length > 0 && data) {
+      setDerivedData(data);
       const lastDestination = {
-        lat: derivedData[derivedData.length - 1].coordinates.latitude,
-        lng: derivedData[derivedData.length - 1].coordinates.longitude,
+        lat: data[data.length - 1].coordinates.latitude,
+        lng: data[data.length - 1].coordinates.longitude,
       };
       setDestination(lastDestination);
-      dispatch({
-        type: "SET_CENTER",
-        payload: { center: { lat: center.lat, lng: center.lng } },
-      });
     }
-  }, [center.lat, center.lng, data, dispatch]);
+  }, [data]);
 
   const getWayPoints = (param) => {
     if (currIdx === startingSearchIndex) {
@@ -242,6 +212,9 @@ const DragPlan = () => {
       latlongArr[currIdx - 1].join(",") + "/" + latlongArr[currIdx].join(",")
     );
   };
+
+  console.log({ data });
+  console.log({ derivedData });
   return (
     <>
       <div class="whole-page" style={{ position: "relative", top: "60px" }}>
