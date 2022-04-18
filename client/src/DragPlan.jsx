@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import "./PlanPage.css";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import Map from "./Map";
-import { restaurantObjects, maObjs, mapStyle } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/thunks.js";
@@ -29,23 +28,21 @@ const startingSearchIndex = 0;
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.businesses);
-  // if (!data) {
-  //   data = maObjs;
-  // }
+  const userCenter = useSelector((state) => state.userCenter);
+  const categoryLength = useSelector((state) => state.categories.length);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getLocationDataByCategories());
   }, []);
 
-  const navigate = useNavigate();
-
-  const userCenter = useSelector((state) => state.userCenter);
-  const categoryLength = useSelector((state) => state.categories.length);
   useEffect(() => {
     if (!categoryLength) {
       navigate("/categories");
     }
   }, [categoryLength]);
+
   useEffect(() => {
     if (!userCenter) {
       return navigate("/location");
@@ -82,7 +79,6 @@ const DragPlan = () => {
         derivedData.push(...myData);
       }
 
-      //check this
       derivedData.unshift({
         name: "starting Location",
         coordinates: {
@@ -402,6 +398,17 @@ const DragPlan = () => {
                   <div className="css-mod-1rhbuit-multiValue">
                     <div className="css-mod-12jo7m5">
                       <a className="pill" target="_blank" href={x.url}>
+                        <div
+                          class="numberCircle"
+                          style={{
+                            marginRight: "2px",
+                            position: "relative",
+                            bottom: "1px",
+                          }}
+                        >
+                          {String.fromCharCode("A".charCodeAt(0) + idx)}
+                        </div>
+
                         {x.name.length > 30
                           ? x.name.slice(0, 29) + "..."
                           : x.name}

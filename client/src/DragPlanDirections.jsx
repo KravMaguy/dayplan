@@ -11,7 +11,14 @@ import {
 } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
-// a little function to help you with reordering the result
+
+const travelModeStrings = {
+  DRIVING: "Drive",
+  BICYCLING: "Bike",
+  WALKING: "Walk",
+  TRANSIT: "Commute",
+};
+
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -131,7 +138,6 @@ const DragPlanDirections = ({
   const viewFullPlan = () => {
     if (currIdx === 0) return;
     travelMode === "TRANSIT" && setTravelMode("DRIVING");
-
     setIdx(0);
     setResponse(null);
     const lastDestination = {
@@ -150,19 +156,12 @@ const DragPlanDirections = ({
     return formatDuration(intervalToDuration({ start: 0, end: time * 1000 }));
   }
 
-  const travelModeStrings = {
-    DRIVING: "Drive",
-    BICYCLING: "Bike",
-    WALKING: "Walk",
-    TRANSIT: "Commute",
-  };
-
   const [originalData, setOriginalData] = useState(null);
   useEffect(() => {
     if (!originalData && derivedData.length > 0) {
       setOriginalData(derivedData);
     }
-  }, [derivedData, data, originalData]);
+  }, [derivedData, originalData]);
 
   const resetForm = (e) => {
     e.preventDefault();

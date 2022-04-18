@@ -12,6 +12,7 @@ export const formActionType = {
 };
 
 const initialState = {
+  testData: [],
   businesses: {},
   center: { lat: 42.009933, lng: -87.70515 },
   isFetching: false,
@@ -31,6 +32,9 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case "SET_TEST_DATA":
+      return { ...state, testData: action.payload };
+
     case "SET_BUISNESSES_BY_CATEGRORY":
       return { ...state, businesses: action.payload };
     case "SET_CATEGORIES":
