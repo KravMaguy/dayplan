@@ -138,17 +138,9 @@ const PlacesAutoComplete = () => {
               className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
             >
               {!userCoordinates ? (
-                <MdLocationOff
-                  size={18}
-                  className="location-icon"
-                  fill={"#d3d3d3"}
-                />
+                <MdLocationOff className="location-icon" fill={"#d3d3d3"} />
               ) : (
-                <MdLocationOn
-                  fill={"green"}
-                  size={18}
-                  className="location-icon"
-                />
+                <MdLocationOn fill={"green"} className="location-icon" />
               )}
             </div>
           </div>

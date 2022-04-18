@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action) {
     case "SET_DATA":
       return { ...state, data: action.payload };
     case "SET_CATEGORIES":
-      return { ...state, categories: action.payload };
+      return { ...state, categories: action.payload, data: [] };
     case "SET_USER_CENTER":
       return { ...state, userCenter: action.payload };
 

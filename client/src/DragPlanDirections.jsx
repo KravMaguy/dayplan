@@ -386,42 +386,27 @@ const DragPlanDirections = ({
                                     {idx + 1 === currIdx &&
                                     currIdx !== collapsed ? (
                                       <button
+                                        className="no-link pure-material-button-text"
                                         style={{
                                           position: "absolute",
                                           right: 0,
                                           top: 0,
-                                          background: "inherit",
-                                          border: "0px",
                                         }}
                                         onClick={() => setCollapsed(idx + 1)}
                                       >
-                                        <IoIosArrowDropupCircle
-                                          style={{
-                                            fill: "#e4e8eb",
-                                            filter:
-                                              "drop-shadow(3px 3px 2px rgb(0 0 0 / 0.4))",
-                                          }}
-                                        />
+                                        Close
                                       </button>
                                     ) : (
                                       <button
+                                        className="no-link pure-material-button-text"
                                         style={{
                                           position: "absolute",
                                           right: 0,
                                           top: 0,
-                                          background: "inherit",
-                                          border: "0px",
-                                          cursor: "pointer",
                                         }}
                                         onClick={() => handleSelectBox(idx + 1)}
                                       >
-                                        <IoIosArrowDropdownCircle
-                                          style={{
-                                            fill: "#e4e8eb",
-                                            filter:
-                                              "drop-shadow(3px 3px 2px rgb(0 0 0 / 0.4))",
-                                          }}
-                                        />
+                                        Open
                                       </button>
                                     )}
                                   </div>
