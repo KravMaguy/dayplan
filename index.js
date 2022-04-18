@@ -153,13 +153,14 @@ app.post("/api/", (req, res) => {
       lat +
       "&longitude=" +
       lng +
-      "&sort_by=distance&limit=" +
-      max / categories.length;
+      "&sort_by=distance&limit=2";
+    // console.log({ url });
     return axios.get(url).catch((e) => console.log(e));
   });
 
   Promise.all(mappedCategories)
     .then((values) => {
+      console.log({ values });
       const data = values.map((val) => val.data);
       res.json(data);
     })

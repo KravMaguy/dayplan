@@ -64,25 +64,32 @@ export function getLocationDataByCategories() {
       const categories = getState().categories;
       const request = { center, categories };
       const { data } = await axios.post("/api/", request);
-      const Data = data[0].businesses.map((x) => {
-        return {
-          id: x.id,
-          name: x.name,
-          coordinates: x.coordinates,
-          url: x.url,
-          address1: x.location?.address1,
-          city: x.location?.city,
-          zip: x.location?.zip,
-          ...x,
-        };
-      });
-      Data.unshift({
-        name: "Start",
-        coordinates: {
-          id: "Start",
-          ...data[0].region.center,
+      const structuredData = data.map((term) =>
+        term.businesses.map((x) => {
+          return {
+            id: x.id,
+            name: x.name,
+            coordinates: x.coordinates,
+            url: x.url,
+            address1: x.location?.address1,
+            city: x.location?.city,
+            zip: x.location?.zip,
+            ...x,
+          };
+        })
+      );
+      const Data = [
+        {
+          name: "Start",
+          coordinates: {
+            id: "Starting id",
+            latitude: center.lat,
+            longitude: center.lng,
+          },
         },
-      });
+        ...structuredData.flat(),
+      ];
+
       dispatch({
         type: "SET_DATA",
         payload: Data,
