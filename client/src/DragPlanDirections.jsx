@@ -9,7 +9,6 @@ import {
   IoIosArrowDropdownCircle,
   IoIosArrowDropupCircle,
 } from "react-icons/io";
-import { RiDragDropLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 // a little function to help you with reordering the result
@@ -163,7 +162,7 @@ const DragPlanDirections = ({
     if (!originalData && derivedData.length > 0) {
       setOriginalData(derivedData);
     }
-  }, [derivedData, data]);
+  }, [derivedData, data, originalData]);
 
   const resetForm = (e) => {
     e.preventDefault();
@@ -204,7 +203,7 @@ const DragPlanDirections = ({
                   onChange={checkDriving}
                   value="DRIVING"
                 />
-                <IoIosCar />
+                <IoIosCar className="travel-modes" />
               </label>
 
               <label htmlFor="BICYCLING">
@@ -217,7 +216,7 @@ const DragPlanDirections = ({
                   onChange={checkBicycling}
                   value="BICYCLING"
                 />
-                <IoIosBicycle />
+                <IoIosBicycle className="travel-modes" />
               </label>
 
               <label htmlFor="TRANSIT">
@@ -231,7 +230,7 @@ const DragPlanDirections = ({
                   onChange={checkTransit}
                   value="TRANSIT"
                 />
-                <IoIosBus />
+                <IoIosBus className="travel-modes" />
               </label>
 
               <label htmlFor="WALKING">
@@ -244,7 +243,7 @@ const DragPlanDirections = ({
                   onChange={checkWalking}
                   value="WALKING"
                 />
-                <IoIosWalk />
+                <IoIosWalk className="travel-modes" />
               </label>
             </div>
             <div>

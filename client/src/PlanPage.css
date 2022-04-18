@@ -275,11 +275,11 @@ table.adp-directions tr:hover .adp-maneuver {
   width: 33rem;
 }
 
-svg {
+/* svg {
   height: 1.6rem;
   width: 1.6rem;
   margin: 0.2rem;
-}
+} */
 
 .bg-grey-plan-controls svg {
   fill: #d3d3d3;
@@ -306,25 +306,25 @@ input + svg {
 input[class="walking"]:hover + svg,
 input[class="walking"]:checked + svg,
 input[class="walking"]:focus + svg {
-  fill: rgb(53 91 154);
+  fill: rgb(58, 212, 84);
 }
 
 input[class="driving"]:hover + svg,
 input[class="driving"]:checked + svg,
 input[class="driving"]:focus + svg {
-  fill: rgb(79 208 113);
+  fill: rgb(58, 212, 84);
 }
 
 input[class="bicycling"]:hover + svg,
 input[class="bicycling"]:checked + svg,
 input[class="bicycling"]:focus + svg {
-  fill: rgb(252 189 45);
+  fill: rgb(58, 212, 84);
 }
 
 input[class="transit"]:hover + svg,
 input[class="transit"]:checked + svg,
 input[class="transit"]:focus + svg {
-  fill: rgb(212, 58, 58);
+  fill: rgb(58, 212, 84);
 }
 
 .font-big {
@@ -664,4 +664,10 @@ a.pill:active {
 
 .open-map-control-size {
   height: calc(100vh - 198px);
+}
+
+svg.travel-modes {
+  height: 2rem;
+  width: 2rem;
+  margin-left: 10px;
 }

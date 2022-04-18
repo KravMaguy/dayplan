@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
-import { getUserPosition } from "./redux/reducer.js";
+import { getUserPosition } from "./redux/thunks.js";
 import { FaDirections } from "react-icons/fa";
-import { getLocationDataByCategories } from "./redux/reducer.js";
 import { useNavigate } from "react-router";
 
 const PlacesAutoComplete = () => {
@@ -78,7 +77,6 @@ const PlacesAutoComplete = () => {
     geocodeByAddress(label)
       .then((results) => {
         resetMapCenter(results);
-        // dispatch(getLocationDataByCategories());
       })
       .catch((error) => console.error(error));
   };

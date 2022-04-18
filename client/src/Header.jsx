@@ -7,7 +7,7 @@ import HomePageLink from "./HomePageLink";
 import UserProfileLink from "./UserProfileLink";
 import "./Header.css";
 
-import { saveThisPlan } from "./redux/reducer";
+import { saveThisPlan } from "./redux/thunks";
 const Header = () => {
   const navigate = useNavigate();
   const userCoordinates = useSelector((state) => state.position);

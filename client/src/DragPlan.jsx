@@ -7,7 +7,7 @@ import Map from "./Map";
 import { restaurantObjects, maObjs, mapStyle } from "./utils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
-import { getLocationDataByCategories } from "./redux/reducer.js";
+import { getLocationDataByCategories } from "./redux/thunks.js";
 import { useNavigate } from "react-router";
 import mapgreypng from "./images/gmapgrey.png";
 const pathVisibilityDefaults = {
@@ -53,7 +53,6 @@ const DragPlan = () => {
   }, [userCenter]);
 
   const [open, setIsOpen] = useState(false);
-
   const [zoom, setZoom] = useState(10);
   const [derivedData, setDerivedData] = useState([]);
   const [currIdx, setIdx] = useState(startingSearchIndex);

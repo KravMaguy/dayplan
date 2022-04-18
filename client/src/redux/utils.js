@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export function getPosition() {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
