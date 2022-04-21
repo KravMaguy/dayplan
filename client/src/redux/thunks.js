@@ -3,13 +3,13 @@ import { getPosition } from "./utils";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import { v4 as uuidv4 } from "uuid";
 
-export function saveThisPlan(derivedData) {
+export function saveThisPlan() {
   return async function (dispatch, getState) {
-    if (getState().derivedData.length < 1) return;
+    if (getState().data.length < 1) return;
     try {
       dispatch({ type: "SAVING_PLAN" });
       const id = uuidv4();
-      const req = { id, derivedData: getState().derivedData };
+      const req = { id, derivedData: getState().data };
       const { data } = await axios.post("/saveplan", req);
       if (data.message === "success") {
         const plan = data.user.plans[data.user.plans.length - 1];

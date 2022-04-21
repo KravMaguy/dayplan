@@ -221,6 +221,11 @@ app.get("/events", async (req, res) => {
     .catch((err) => res.status(err.response.status).send(err.message));
 });
 
+app.get("*", function (req, res) {
+  console.log("reached in here");
+  res.sendFile(path.join(__dirname, "./client/build", "index.html"));
+});
+
 app.listen(process.env.PORT || PORT, () =>
   console.log(`listening at http://localhost:${PORT}`)
 );
