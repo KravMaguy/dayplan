@@ -215,7 +215,7 @@ const DragPlan = () => {
 
   return (
     <>
-      <div class="whole-page" style={{ position: "relative", top: "60px" }}>
+      <div className="whole-page" style={{ position: "relative", top: "60px" }}>
         {" "}
         <div className="row map-plan-row">
           <div className="col col-left side-p-10">
@@ -249,7 +249,7 @@ const DragPlan = () => {
                     style={{ display: "flex" }}
                     href={`https://www.google.com/maps/dir/${getLocStr()}`}
                   >
-                    <span class="map-link-text-hide">on</span>
+                    <span className="map-link-text-hide">on</span>
                     <img
                       alt="google-directions-link"
                       style={{ height: "31px" }}
@@ -363,14 +363,14 @@ const DragPlan = () => {
         </div>
         {!open && (
           <div className="map-destination-links-container">
-            {derivedData.map(
-              (x, idx) =>
+            {derivedData.map((x, idx) => {
+              return (
                 idx > 0 && (
                   <div className="css-mod-1rhbuit-multiValue">
                     <div className="css-mod-12jo7m5">
                       <a className="pill" target="_blank" href={x.url}>
                         <div
-                          class="numberCircle"
+                          className="numberCircle"
                           style={{
                             marginRight: "2px",
                             position: "relative",
@@ -404,7 +404,8 @@ const DragPlan = () => {
                     </div>
                   </div>
                 )
-            )}
+              );
+            })}
           </div>
         )}
       </div>

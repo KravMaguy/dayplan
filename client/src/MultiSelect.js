@@ -28,7 +28,6 @@ export default function MultiSelectAsync() {
   };
   const loadOptions = async (inputValue, { action }) => {
     const { data } = await axios.get(`/autocomplete/${inputValue}`);
-    console.log(data, "the data");
     const categories = data.categories.map((category) => {
       return { value: category.alias, label: category.title, def: "category" };
     });
@@ -56,15 +55,15 @@ export default function MultiSelectAsync() {
         }}
       >
         {/* <h1 style={{ marginBottom: "20px" }}>
-          <span class="wrap">
-            <span class="inner">
+          <span className="wrap">
+            <span className="inner">
               Create a day plan based around popular activities, festivals,
               local buisnesses, or whatever you feel like.
             </span>
           </span>
         </h1> */}
         <h1 className="homepage-title">
-          <span class="homepage-title-inner">
+          <span className="homepage-title-inner">
             What do you want your plan to be about?
           </span>
         </h1>

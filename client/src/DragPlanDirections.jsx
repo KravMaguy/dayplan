@@ -281,11 +281,11 @@ const DragPlanDirections = ({
               </div>
             </div>
           </div>
-          <div className={open && "hidden"}>
+          <div className={open ? "hidden" : ""}>
             <div className="dnd-text">
-              <div class="demo-card__title">
-                <div class="numberCircle red-bg white-border">A</div>
-                <span class="text">{startLink}</span>
+              <div className="demo-card__title">
+                <div className="numberCircle red-bg white-border">A</div>
+                <span className="text">{startLink}</span>
               </div>
             </div>
 
@@ -367,7 +367,7 @@ const DragPlanDirections = ({
                                     <div className="text">
                                       <p>{location.name} </p>
                                       {}
-                                      <p class="drag-address">
+                                      <p className="drag-address">
                                         {idx + 1 !== currIdx && (
                                           <a
                                             style={{ fontStyle: "italic" }}
