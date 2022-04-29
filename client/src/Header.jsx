@@ -55,7 +55,7 @@ const Header = () => {
       <div
         id="overlay"
         onClick={() => setIsShowingShare(false)}
-        className={isShowingShare && "active"}
+        className={isShowingShare ? "active" : ""}
       ></div>
       <div className="header header-fixed shadow">
         <div className="navbar container">

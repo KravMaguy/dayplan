@@ -213,8 +213,6 @@ const DragPlan = () => {
     );
   };
 
-  console.log({ data });
-  console.log({ derivedData });
   return (
     <>
       <div class="whole-page" style={{ position: "relative", top: "60px" }}>
