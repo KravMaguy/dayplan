@@ -366,7 +366,10 @@ const DragPlan = () => {
             {derivedData.map((x, idx) => {
               return (
                 idx > 0 && (
-                  <div className="css-mod-1rhbuit-multiValue">
+                  <div
+                    key={x.id ? x.id : x.coordinates.id}
+                    className="css-mod-1rhbuit-multiValue"
+                  >
                     <div className="css-mod-12jo7m5">
                       <a className="pill" target="_blank" href={x.url}>
                         <div
