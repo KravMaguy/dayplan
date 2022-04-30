@@ -1,5 +1,5 @@
 import { Marker } from "@react-google-maps/api";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import "./PlanPage.css";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
@@ -161,16 +161,15 @@ const DragPlan = () => {
     }
   }, [currIdx, travelMode]);
 
+  const mapRef = useRef(null);
   const logMsg = useCallback(() => {
-    console.log("abcs");
+    mapRef?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
   useEffect(() => {
     const newCurr = document.getElementById(`panel-${currIdx}`);
-    console.log({ newCurr });
-
     if (newCurr) {
-      newCurr.addEventListener("click", logMsg);
+      newCurr.addEventListener("click", logMsg, true);
     }
     return {
       if(newCurr) {
@@ -277,11 +276,13 @@ const DragPlan = () => {
                 </button>
               </div>
               <main
+                ref={mapRef}
                 className={`map-wrapper ${
                   open ? "closed-map-control-size" : "open-map-control-size"
                 }`}
               >
                 <Map
+                  innerRef={mapRef}
                   containerClass="map-container"
                   // mapStyle={mapStyle}
                   center={center}
