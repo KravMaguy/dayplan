@@ -1,5 +1,5 @@
 import { Marker } from "@react-google-maps/api";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import "./PlanPage.css";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
@@ -160,6 +160,24 @@ const DragPlan = () => {
       curr.innerHTML = "";
     }
   }, [currIdx, travelMode]);
+
+  const logMsg = useCallback(() => {
+    console.log("abcs");
+  }, []);
+
+  useEffect(() => {
+    const newCurr = document.getElementById(`panel-${currIdx}`);
+    console.log({ newCurr });
+
+    if (newCurr) {
+      newCurr.addEventListener("click", logMsg);
+    }
+    return {
+      if(newCurr) {
+        newCurr.removeEventListener("click", logMsg);
+      },
+    };
+  }, [currIdx, travelMode, logMsg]);
 
   const handleSelectBox = (boxIndex) => {
     if (currIdx === collapsed) {
