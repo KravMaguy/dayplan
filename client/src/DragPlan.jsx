@@ -1,34 +1,22 @@
 import { MarkerClusterer, Marker } from "@react-google-maps/api";
 import React, { useState, useEffect, useCallback, useRef } from "react";
-
 import "./PlanPage.css";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import Map from "./Map";
+import {
+  startingSearchIndex,
+  dimStyle,
+  zoom,
+  pathVisibilityDefaults,
+  containerStyle,
+  options,
+} from "./planUtils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/thunks.js";
 import { useNavigate } from "react-router";
+import DestinationLinks from "./DestinationLinks";
 import mapgreypng from "./images/gmapgrey.png";
-const options = {
-  imagePath:
-    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m", // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
-};
-
-const pathVisibilityDefaults = {
-  strokeOpacity: 0.9,
-  strokeWeight: 6,
-};
-
-const containerStyle = {
-  width: "100%",
-  height: "100%",
-};
-
-const dimStyle = {
-  color: "dimgrey",
-  background: "#6969695c",
-};
-const startingSearchIndex = 0;
 
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
@@ -37,24 +25,8 @@ const DragPlan = () => {
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getLocationDataByCategories());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (!categoryLength) {
-      navigate("/categories");
-    }
-  }, [categoryLength]);
-
-  useEffect(() => {
-    if (!userCenter) {
-      return navigate("/location");
-    }
-  }, [userCenter]);
 
   const [open, setIsOpen] = useState(false);
-  const [zoom, setZoom] = useState(10);
   const [derivedData, setDerivedData] = useState([]);
   const [currIdx, setIdx] = useState(startingSearchIndex);
   const [destination, setDestination] = useState(null);
@@ -63,6 +35,43 @@ const DragPlan = () => {
   const [path, setPath] = useState(null);
   const [travelMode, setTravelMode] = useState("DRIVING");
   const [collapsed, setCollapsed] = useState(null);
+  const wayPoints = [origin, destination];
+
+  const checkDriving = ({ target: { checked } }) => {
+    checked && setTravelMode("DRIVING");
+    setResponse(null);
+  };
+
+  const checkBicycling = ({ target: { checked } }) => {
+    checked && setTravelMode("BICYCLING");
+    setResponse(null);
+  };
+
+  const checkTransit = ({ target: { checked } }) => {
+    checked && setTravelMode("TRANSIT");
+    setResponse(null);
+  };
+
+  const checkWalking = ({ target: { checked } }) => {
+    checked && setTravelMode("WALKING");
+    setResponse(null);
+  };
+
+  useEffect(() => {
+    dispatch(getLocationDataByCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!categoryLength) {
+      navigate("/categories");
+    }
+  }, [categoryLength, navigate]);
+
+  useEffect(() => {
+    if (!userCenter) {
+      return navigate("/location");
+    }
+  }, [userCenter, navigate]);
 
   useEffect(() => {
     if (data.length > 0 && data) {
@@ -134,28 +143,6 @@ const DragPlan = () => {
       setOrigin(prevOrigin);
       setIdx(currIdx - 1);
     }
-    setResponse(null);
-  };
-
-  const wayPoints = [origin, destination];
-
-  const checkDriving = ({ target: { checked } }) => {
-    checked && setTravelMode("DRIVING");
-    setResponse(null);
-  };
-
-  const checkBicycling = ({ target: { checked } }) => {
-    checked && setTravelMode("BICYCLING");
-    setResponse(null);
-  };
-
-  const checkTransit = ({ target: { checked } }) => {
-    checked && setTravelMode("TRANSIT");
-    setResponse(null);
-  };
-
-  const checkWalking = ({ target: { checked } }) => {
-    checked && setTravelMode("WALKING");
     setResponse(null);
   };
 
@@ -289,10 +276,8 @@ const DragPlan = () => {
                 <Map
                   innerRef={mapRef}
                   containerClass="map-container"
-                  // mapStyle={mapStyle}
                   center={center}
                   zoom={zoom}
-                  // setZoom={setZoom}
                   containerStyle={containerStyle}
                 >
                   {!response && !path && destination && origin && (
@@ -391,54 +376,10 @@ const DragPlan = () => {
           />
         </div>
         {!open && (
-          <div className="map-destination-links-container">
-            {derivedData.map((x, idx) => {
-              return (
-                idx > 0 && (
-                  <div
-                    key={x.id ? x.id : x.coordinates.id}
-                    className="css-mod-1rhbuit-multiValue"
-                  >
-                    <div className="css-mod-12jo7m5">
-                      <a className="pill" target="_blank" href={x.url}>
-                        <div
-                          className="numberCircle"
-                          style={{
-                            marginRight: "2px",
-                            position: "relative",
-                            bottom: "1px",
-                          }}
-                        >
-                          {String.fromCharCode("A".charCodeAt(0) + idx)}
-                        </div>
-
-                        {x.name.length > 30
-                          ? x.name.slice(0, 29) + "..."
-                          : x.name}
-                      </a>
-                    </div>
-                    <div
-                      onClick={() => removeLocation(x.id)}
-                      role="button"
-                      className="css-mod-xb97g8"
-                      aria-label={`remove ${x.name}`}
-                    >
-                      <svg
-                        height={14}
-                        width={14}
-                        viewBox="0 0 20 20"
-                        aria-hidden="true"
-                        focusable="false"
-                        className="css-mod-tj5bde-Svg"
-                      >
-                        <path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z" />
-                      </svg>
-                    </div>
-                  </div>
-                )
-              );
-            })}
-          </div>
+          <DestinationLinks
+            derivedData={derivedData}
+            removeLocation={removeLocation}
+          />
         )}
       </div>
     </>

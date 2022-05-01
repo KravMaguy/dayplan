@@ -1,23 +1,9 @@
 import { useState, useEffect } from "react";
 import { formatDuration, intervalToDuration } from "date-fns";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import {
-  IoIosBicycle,
-  IoIosCar,
-  IoIosBus,
-  IoIosWalk,
-  IoIosArrowDropdownCircle,
-  IoIosArrowDropupCircle,
-} from "react-icons/io";
+import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
-
-const travelModeStrings = {
-  DRIVING: "Drive",
-  BICYCLING: "Bike",
-  WALKING: "Walk",
-  TRANSIT: "Commute",
-};
-
+import DragDropContent from "./DragDropContent";
+import { highlightedColor, travelModeStrings } from "./planUtils";
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -25,28 +11,6 @@ const reorder = (list, startIndex, endIndex) => {
 
   return result;
 };
-
-const grid = 8;
-const highlightedColor = "#8d7fbf";
-const getItemStyle = (isDragging, draggableStyle, currIdx, idx, collapsed) => ({
-  userSelect: "none",
-  cursor: "move",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-  background: isDragging
-    ? "lightgreen"
-    : currIdx === idx + 1
-    ? highlightedColor
-    : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-});
 
 const DragPlanDirections = ({
   handleSelectBox,
@@ -178,79 +142,17 @@ const DragPlanDirections = ({
         }`}
       >
         <div className="plan-inner-container">
-          <form className="bg-grey-plan-controls">
-            <div className="radio-wrapper">
-              <label htmlFor="DRIVING">
-                <input
-                  type="radio"
-                  name="DRIVING"
-                  id="DRIVING"
-                  className="driving"
-                  checked={travelMode === "DRIVING"}
-                  onChange={checkDriving}
-                  value="DRIVING"
-                />
-                <IoIosCar className="travel-modes" />
-              </label>
-
-              <label htmlFor="BICYCLING">
-                <input
-                  type="radio"
-                  name="BICYCLING"
-                  className="bicycling"
-                  id="BICYCLING"
-                  checked={travelMode === "BICYCLING"}
-                  onChange={checkBicycling}
-                  value="BICYCLING"
-                />
-                <IoIosBicycle className="travel-modes" />
-              </label>
-
-              <label htmlFor="TRANSIT">
-                <input
-                  disabled={currIdx === 0}
-                  type="radio"
-                  name="TRANSIT"
-                  className="transit"
-                  id="TRANSIT"
-                  checked={travelMode === "TRANSIT"}
-                  onChange={checkTransit}
-                  value="TRANSIT"
-                />
-                <IoIosBus className="travel-modes" />
-              </label>
-
-              <label htmlFor="WALKING">
-                <input
-                  type="radio"
-                  name="WALKING"
-                  className="walking"
-                  id="WALKING"
-                  checked={travelMode === "WALKING"}
-                  onChange={checkWalking}
-                  value="WALKING"
-                />
-                <IoIosWalk className="travel-modes" />
-              </label>
-            </div>
-            <div>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsOpen(!open);
-                }}
-                className="no-link small-ui pure-material-button-text"
-              >
-                {!open ? "Close" : "Open"}
-              </button>
-              <button
-                onClick={(e) => resetForm(e)}
-                className="no-link pure-material-button-text"
-              >
-                Reset
-              </button>
-            </div>
-          </form>
+          <TravelModes
+            travelMode={travelMode}
+            checkBicycling={checkBicycling}
+            checkDriving={checkDriving}
+            checkWalking={checkWalking}
+            checkTransit={checkTransit}
+            currIdx={currIdx}
+            setIsOpen={setIsOpen}
+            resetForm={resetForm}
+            open={open}
+          />
           <div
             style={{
               color: "white",
@@ -288,149 +190,14 @@ const DragPlanDirections = ({
                 <span className="text">{startLink}</span>
               </div>
             </div>
-
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
-                  >
-                    {derivedData.slice(1).map((location, idx, arr) => {
-                      let previous = arr[idx - 1];
-                      return (
-                        <Draggable
-                          className="draggable-element"
-                          key={location.id}
-                          draggableId={location.id}
-                          index={idx}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={getItemStyle(
-                                snapshot.isDragging,
-                                provided.draggableProps.style,
-                                currIdx,
-                                idx,
-                                collapsed
-                              )}
-                            >
-                              <div
-                                style={{
-                                  color:
-                                    currIdx === idx + 1 ? "white" : "black",
-                                  textShadow:
-                                    idx + 1 === currIdx
-                                      ? "1px 1px 2px #000000"
-                                      : "none",
-                                }}
-                                className="plan-card"
-                              >
-                                <div
-                                  className={
-                                    idx + 1 === currIdx && currIdx !== collapsed
-                                      ? "points-container seconddiv coolclass"
-                                      : "seconddiv hidden"
-                                  }
-                                >
-                                  <div className="numberCircle">
-                                    {String.fromCharCode(
-                                      "A".charCodeAt(0) + idx
-                                    )}
-                                  </div>
-                                  <div className="line"></div>
-                                  <div className="numberCircle">
-                                    {String.fromCharCode(
-                                      "B".charCodeAt(0) + idx
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="locations">
-                                  <div
-                                    className={
-                                      idx + 1 === currIdx &&
-                                      currIdx !== collapsed
-                                        ? "text top seconddiv coolclass"
-                                        : "seconddiv"
-                                    }
-                                  >
-                                    <p>
-                                      {previous
-                                        ? previous.name
-                                        : "Starting Location"}
-                                    </p>
-                                  </div>
-                                  <div style={{ display: "flex" }}>
-                                    <div className="text">
-                                      <p>{location.name} </p>
-                                      {}
-                                      <p className="drag-address">
-                                        {idx + 1 !== currIdx && (
-                                          <a
-                                            style={{ fontStyle: "italic" }}
-                                            className=""
-                                            href={`https://www.google.com/maps?q=${encodeURI(
-                                              `${location.name} ${location?.address1} ${location?.city} ${location?.zip}`
-                                            )}`}
-                                            target="_blank"
-                                          >
-                                            {location?.address1}
-                                          </a>
-                                        )}
-                                      </p>
-                                    </div>
-
-                                    {idx + 1 === currIdx &&
-                                    currIdx !== collapsed ? (
-                                      <button
-                                        className="no-link pure-material-button-text"
-                                        style={{
-                                          position: "absolute",
-                                          right: 0,
-                                          top: 0,
-                                        }}
-                                        onClick={() => setCollapsed(idx + 1)}
-                                      >
-                                        Close
-                                      </button>
-                                    ) : (
-                                      <button
-                                        className="no-link pure-material-button-text"
-                                        style={{
-                                          position: "absolute",
-                                          right: 0,
-                                          top: 0,
-                                        }}
-                                        onClick={() => handleSelectBox(idx + 1)}
-                                      >
-                                        Open
-                                      </button>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className={
-                                  idx + 1 === currIdx && collapsed !== currIdx
-                                    ? "mt-40"
-                                    : "hidden"
-                                }
-                                id={`panel-${idx + 1}`}
-                              />
-                            </div>
-                          )}
-                        </Draggable>
-                      );
-                    })}
-
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+            <DragDropContent
+              onDragEnd={onDragEnd}
+              derivedData={derivedData}
+              currIdx={currIdx}
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              handleSelectBox={handleSelectBox}
+            />
           </div>
         </div>
         {/* <div className="fadedScroller_fade"></div> */}
