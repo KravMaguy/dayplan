@@ -10,16 +10,24 @@ const HomePage = () => {
   return (
     <>
       <div className="my-homepage">
-        <h1
-          className="homepage-title"
-          style={{ marginTop: "90px", marginLeft: "20px" }}
-        >
-          <span className="homepage-title-inner">
-            Create a day plan based around popular activities, festivals, local
-            buisnesses, or whatever you feel like.{" "}
-            <Link to={"/categories"}>Get Started</Link>
-          </span>
-        </h1>
+        <div style={{ marginTop: "90px", marginLeft: "20px" }}>
+          <h1 className="homepage-title">
+            <span className="homepage-title-inner">
+              Create a day plan based around popular activities, festivals,
+              local buisnesses, or whatever you feel like.{" "}
+              <Link to={"/categories"}>Get Started</Link>
+            </span>
+          </h1>
+          <div
+            class="legal-links"
+            style={{ position: "absolute", bottom: "10px" }}
+          >
+            <Link to={"/terms-of-service"}>Terms of Service</Link>
+            <br />
+            <Link to={"/privacy-policy"}>Privacy Policy</Link>
+          </div>
+        </div>
+
         {/* <div className="grid-container">
           <div className="grid-item">
             <img alt="redux" style={{ height: "100px" }} src={redux} />
