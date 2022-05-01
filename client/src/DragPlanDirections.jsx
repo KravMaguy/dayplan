@@ -38,6 +38,9 @@ const DragPlanDirections = ({
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
   const onDragEnd = (result) => {
+    if (travelMode === "TRANSIT") {
+      setTravelMode("DRIVING");
+    }
     if (!result.destination) {
       return;
     }
