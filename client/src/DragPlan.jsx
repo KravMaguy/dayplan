@@ -162,13 +162,9 @@ const DragPlan = () => {
             open={open}
             setIsOpen={setIsOpen}
             currIdx={currIdx}
-            setIdx={setIdx}
             handleSelectBox={handleSelectBox}
             response={response}
             derivedData={derivedData}
-            setResponse={setResponse}
-            setOrigin={setOrigin}
-            setDestination={setDestination}
             travelMode={travelMode}
             setTravelMode={setTravelMode}
             checkBicycling={checkBicycling}
@@ -178,6 +174,7 @@ const DragPlan = () => {
             setDerivedData={setDerivedData}
             collapsed={collapsed}
             setCollapsed={setCollapsed}
+            performDirections={performDirections}
           />
         </div>
         {!open && (

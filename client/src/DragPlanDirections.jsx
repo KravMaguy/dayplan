@@ -18,10 +18,6 @@ const DragPlanDirections = ({
   handleSelectBox,
   currIdx,
   response,
-  setResponse,
-  setOrigin,
-  setDestination,
-  setIdx,
   derivedData,
   setDerivedData,
   travelMode,
@@ -34,9 +30,13 @@ const DragPlanDirections = ({
   setCollapsed,
   open,
   setIsOpen,
+  performDirections,
 }) => {
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
+  const [startLink, setStartLink] = useState("");
+  const [originalData, setOriginalData] = useState(null);
+
   const onDragEnd = (result) => {
     if (travelMode === "TRANSIT") {
       setTravelMode("DRIVING");
@@ -44,8 +44,6 @@ const DragPlanDirections = ({
     if (!result.destination) {
       return;
     }
-    setIdx(0);
-
     const newItems = reorder(
       derivedData.slice(1),
       result.source.index,
@@ -60,11 +58,8 @@ const DragPlanDirections = ({
       lat: newItems[newItems.length - 1].coordinates.latitude,
       lng: newItems[newItems.length - 1].coordinates.longitude,
     };
-    setOrigin(origin);
-    setDestination(destination);
-    setResponse(null);
+    performDirections = (0, origin, destination, null);
   };
-  const [startLink, setStartLink] = useState("");
 
   useEffect(() => {
     if (derivedData.length > 0) {
@@ -95,8 +90,6 @@ const DragPlanDirections = ({
   const viewFullPlan = () => {
     if (currIdx === 0) return;
     travelMode === "TRANSIT" && setTravelMode("DRIVING");
-    setIdx(0);
-    setResponse(null);
     const lastDestination = {
       lat: derivedData[derivedData.length - 1].coordinates.latitude,
       lng: derivedData[derivedData.length - 1].coordinates.longitude,
@@ -105,15 +98,13 @@ const DragPlanDirections = ({
       lat: derivedData[0].coordinates.latitude,
       lng: derivedData[0].coordinates.longitude,
     };
-    setOrigin(origin);
-    setDestination(lastDestination);
+    performDirections(0, origin, lastDestination, null);
   };
 
   function humanDuration(time) {
     return formatDuration(intervalToDuration({ start: 0, end: time * 1000 }));
   }
 
-  const [originalData, setOriginalData] = useState(null);
   useEffect(() => {
     if (!originalData && derivedData.length > 0) {
       setOriginalData(derivedData);
@@ -131,12 +122,9 @@ const DragPlanDirections = ({
       lat: originalData[originalData.length - 1].coordinates.latitude,
       lng: originalData[originalData.length - 1].coordinates.longitude,
     };
-
-    setDestination(lastDestination);
-    setOrigin(origin);
-    setIdx(0);
-    setResponse(null);
+    performDirections = (0, origin, lastDestination, null);
   };
+
   return (
     <div className="col plan-col-right">
       <div
