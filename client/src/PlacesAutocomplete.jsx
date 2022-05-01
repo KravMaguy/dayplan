@@ -115,7 +115,7 @@ const PlacesAutoComplete = () => {
       >
         {true && (
           <div className="constrained top-container-searchbox">
-            <div className="search-wrap" style={{ width: "100%" }}>
+            <div className="search-wrap">
               <GooglePlacesAutocomplete
                 selectProps={{
                   // onFocus: () => console.log("focused"),
@@ -126,7 +126,7 @@ const PlacesAutoComplete = () => {
                     console.log("on input change");
                     setInputValue(newInputValue);
                   },
-                  placeholder: "plan for things to do around...",
+                  placeholder: "choose location",
                   onChange: (val) => handleSelect(val),
                 }}
                 apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}

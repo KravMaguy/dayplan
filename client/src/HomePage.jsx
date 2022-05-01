@@ -25,6 +25,9 @@ const HomePage = () => {
             <Link to={"/terms-of-service"}>Terms of Service</Link>
             <br />
             <Link to={"/privacy-policy"}>Privacy Policy</Link>
+            <br />
+
+            <Link to={"/attributes"}>Attributes</Link>
           </div>
         </div>
 

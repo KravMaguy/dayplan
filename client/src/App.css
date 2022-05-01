@@ -146,10 +146,6 @@ body {
   text-align: center;
 }
 
-.constrained {
-  width: 90vw;
-}
-
 .top-container-searchbox {
   /* margin: 0 auto; */
   z-index: 1;
@@ -164,6 +160,17 @@ body {
 
 .search-wrap {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .search-wrap {
+    width: 75vw !important;
+  }
+}
+
+.constrained {
+  width: 90vw;
 }
 
 @media screen and (min-width: 600px) {
@@ -192,7 +199,7 @@ body {
 
 .icon {
   width: 50px;
-  background: silver;
+  background: #5491f5;
   display: flex;
   justify-content: center;
   align-items: center;

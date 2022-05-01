@@ -8,6 +8,7 @@ import PlanPreview from "./PlanPreview";
 import Header from "./Header";
 import PrivacyPolicy from "./PrivacyPolicy";
 import Tos from "./Tos";
+import Attributes from "./Attributes";
 function App() {
   return (
     <div className="">
@@ -21,6 +22,7 @@ function App() {
           <Route path="/plans/:email/:id" element={<PlanPreview />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<Tos />} />
+          <Route path="/attributes" element={<Attributes />} />
         </Routes>
       </Router>
     </div>

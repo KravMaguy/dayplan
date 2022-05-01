@@ -1,4 +1,4 @@
-import { Marker } from "@react-google-maps/api";
+import { MarkerClusterer, Marker } from "@react-google-maps/api";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import "./PlanPage.css";
@@ -9,6 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/thunks.js";
 import { useNavigate } from "react-router";
 import mapgreypng from "./images/gmapgrey.png";
+const options = {
+  imagePath:
+    "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m", // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
+};
+
 const pathVisibilityDefaults = {
   strokeOpacity: 0.9,
   strokeWeight: 6,
@@ -314,7 +319,6 @@ const DragPlan = () => {
                     <DirectionsRenderer
                       options={{
                         suppressMarkers: !getWayPoints() ? true : false,
-
                         directions: response,
                         polylineOptions: {
                           strokeColor:
@@ -335,22 +339,28 @@ const DragPlan = () => {
                       panel={document.getElementById(`panel-${currIdx}`)}
                     />
                   )}
-                  {!getWayPoints() &&
-                    wayPoints.map((waypoint, idx) => {
-                      const letter = String.fromCharCode(
-                        "A".charCodeAt(0) + currIdx + idx - 1
-                      );
-                      return (
-                        <Marker
-                          key={letter}
-                          position={{
-                            lat: waypoint.lat,
-                            lng: waypoint.lng,
-                          }}
-                          label={{ text: letter, color: "white" }}
-                        />
-                      );
-                    })}
+                  {!getWayPoints() && (
+                    <MarkerClusterer options={options}>
+                      {(clusterer) =>
+                        wayPoints.map((waypoint, idx) => {
+                          const letter = String.fromCharCode(
+                            "A".charCodeAt(0) + currIdx + idx - 1
+                          );
+                          return (
+                            <Marker
+                              key={idx}
+                              position={{
+                                lat: waypoint.lat,
+                                lng: waypoint.lng,
+                              }}
+                              label={{ text: letter, color: "white" }}
+                              clusterer={clusterer}
+                            />
+                          );
+                        })
+                      }
+                    </MarkerClusterer>
+                  )}
                 </Map>
               </main>
             </div>
