@@ -1,23 +1,13 @@
-import { MarkerClusterer, Marker } from "@react-google-maps/api";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./PlanPage.css";
-import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
-import Map from "./Map";
-import {
-  startingSearchIndex,
-  dimStyle,
-  zoom,
-  pathVisibilityDefaults,
-  containerStyle,
-  options,
-} from "./planUtils";
+
+import { startingSearchIndex } from "./planUtils";
 import DragPlanDirections from "./DragPlanDirections";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationDataByCategories } from "./redux/thunks.js";
 import { useNavigate } from "react-router";
 import DestinationLinks from "./DestinationLinks";
-import mapgreypng from "./images/gmapgrey.png";
-
+import PlanMap from "./PlanMap";
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.data);
@@ -32,10 +22,8 @@ const DragPlan = () => {
   const [destination, setDestination] = useState(null);
   const [origin, setOrigin] = useState(center);
   const [response, setResponse] = useState(null);
-  const [path, setPath] = useState(null);
   const [travelMode, setTravelMode] = useState("DRIVING");
   const [collapsed, setCollapsed] = useState(null);
-  const wayPoints = [origin, destination];
 
   const checkDriving = ({ target: { checked } }) => {
     checked && setTravelMode("DRIVING");
@@ -83,68 +71,6 @@ const DragPlan = () => {
       setDestination(lastDestination);
     }
   }, [data]);
-
-  const getWayPoints = (param) => {
-    if (currIdx === startingSearchIndex) {
-      const myPoints = derivedData.slice(
-        startingSearchIndex + 1,
-        derivedData.length - 1
-      );
-      const thepoints = myPoints.map((destination) => {
-        return {
-          location: {
-            lat: destination.coordinates.latitude,
-            lng: destination.coordinates.longitude,
-          },
-          stopover: true,
-        };
-      });
-
-      return thepoints;
-    } else {
-      return null;
-    }
-  };
-
-  const nextDestination = () => {
-    if (currIdx !== startingSearchIndex) {
-      setOrigin(destination);
-    }
-    const nextDestination = {
-      lat: derivedData[currIdx + 1].coordinates.latitude,
-      lng: derivedData[currIdx + 1].coordinates.longitude,
-    };
-    setDestination(nextDestination);
-    setIdx(currIdx + 1);
-    setResponse(null);
-  };
-
-  const prevDestination = () => {
-    if (currIdx === startingSearchIndex + 1) {
-      travelMode === "TRANSIT" && setTravelMode("DRIVING");
-
-      setIdx(startingSearchIndex);
-      const startingDestination = {
-        lat: derivedData[startingSearchIndex].coordinates.latitude,
-        lng: derivedData[startingSearchIndex].coordinates.longitude,
-      };
-      setOrigin(startingDestination);
-      const lastDestination = {
-        lat: derivedData[derivedData.length - 1].coordinates.latitude,
-        lng: derivedData[derivedData.length - 1].coordinates.longitude,
-      };
-      setDestination(lastDestination);
-    } else {
-      setDestination(origin);
-      const prevOrigin = {
-        lat: derivedData[currIdx - 2].coordinates.latitude,
-        lng: derivedData[currIdx - 2].coordinates.longitude,
-      };
-      setOrigin(prevOrigin);
-      setIdx(currIdx - 1);
-    }
-    setResponse(null);
-  };
 
   useEffect(() => {
     const curr = document.getElementById(`panel-${currIdx}`);
@@ -210,147 +136,25 @@ const DragPlan = () => {
     setResponse(null);
   };
 
-  const getLocStr = () => {
-    const latlongArr = derivedData.map((x) => {
-      return [x.coordinates.latitude, x.coordinates.longitude];
-    });
-    if (currIdx === 0) {
-      return latlongArr.map((e) => e.join(",")).join("/");
-    }
-    return (
-      latlongArr[currIdx - 1].join(",") + "/" + latlongArr[currIdx].join(",")
-    );
-  };
-
   return (
     <>
       <div className="whole-page" style={{ position: "relative", top: "60px" }}>
-        {" "}
         <div className="row map-plan-row">
-          <div className="col col-left side-p-10">
-            <div className="plan-map-container">
-              <div className="map-card-controls">
-                <div style={{ display: "flex" }}>
-                  <button
-                    className="map-controls"
-                    style={currIdx <= 0 ? dimStyle : null}
-                    disabled={currIdx <= 0 ? true : false}
-                    onClick={() => prevDestination()}
-                  >
-                    {currIdx === startingSearchIndex + 1
-                      ? "Full Plan"
-                      : "Previous"}
-                  </button>
-                  <button
-                    style={currIdx >= derivedData.length - 1 ? dimStyle : null}
-                    className="map-controls plan-next-btn"
-                    disabled={currIdx >= derivedData.length - 1 ? true : false}
-                    onClick={() => nextDestination()}
-                  >
-                    {currIdx === startingSearchIndex ? "Start" : "Next"}
-                  </button>
-                </div>
-
-                <button className="pure-material-button-text pink-bg">
-                  <a
-                    alt="view this plan on google maps"
-                    target="blank"
-                    style={{ display: "flex" }}
-                    href={`https://www.google.com/maps/dir/${getLocStr()}`}
-                  >
-                    <span className="map-link-text-hide">on</span>
-                    <img
-                      alt="google-directions-link"
-                      style={{ height: "31px" }}
-                      src={mapgreypng}
-                    />
-                  </a>
-                </button>
-              </div>
-              <main
-                ref={mapRef}
-                className={`map-wrapper ${
-                  open ? "closed-map-control-size" : "open-map-control-size"
-                }`}
-              >
-                <Map
-                  innerRef={mapRef}
-                  containerClass="map-container"
-                  center={center}
-                  zoom={zoom}
-                  containerStyle={containerStyle}
-                >
-                  {!response && !path && destination && origin && (
-                    <DirectionsService
-                      options={{
-                        origin: origin,
-                        destination: destination,
-                        waypoints: getWayPoints(),
-                        travelMode: travelMode,
-                      }}
-                      callback={(response) => {
-                        if (response !== null) {
-                          if (response.status === "OK") {
-                            setResponse(response);
-                          } else {
-                            setPath([origin, destination]);
-                          }
-                        }
-                      }}
-                    />
-                  )}
-
-                  {response !== null && (
-                    <DirectionsRenderer
-                      options={{
-                        suppressMarkers: !getWayPoints() ? true : false,
-                        directions: response,
-                        polylineOptions: {
-                          strokeColor:
-                            currIdx === startingSearchIndex
-                              ? "black"
-                              : "#604ca6c7",
-                          strokeOpacity:
-                            currIdx !== startingSearchIndex
-                              ? pathVisibilityDefaults.strokeOpacity
-                              : null,
-                          strokeWeight:
-                            currIdx !== startingSearchIndex
-                              ? pathVisibilityDefaults.strokeWeight
-                              : null,
-                        },
-                      }}
-                      directions={response}
-                      panel={document.getElementById(`panel-${currIdx}`)}
-                    />
-                  )}
-                  {!getWayPoints() && (
-                    <MarkerClusterer options={options}>
-                      {(clusterer) =>
-                        wayPoints.map((waypoint, idx) => {
-                          const letter = String.fromCharCode(
-                            "A".charCodeAt(0) + currIdx + idx - 1
-                          );
-                          return (
-                            <Marker
-                              key={idx}
-                              position={{
-                                lat: waypoint.lat,
-                                lng: waypoint.lng,
-                              }}
-                              label={{ text: letter, color: "white" }}
-                              clusterer={clusterer}
-                            />
-                          );
-                        })
-                      }
-                    </MarkerClusterer>
-                  )}
-                </Map>
-              </main>
-            </div>
-          </div>
-
+          <PlanMap
+            origin={origin}
+            destination={destination}
+            currIdx={currIdx}
+            derivedData={derivedData}
+            travelMode={travelMode}
+            setTravelMode={setTravelMode}
+            setIdx={setIdx}
+            setOrigin={setOrigin}
+            setDestination={setDestination}
+            setResponse={setResponse}
+            response={response}
+            open={open}
+            mapRef={mapRef}
+          />
           <DragPlanDirections
             open={open}
             setIsOpen={setIsOpen}
@@ -369,8 +173,6 @@ const DragPlan = () => {
             checkTransit={checkTransit}
             checkDriving={checkDriving}
             setDerivedData={setDerivedData}
-            data={data}
-            center={center}
             collapsed={collapsed}
             setCollapsed={setCollapsed}
           />

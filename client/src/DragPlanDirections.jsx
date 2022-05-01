@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import { formatDuration, intervalToDuration } from "date-fns";
 import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
