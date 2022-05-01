@@ -96,6 +96,13 @@ const DragPlan = () => {
     };
   }, [currIdx, travelMode, logMsg]);
 
+  const performDirections = (index, origin, destination, response) => {
+    index && setIdx(index);
+    origin && setOrigin(origin);
+    destination && setDestination(destination);
+    setResponse(response);
+  };
+
   const handleSelectBox = (boxIndex) => {
     if (currIdx === collapsed) {
       setCollapsed(null);
@@ -109,13 +116,13 @@ const DragPlan = () => {
       lat: derivedData[boxIndex].coordinates.latitude,
       lng: derivedData[boxIndex].coordinates.longitude,
     };
-    setIdx(boxIndex);
-    setOrigin(origin);
-    setDestination(destination);
-    setResponse(null);
+    performDirections(boxIndex, origin, destination, null);
   };
 
   const removeLocation = (id) => {
+    if (travelMode === "TRANSIT") {
+      setTravelMode("DRIVING");
+    }
     const index = derivedData.findIndex((obj) => obj.id === id);
     const origin = {
       lat: derivedData[0].coordinates.latitude,
@@ -125,15 +132,12 @@ const DragPlan = () => {
       .slice(0, index)
       .concat(derivedData.slice(index + 1));
     setDerivedData(filteredData);
-    setIdx(0);
 
     const destination = {
       lat: filteredData[filteredData.length - 1].coordinates.latitude,
       lng: filteredData[filteredData.length - 1].coordinates.longitude,
     };
-    setOrigin(origin);
-    setDestination(destination);
-    setResponse(null);
+    performDirections(0, origin, destination, null);
   };
 
   return (
@@ -154,6 +158,7 @@ const DragPlan = () => {
             response={response}
             open={open}
             mapRef={mapRef}
+            performDirections={performDirections}
           />
           <DragPlanDirections
             open={open}

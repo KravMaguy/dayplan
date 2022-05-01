@@ -64,7 +64,7 @@ export default function MultiSelectAsync() {
         </h1> */}
         <h1 className="homepage-title">
           <span className="homepage-title-inner">
-            What do you want your plan to be about?
+            Create a plan, choose up to three categories
           </span>
         </h1>
 

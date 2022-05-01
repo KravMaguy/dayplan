@@ -133,7 +133,6 @@ app.post("/api/", (req, res) => {
   const { lat, lng } = center;
   const max = 6;
   const mappedCategories = categories.map((category) => {
-    console.log(category);
     let terms = "",
       categoryStr = "";
     if (category.def === "term") {
@@ -153,7 +152,7 @@ app.post("/api/", (req, res) => {
       lat +
       "&longitude=" +
       lng +
-      "&sort_by=distance&limit=2";
+      `&sort_by=distance&limit=${max / categories.length}`;
     // console.log({ url });
     return axios.get(url).catch((e) => console.log(e));
   });
