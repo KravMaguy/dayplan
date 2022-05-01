@@ -22,45 +22,41 @@ const PlanMap = ({
   derivedData,
   travelMode,
   setTravelMode,
-  setIdx,
   setOrigin,
-  setDestination,
   setResponse,
   response,
   open,
   mapRef,
+  performDirections,
 }) => {
   const center = useSelector((state) => state.center);
-
   const wayPoints = [origin, destination];
-
   const [path, setPath] = useState(null);
 
   const prevDestination = () => {
     if (currIdx === startingSearchIndex + 1) {
       travelMode === "TRANSIT" && setTravelMode("DRIVING");
-
-      setIdx(startingSearchIndex);
       const startingDestination = {
         lat: derivedData[startingSearchIndex].coordinates.latitude,
         lng: derivedData[startingSearchIndex].coordinates.longitude,
       };
-      setOrigin(startingDestination);
       const lastDestination = {
         lat: derivedData[derivedData.length - 1].coordinates.latitude,
         lng: derivedData[derivedData.length - 1].coordinates.longitude,
       };
-      setDestination(lastDestination);
+      performDirections(
+        startingSearchIndex,
+        startingDestination,
+        lastDestination,
+        null
+      );
     } else {
-      setDestination(origin);
       const prevOrigin = {
         lat: derivedData[currIdx - 2].coordinates.latitude,
         lng: derivedData[currIdx - 2].coordinates.longitude,
       };
-      setOrigin(prevOrigin);
-      setIdx(currIdx - 1);
+      performDirections(currIdx - 1, prevOrigin, origin, null);
     }
-    setResponse(null);
   };
 
   const nextDestination = () => {
@@ -71,9 +67,7 @@ const PlanMap = ({
       lat: derivedData[currIdx + 1].coordinates.latitude,
       lng: derivedData[currIdx + 1].coordinates.longitude,
     };
-    setDestination(nextDestination);
-    setIdx(currIdx + 1);
-    setResponse(null);
+    performDirections(currIdx + 1, null, nextDestination, null);
   };
 
   const getWayPoints = (param) => {
@@ -91,7 +85,6 @@ const PlanMap = ({
           stopover: true,
         };
       });
-
       return thepoints;
     } else {
       return null;

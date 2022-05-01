@@ -97,7 +97,7 @@ const DragPlan = () => {
   }, [currIdx, travelMode, logMsg]);
 
   const performDirections = (index, origin, destination, response) => {
-    index && setIdx(index);
+    (index || index === 0) && setIdx(index);
     origin && setOrigin(origin);
     destination && setDestination(destination);
     setResponse(response);
@@ -151,9 +151,7 @@ const DragPlan = () => {
             derivedData={derivedData}
             travelMode={travelMode}
             setTravelMode={setTravelMode}
-            setIdx={setIdx}
             setOrigin={setOrigin}
-            setDestination={setDestination}
             setResponse={setResponse}
             response={response}
             open={open}
