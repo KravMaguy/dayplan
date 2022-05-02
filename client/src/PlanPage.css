@@ -608,14 +608,14 @@ a.pill:active {
 
 /* end drag styles */
 
-/* cellphone responsive layout 576 px and under */
-@media screen and (min-width: 576px) {
+/* cellphone responsive layout 600 px and under */
+@media screen and (min-width: 600px) {
   button.small-ui {
     display: none;
   }
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 600px) {
   .col-left {
     width: 100%;
     float: none;
