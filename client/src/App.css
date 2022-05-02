@@ -263,3 +263,16 @@ body {
   color: black;
   padding: 20px;
 }
+
+.legal-links a {
+  /* margin-left: 3px;
+  color: rgb(58, 55, 55); */
+}
+
+.legal-links a:first-child {
+  /*margin-left: 0px;  limits the scope of the previous rule */
+}
+
+.legal-links a {
+  display: block;
+}

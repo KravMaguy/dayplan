@@ -20,12 +20,10 @@ const HomePage = () => {
           </h1>
           <div
             class="legal-links"
-            style={{ position: "absolute", bottom: "10px" }}
+            style={{ position: "absolute", bottom: "20px" }}
           >
             <Link to={"/terms-of-service"}>Terms of Service</Link>
-            <br />
             <Link to={"/privacy-policy"}>Privacy Policy</Link>
-            <br />
 
             <Link to={"/attributes"}>Attributes</Link>
           </div>
