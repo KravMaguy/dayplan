@@ -81,6 +81,7 @@ const DragPlan = () => {
 
   const mapRef = useRef(null);
   const logMsg = useCallback(() => {
+    console.log({ mapRef });
     mapRef?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
