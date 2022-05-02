@@ -7,6 +7,7 @@ import axios from "axios";
 import "./planpreview.css";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import { options } from "./planUtils";
+import SkeletonArticle from "./SkeletonArticle";
 
 const containerStyle = {
   height: "100%",
@@ -220,17 +221,19 @@ const PlanPreview = () => {
           </div>
         </>
       ) : (
-        <div
-          className="when-do-i-show"
-          style={{
-            position: "absolute",
-            bottom: "0px",
-            fontSize: "50px",
-            background: "green",
-          }}
-        >
-          Map loading...
-        </div>
+        // <div
+        //   className="when-do-i-show"
+        //   style={{
+        //     position: "absolute",
+        //     bottom: "0px",
+        //     fontSize: "50px",
+        //     background: "green",
+        //   }}
+        // >
+        //   Map loading...
+        // </div>
+
+        [1, 2, 3, 4, 5].map((n) => <SkeletonArticle key={n} theme="light" />)
       )}
     </>
   );
