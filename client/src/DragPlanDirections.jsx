@@ -58,7 +58,8 @@ const DragPlanDirections = ({
       lat: newItems[newItems.length - 1].coordinates.latitude,
       lng: newItems[newItems.length - 1].coordinates.longitude,
     };
-    performDirections = (0, origin, destination, null);
+
+    performDirections(0, origin, destination, null);
   };
 
   useEffect(() => {
@@ -122,7 +123,7 @@ const DragPlanDirections = ({
       lat: originalData[originalData.length - 1].coordinates.latitude,
       lng: originalData[originalData.length - 1].coordinates.longitude,
     };
-    performDirections = (0, origin, lastDestination, null);
+    performDirections(0, origin, lastDestination, null);
   };
 
   return (
