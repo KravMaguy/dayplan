@@ -5,10 +5,9 @@ import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import Map from "./Map";
 import mapgreypng from "./images/gmapgrey.png";
 import { useSelector } from "react-redux";
-
+import CardDirectionsButtons from "./CardDirectionsButtons";
 import {
   startingSearchIndex,
-  dimStyle,
   zoom,
   pathVisibilityDefaults,
   containerStyle,
@@ -28,47 +27,49 @@ const PlanMap = ({
   open,
   mapRef,
   performDirections,
+  nextDestination,
+  prevDestination,
 }) => {
   const center = useSelector((state) => state.center);
   const wayPoints = [origin, destination];
   const [path, setPath] = useState(null);
 
-  const prevDestination = () => {
-    if (currIdx === startingSearchIndex + 1) {
-      travelMode === "TRANSIT" && setTravelMode("DRIVING");
-      const startingDestination = {
-        lat: derivedData[startingSearchIndex].coordinates.latitude,
-        lng: derivedData[startingSearchIndex].coordinates.longitude,
-      };
-      const lastDestination = {
-        lat: derivedData[derivedData.length - 1].coordinates.latitude,
-        lng: derivedData[derivedData.length - 1].coordinates.longitude,
-      };
-      performDirections(
-        startingSearchIndex,
-        startingDestination,
-        lastDestination,
-        null
-      );
-    } else {
-      const prevOrigin = {
-        lat: derivedData[currIdx - 2].coordinates.latitude,
-        lng: derivedData[currIdx - 2].coordinates.longitude,
-      };
-      performDirections(currIdx - 1, prevOrigin, origin, null);
-    }
-  };
+  // const prevDestination = () => {
+  //   if (currIdx === startingSearchIndex + 1) {
+  //     travelMode === "TRANSIT" && setTravelMode("DRIVING");
+  //     const startingDestination = {
+  //       lat: derivedData[startingSearchIndex].coordinates.latitude,
+  //       lng: derivedData[startingSearchIndex].coordinates.longitude,
+  //     };
+  //     const lastDestination = {
+  //       lat: derivedData[derivedData.length - 1].coordinates.latitude,
+  //       lng: derivedData[derivedData.length - 1].coordinates.longitude,
+  //     };
+  //     performDirections(
+  //       startingSearchIndex,
+  //       startingDestination,
+  //       lastDestination,
+  //       null
+  //     );
+  //   } else {
+  //     const prevOrigin = {
+  //       lat: derivedData[currIdx - 2].coordinates.latitude,
+  //       lng: derivedData[currIdx - 2].coordinates.longitude,
+  //     };
+  //     performDirections(currIdx - 1, prevOrigin, origin, null);
+  //   }
+  // };
 
-  const nextDestination = () => {
-    if (currIdx !== startingSearchIndex) {
-      setOrigin(destination);
-    }
-    const nextDestination = {
-      lat: derivedData[currIdx + 1].coordinates.latitude,
-      lng: derivedData[currIdx + 1].coordinates.longitude,
-    };
-    performDirections(currIdx + 1, null, nextDestination, null);
-  };
+  // const nextDestination = () => {
+  //   if (currIdx !== startingSearchIndex) {
+  //     setOrigin(destination);
+  //   }
+  //   const nextDestination = {
+  //     lat: derivedData[currIdx + 1].coordinates.latitude,
+  //     lng: derivedData[currIdx + 1].coordinates.longitude,
+  //   };
+  //   performDirections(currIdx + 1, null, nextDestination, null);
+  // };
 
   const getWayPoints = (param) => {
     if (currIdx === startingSearchIndex) {
@@ -107,25 +108,12 @@ const PlanMap = ({
     <div className="col col-left side-p-10">
       <div className="plan-map-container">
         <div className="map-card-controls">
-          <div style={{ display: "flex" }}>
-            <button
-              className="map-controls"
-              style={currIdx <= 0 ? dimStyle : null}
-              disabled={currIdx <= 0 ? true : false}
-              onClick={() => prevDestination()}
-            >
-              {currIdx === startingSearchIndex + 1 ? "Full Plan" : "Previous"}
-            </button>
-            <button
-              style={currIdx >= derivedData.length - 1 ? dimStyle : null}
-              className="map-controls plan-next-btn"
-              disabled={currIdx >= derivedData.length - 1 ? true : false}
-              onClick={() => nextDestination()}
-            >
-              {currIdx === startingSearchIndex ? "Start" : "Next"}
-            </button>
-          </div>
-
+          <CardDirectionsButtons
+            currIdx={currIdx}
+            prevDestination={prevDestination}
+            derivedData={derivedData}
+            nextDestination={nextDestination}
+          />
           <button className="pure-material-button-text pink-bg">
             <a
               alt="view this plan on google maps"

@@ -6,6 +6,7 @@ import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import DragDropContent from "./DragDropContent";
 import { highlightedColor, travelModeStrings } from "./planUtils";
+import CardDirectionsButtons from "./CardDirectionsButtons";
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -31,6 +32,8 @@ const DragPlanDirections = ({
   open,
   setIsOpen,
   performDirections,
+  prevDestination,
+  nextDestination,
 }) => {
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
@@ -126,6 +129,8 @@ const DragPlanDirections = ({
     performDirections(0, origin, lastDestination, null);
   };
 
+  console.log({ currIdx });
+
   return (
     <div className="col plan-col-right">
       <div
@@ -159,6 +164,13 @@ const DragPlanDirections = ({
             <div className="plan-flex-container">
               <div className="mdc-card-wrapper__text-section">
                 <div className="demo-card__title">
+                  <CardDirectionsButtons
+                    currIdx={currIdx}
+                    prevDestination={prevDestination}
+                    derivedData={derivedData}
+                    nextDestination={nextDestination}
+                  />
+
                   <div
                     className={`numberCircle greyish-bg                 white-border`}
                   >

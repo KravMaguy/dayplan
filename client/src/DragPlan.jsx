@@ -141,6 +141,42 @@ const DragPlan = () => {
     performDirections(0, origin, destination, null);
   };
 
+  const prevDestination = () => {
+    if (currIdx === startingSearchIndex + 1) {
+      travelMode === "TRANSIT" && setTravelMode("DRIVING");
+      const startingDestination = {
+        lat: derivedData[startingSearchIndex].coordinates.latitude,
+        lng: derivedData[startingSearchIndex].coordinates.longitude,
+      };
+      const lastDestination = {
+        lat: derivedData[derivedData.length - 1].coordinates.latitude,
+        lng: derivedData[derivedData.length - 1].coordinates.longitude,
+      };
+      performDirections(
+        startingSearchIndex,
+        startingDestination,
+        lastDestination,
+        null
+      );
+    } else {
+      const prevOrigin = {
+        lat: derivedData[currIdx - 2].coordinates.latitude,
+        lng: derivedData[currIdx - 2].coordinates.longitude,
+      };
+      performDirections(currIdx - 1, prevOrigin, origin, null);
+    }
+  };
+
+  const nextDestination = () => {
+    if (currIdx !== startingSearchIndex) {
+      setOrigin(destination);
+    }
+    const nextDestination = {
+      lat: derivedData[currIdx + 1].coordinates.latitude,
+      lng: derivedData[currIdx + 1].coordinates.longitude,
+    };
+    performDirections(currIdx + 1, null, nextDestination, null);
+  };
   return (
     <>
       <div className="whole-page" style={{ position: "relative", top: "60px" }}>
@@ -158,6 +194,8 @@ const DragPlan = () => {
             open={open}
             mapRef={mapRef}
             performDirections={performDirections}
+            nextDestination={nextDestination}
+            prevDestination={prevDestination}
           />
           <DragPlanDirections
             open={open}
@@ -176,6 +214,8 @@ const DragPlan = () => {
             collapsed={collapsed}
             setCollapsed={setCollapsed}
             performDirections={performDirections}
+            nextDestination={nextDestination}
+            prevDestination={prevDestination}
           />
         </div>
         {!open && (
