@@ -1,6 +1,6 @@
 import { useState, useEffect, createRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import useMediaQuery from "./useMediaQuery";
+// import useMediaQuery from "./useMediaQuery";
 
 const grid = 8;
 const highlightedColor = "#8d7fbf";
@@ -30,19 +30,19 @@ const DragDropContent = ({
   setCollapsed,
   handleSelectBox,
 }) => {
-  const matches = useMediaQuery("(min-width: 600px)");
+  // const matches = useMediaQuery("(min-width: 600px)");
 
   const [elRefs, setElRefs] = useState([]);
 
   useEffect(() => {
-    if (derivedData.length > 0 && matches) {
+    if (derivedData.length > 0) {
       setElRefs((refs) =>
         Array(derivedData.length - 1)
           .fill()
           .map((_, i) => refs[i] || createRef())
       );
     }
-  }, [derivedData.length, matches]);
+  }, [derivedData.length]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
