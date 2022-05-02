@@ -253,3 +253,13 @@ body {
   /* height: 65px;
   width: 95px; */
 }
+
+.large-continue-btn {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  border-radius: 0px;
+  font-size: x-large;
+  color: black;
+  padding: 20px;
+}

@@ -149,7 +149,6 @@ const PlanMap = ({
           }`}
         >
           <Map
-            innerRef={mapRef}
             containerClass="map-container"
             center={center}
             zoom={zoom}

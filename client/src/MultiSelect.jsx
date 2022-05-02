@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import axios from "axios";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const animatedComponents = makeAnimated();
+
 const customStyles = {
   option: (provided, state) => ({
     ...provided,
@@ -21,6 +21,7 @@ const customStyles = {
 };
 
 export default function MultiSelectAsync() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
   const checkLength = () => {
@@ -43,52 +44,51 @@ export default function MultiSelectAsync() {
     );
   };
 
+  console.log("length of categories ", categories.length);
   return (
-    <>
-      <div
-        className="constrained"
-        style={{
-          position: "relative",
-          top: "90px",
-          // width: "90%",
-          margin: "0 auto",
-        }}
-      >
-        {/* <h1 style={{ marginBottom: "20px" }}>
-          <span className="wrap">
-            <span className="inner">
-              Create a day plan based around popular activities, festivals,
-              local buisnesses, or whatever you feel like.
-            </span>
-          </span>
-        </h1> */}
-        <h1 className="homepage-title">
-          <span className="homepage-title-inner">
-            Create a plan, choose up to three categories
-          </span>
-        </h1>
+    <div
+      className="constrained"
+      style={{
+        position: "relative",
+        top: "90px",
+        margin: "0 auto",
+        minHeight: "calc(100vh - 90px)",
+      }}
+    >
+      <h1 className="homepage-title">
+        <span className="homepage-title-inner">
+          Create a plan, choose up to three categories
+        </span>
+      </h1>
 
-        <AsyncSelect
-          cacheOptions
-          defaultValue={categories}
-          placeholder={"What do you feel like doing?"}
-          loadOptions={checkLength() && loadOptions}
-          components={animatedComponents}
-          isMulti
-          styles={customStyles}
-          onChange={(e) => {
-            dispatch({
-              type: "SET_CATEGORIES",
-              payload: e,
-            });
-          }}
-          noOptionsMessage={({ inputValue }) => {
-            return checkLength()
-              ? "no options found"
-              : "max categories allowed in free plan";
-          }}
-        />
-      </div>
-    </>
+      <AsyncSelect
+        cacheOptions
+        defaultValue={categories}
+        placeholder={"What do you feel like doing?"}
+        loadOptions={checkLength() && loadOptions}
+        components={animatedComponents}
+        isMulti
+        styles={customStyles}
+        onChange={(e) => {
+          dispatch({
+            type: "SET_CATEGORIES",
+            payload: e,
+          });
+        }}
+        noOptionsMessage={({ inputValue }) => {
+          return checkLength()
+            ? "no options found"
+            : "max categories allowed in free plan";
+        }}
+      />
+      {categories.length > 0 && (
+        <button
+          className="large-continue-btn"
+          onClick={() => navigate("/location")}
+        >
+          Continue to Location
+        </button>
+      )}
+    </div>
   );
 }
