@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 import { formatDuration, intervalToDuration } from "date-fns";
 import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import DragDropContent from "./DragDropContent";
 import { highlightedColor, travelModeStrings } from "./planUtils";
+import SkeletonAddress from "./SkeletonAddress";
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -178,12 +178,16 @@ const DragPlanDirections = ({
             </div>
           </div>
           <div className={open ? "hidden" : ""}>
-            <div className="dnd-text">
-              <div className="demo-card__title">
-                <div className="numberCircle red-bg white-border">A</div>
-                <span className="text">{startLink}</span>
+            {derivedData.length > 0 ? (
+              <div className="dnd-text">
+                <div className="demo-card__title">
+                  <div className="numberCircle red-bg white-border">A</div>
+                  <span className="text">{startLink}</span>
+                </div>
               </div>
-            </div>
+            ) : (
+              <SkeletonAddress theme="dark" />
+            )}
             <DragDropContent
               onDragEnd={onDragEnd}
               derivedData={derivedData}

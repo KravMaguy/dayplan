@@ -2,18 +2,17 @@ import React from "react";
 import Shimmer from "./Shimmer";
 import SkeletonElement from "./SkeletonElement";
 
-const SkeletonMap = ({ theme }) => {
+const SkeletonLinks = ({ theme }) => {
   const themeClass = theme || "light";
 
   return (
-    <div className={`skeleton-wrapper ${themeClass}`}>
+    <div className={`skeleton-wrapper skeleton-links ${themeClass}`}>
       <div className="skeleton-article">
-        <SkeletonElement type="title" />
-        <SkeletonElement type="text" />
+        <SkeletonElement type="text wide" />
       </div>
       <Shimmer />
     </div>
   );
 };
 
-export default SkeletonMap;
+export default SkeletonLinks;

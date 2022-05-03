@@ -6,11 +6,8 @@ const SkeletonMap = ({ theme }) => {
   const themeClass = theme || "light";
 
   return (
-    <div className={`skeleton-wrapper ${themeClass}`}>
-      <div className="skeleton-article">
-        <SkeletonElement type="title" />
-        <SkeletonElement type="text" />
-      </div>
+    <div className={`skeleton-wrapper skeleton-map ${themeClass}`}>
+      <div className="skeleton-article center-text">Loading Map</div>
       <Shimmer />
     </div>
   );

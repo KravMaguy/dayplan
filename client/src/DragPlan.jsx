@@ -8,6 +8,7 @@ import { getLocationDataByCategories } from "./redux/thunks.js";
 import { useNavigate } from "react-router";
 import DestinationLinks from "./DestinationLinks";
 import PlanMap from "./PlanMap";
+import SkeletonLinks from "./SkeletonLinks";
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.data);
@@ -178,11 +179,17 @@ const DragPlan = () => {
             performDirections={performDirections}
           />
         </div>
-        {!open && (
+        {derivedData.length > 0 ? (
           <DestinationLinks
             derivedData={derivedData}
             removeLocation={removeLocation}
           />
+        ) : (
+          <div className="links-holder">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <SkeletonLinks key={n} theme="light" />
+            ))}
+          </div>
         )}
       </div>
     </>
