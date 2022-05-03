@@ -8,7 +8,7 @@ import { getLocationDataByCategories } from "./redux/thunks.js";
 import { useNavigate } from "react-router";
 import DestinationLinks from "./DestinationLinks";
 import PlanMap from "./PlanMap";
-import SkeletonLinks from "./SkeletonLinks";
+import { SkeletonLinks } from "./skeletons";
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.data);

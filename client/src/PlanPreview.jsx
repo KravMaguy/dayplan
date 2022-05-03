@@ -7,7 +7,7 @@ import axios from "axios";
 import "./planpreview.css";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import { options } from "./planUtils";
-import SkeletonMap from "./SkeletonMap";
+import { SkeletonMap } from "./skeletons";
 
 const containerStyle = {
   height: "100%",

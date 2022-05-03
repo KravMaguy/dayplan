@@ -5,7 +5,7 @@ import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import DragDropContent from "./DragDropContent";
 import { highlightedColor, travelModeStrings } from "./planUtils";
-import SkeletonAddress from "./SkeletonAddress";
+import { SkeletonAddress } from "./skeletons";
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
