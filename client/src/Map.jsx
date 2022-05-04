@@ -3,11 +3,19 @@ import { GoogleMap } from "@react-google-maps/api";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
-const Map = React.memo(function Map(props) {
+const Map = React.memo(function Map({
+  center,
+  zoom,
+  setZoom,
+  containerStyle,
+  mapStyle,
+  placeId,
+  setPlace,
+  place,
+  children,
+}) {
   const [map, setMap] = useState(null);
-  const state = useSelector((state) => state);
-  console.log({ state });
-  const { center, zoom, setZoom, containerStyle, mapStyle, placeId } = props;
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -25,7 +33,7 @@ const Map = React.memo(function Map(props) {
   }, [map, center]);
 
   useEffect(() => {
-    if (!map || !placeId) {
+    if (!map || !placeId || place?.place_id === placeId) {
       return;
     }
     const request = {
@@ -37,11 +45,12 @@ const Map = React.memo(function Map(props) {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         // console.log(place?.photos[0]?.getUrl());
         console.log({ place });
+        setPlace(place);
       } else {
         console.log("not ok");
       }
     }
-  }, [map, placeId]);
+  }, [map, placeId, setPlace, place?.place_id]);
 
   return (
     <GoogleMap
@@ -69,7 +78,7 @@ const Map = React.memo(function Map(props) {
       }}
       onLoad={onLoad}
     >
-      <>{props.children}</>
+      <>{children}</>
     </GoogleMap>
   );
 });

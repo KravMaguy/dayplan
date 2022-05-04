@@ -13,6 +13,12 @@
   border-left: 3px solid grey;
 }
 
+@media screen and (max-width: 400px) {
+  #drawer-nav {
+    width: 280px;
+  }
+}
+
 #drawer-nav.active {
   transform: translateX(0);
 }
@@ -163,4 +169,28 @@ Not supports in Firefox and IE */
 
 .open-preview-map-control-size {
   width: 100vw;
+}
+
+@media screen and (max-width: 400px) {
+  #drawer-nav {
+    width: 280px;
+  }
+  .closed-preview-map-control-size {
+    width: calc(100% - 280px);
+  }
+  .drawer-image {
+    width: 276px;
+  }
+}
+
+.visible-searchbar {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+
+.hidden-searchbar {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }

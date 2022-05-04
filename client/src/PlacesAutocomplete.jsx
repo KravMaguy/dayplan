@@ -10,7 +10,7 @@ import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import { getUserPosition } from "./redux/thunks.js";
-import { FaDirections } from "react-icons/fa";
+// import { FaDirections } from "react-icons/fa";
 import { useNavigate } from "react-router";
 
 const PlacesAutoComplete = () => {
@@ -43,11 +43,13 @@ const PlacesAutoComplete = () => {
     (state) => state.position?.geocodedAddress
   );
   const userCenter = useSelector((state) => state.userCenter);
+  const menuClosed = useSelector((state) => state.menuClosed);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [drawerOpen, setOpenDrawer] = useState(false);
   const [placeId, setPlaceId] = useState(null);
+  const [place, setPlace] = useState(null);
   // const [showSearchBar, setShowSearchBar] = useState(true);
   useEffect(() => {
     if (
@@ -75,14 +77,13 @@ const PlacesAutoComplete = () => {
   };
 
   const handleSelect = (val) => {
-    setValue(val);
+    slowOpenSetValue(val);
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
         console.log({ results });
         setPlaceId(results[0].place_id);
         resetMapCenter(results);
-        setOpenDrawer(true);
       })
       .catch((error) => console.error(error));
   };
@@ -90,7 +91,7 @@ const PlacesAutoComplete = () => {
   console.log({ placeId });
 
   const runGetUserLocation = () => {
-    setValue(null);
+    slowOpenSetValue(null);
     setZoom(13);
     if (!userCoordinates) {
       return dispatch(getUserPosition());
@@ -110,7 +111,6 @@ const PlacesAutoComplete = () => {
     const formatted_address =
       userCoordinatesGeoFormattedAddress[0].formatted_address;
     setInputValue(formatted_address);
-    setOpenDrawer(true);
   };
 
   useEffect(() => {
@@ -123,6 +123,13 @@ const PlacesAutoComplete = () => {
     setPlaceId(placeId);
   }, [userCenter?.geocodedAddress, userCoordinates?.geocodedAddress]);
 
+  function slowOpenSetValue(val) {
+    setTimeout(() => {
+      setOpenDrawer(true);
+    }, 500);
+    setValue(val);
+  }
+
   return (
     <div className="user-destination-page">
       <div
@@ -130,56 +137,57 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen && "active"}
       ></div>
-      {(userCoordinates || userCenter) && (
-        <div
-          id="drawer-nav"
-          className={(userCoordinates || userCenter) && drawerOpen && "active"}
-        >
-          <img
-            loading="lazy"
-            src={`https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`}
-            // src={
-            // selectedIdx === 0
-            //   ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
-            //   : sharedPlan[selectedIdx].image_url
-            //   ? sharedPlan[selectedIdx].image_url
-            //   : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
-            // }
-            className="drawer-image"
-          />
-          <div className="buisness-details">
-            <div class={{}}>
-              <div class={{}}>
-                <div className="yelp-stars-container">
-                  <div>
-                    <img
-                      className="yelp-stars"
-                      alt=""
-                      src="../../web_and_ios/large/large_0@2x.png"
-                    />
-                  </div>
 
+      <div id="drawer-nav" className={drawerOpen && "active"}>
+        <img
+          loading="lazy"
+          src={
+            place?.photos
+              ? place?.photos[0].getUrl()
+              : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
+          }
+          // src={
+          // selectedIdx === 0
+          //   ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
+          //   : sharedPlan[selectedIdx].image_url
+          //   ? sharedPlan[selectedIdx].image_url
+          //   : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
+          // }
+          className="drawer-image"
+        />
+        <div className="buisness-details">
+          <div class={{}}>
+            <div class={{}}>
+              <div className="yelp-stars-container">
+                <div>
                   <img
-                    className="yelp-dark-bg"
+                    className="yelp-stars"
                     alt=""
-                    src="../../yelp_logo_dark_bg.png"
+                    src="../../web_and_ios/large/large_0@2x.png"
                   />
                 </div>
-                <h2>
-                  {/* {String.fromCharCode("A".charCodeAt(0) + selectedIdx)}
+
+                <img
+                  className="yelp-dark-bg"
+                  alt=""
+                  src="../../yelp_logo_dark_bg.png"
+                />
+              </div>
+              <h2>
+                {/* {String.fromCharCode("A".charCodeAt(0) + selectedIdx)}
                   {") "}
                   {sharedPlan[selectedIdx].name} */}
-                  some thing
-                </h2>
+                some thing
+              </h2>
 
-                {/* <p>
+              {/* <p>
                   {selectedIdx === 0
                     ? decodeURI(startLink)
                     : sharedPlan?.[selectedIdx]?.location?.display_address.join(
                         ", "
                       )}
                 </p> */}
-                {/* {selectedIdx !== 0 && (
+              {/* {selectedIdx !== 0 && (
                   <>
                     {" "}
                     <div className="pill-categories-container">
@@ -228,11 +236,11 @@ const PlacesAutoComplete = () => {
                     </div>
                   </>
                 )} */}
-              </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
+
       <div
         className={`plan-preview-map-container ${
           drawerOpen
@@ -244,38 +252,40 @@ const PlacesAutoComplete = () => {
           className="destination-page-map-container"
           style={{ width: "100%" }}
         >
-          {true && (
-            <div className="constrained top-container-searchbox">
-              <div className="search-wrap">
-                <GooglePlacesAutocomplete
-                  selectProps={{
-                    // onFocus: () => console.log("focused"),
-                    // onBlur: () => console.log("blur"),
-                    inputValue,
-                    value,
-                    onInputChange: (newInputValue, meta) => {
-                      console.log("on input change");
-                      setInputValue(newInputValue);
-                    },
-                    placeholder: "choose location",
-                    onChange: (val) => handleSelect(val),
-                  }}
-                  apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
-                />
-              </div>
-
-              <div
-                onClick={() => runGetUserLocation()}
-                className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
-              >
-                {!userCoordinates ? (
-                  <MdLocationOff className="location-icon" fill={"#d3d3d3"} />
-                ) : (
-                  <MdLocationOn fill={"green"} className="location-icon" />
-                )}
-              </div>
+          <div
+            className={`constrained top-container-searchbox ${
+              !drawerOpen ? "visible-searchbar" : "hidden-searchbar"
+            }`}
+          >
+            <div className="search-wrap">
+              <GooglePlacesAutocomplete
+                selectProps={{
+                  // onFocus: () => console.log("focused"),
+                  // onBlur: () => console.log("blur"),
+                  inputValue,
+                  value,
+                  onInputChange: (newInputValue, meta) => {
+                    console.log("on input change");
+                    setInputValue(newInputValue);
+                  },
+                  placeholder: "choose location",
+                  onChange: (val) => handleSelect(val),
+                }}
+                apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
+              />
             </div>
-          )}
+
+            <div
+              onClick={() => runGetUserLocation()}
+              className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
+            >
+              {!userCoordinates ? (
+                <MdLocationOff className="location-icon" fill={"#d3d3d3"} />
+              ) : (
+                <MdLocationOn fill={"green"} className="location-icon" />
+              )}
+            </div>
+          </div>
 
           {/* {(userCoordinates || userCenter) && (
             <div
@@ -308,6 +318,8 @@ const PlacesAutoComplete = () => {
             setZoom={setZoom}
             containerStyle={containerStyle}
             placeId={placeId}
+            setPlace={setPlace}
+            place={place}
           >
             {userCoordinates && (
               <OverlayView

@@ -170,7 +170,7 @@ body {
 }
 
 .constrained {
-  width: 90vw;
+  width: 90%;
 }
 
 @media screen and (min-width: 600px) {
