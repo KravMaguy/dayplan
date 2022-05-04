@@ -24,7 +24,8 @@ const PlacesAutoComplete = () => {
     if (!categoryLength) {
       navigate("/categories");
     }
-  }, [categoryLength]);
+  }, [categoryLength, navigate]);
+
   useEffect(() => {
     const handleResize = () => {
       setHeight(window.innerHeight);
@@ -34,6 +35,7 @@ const PlacesAutoComplete = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
   const userCoordinates = useSelector((state) => state.position);
@@ -45,6 +47,7 @@ const PlacesAutoComplete = () => {
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [drawerOpen, setOpenDrawer] = useState(false);
+  const [placeId, setPlaceId] = useState(null);
   // const [showSearchBar, setShowSearchBar] = useState(true);
   useEffect(() => {
     if (
@@ -72,17 +75,19 @@ const PlacesAutoComplete = () => {
   };
 
   const handleSelect = (val) => {
-    console.log("in here yea?");
     setValue(val);
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
         console.log({ results });
+        setPlaceId(results[0].place_id);
         resetMapCenter(results);
         setOpenDrawer(true);
       })
       .catch((error) => console.error(error));
   };
+
+  console.log({ placeId });
 
   const runGetUserLocation = () => {
     setValue(null);
@@ -108,25 +113,15 @@ const PlacesAutoComplete = () => {
     setOpenDrawer(true);
   };
 
-  // const getLocationStringForAccuracy = () => {
-  //   return encodeURI(value.label);
-  // };
-
-  // useEffect(() => {
-  //   if (map) {
-  // var request = {
-  //   placeId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-  //   fields: ["name", "rating", "formatted_phone_number", "geometry"],
-  // };
-  // const service = new google.maps.places.PlacesService(map);
-  // service.getDetails(request, callback);
-  // function callback(place, status) {
-  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //     console.log(place);
-  //   }
-  // }
-  //   }
-  // }, [map]);
+  useEffect(() => {
+    if (!userCenter?.geocodedAddress && !userCoordinates?.geocodedAddress) {
+      return;
+    }
+    const placeId =
+      userCoordinates?.geocodedAddress[0].place_id ||
+      userCenter?.geocodedAddress[0].place_id;
+    setPlaceId(placeId);
+  }, [userCenter?.geocodedAddress, userCoordinates?.geocodedAddress]);
 
   return (
     <div className="user-destination-page">
@@ -312,6 +307,7 @@ const PlacesAutoComplete = () => {
             zoom={zoom}
             setZoom={setZoom}
             containerStyle={containerStyle}
+            placeId={placeId}
           >
             {userCoordinates && (
               <OverlayView

@@ -5,11 +5,9 @@ import { useSelector } from "react-redux";
 
 const Map = React.memo(function Map(props) {
   const [map, setMap] = useState(null);
-  const userCoordinates = useSelector((state) => state.position);
-  const userCenter = useSelector((state) => state.userCenter);
   const state = useSelector((state) => state);
   console.log({ state });
-  const { center, zoom, setZoom, containerStyle, mapStyle, setCenter } = props;
+  const { center, zoom, setZoom, containerStyle, mapStyle, placeId } = props;
   const location = useLocation();
   const { pathname } = location;
 
@@ -27,15 +25,9 @@ const Map = React.memo(function Map(props) {
   }, [map, center]);
 
   useEffect(() => {
-    if (
-      !map ||
-      (!userCenter?.geocodedAddress && !userCoordinates?.geocodedAddress)
-    ) {
+    if (!map || !placeId) {
       return;
     }
-    const placeId =
-      userCoordinates?.geocodedAddress[0].place_id ||
-      userCenter?.geocodedAddress[0].place_id;
     const request = {
       placeId,
     };
@@ -49,7 +41,7 @@ const Map = React.memo(function Map(props) {
         console.log("not ok");
       }
     }
-  }, [map, userCenter, userCoordinates]);
+  }, [map, placeId]);
 
   return (
     <GoogleMap
