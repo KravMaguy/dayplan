@@ -204,7 +204,7 @@ const PlanPreview = () => {
                           );
                           setTimeout(() => {
                             setOpenDrawer(true);
-                          }, 600);
+                          }, 400);
                         }}
                         key={idx}
                         position={{

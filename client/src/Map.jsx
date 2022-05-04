@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 import { useLocation } from "react-router";
-import { useGoogleMap } from "@react-google-maps/api";
 
 const Map = React.memo(function Map(props) {
   const [map, setMap] = useState(null);
@@ -13,21 +12,24 @@ const Map = React.memo(function Map(props) {
   );
 
   const location = useLocation();
-  // useEffect(() => {
-  //   if (map) {
-  // var request = {
-  //   placeId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-  //   fields: ["name", "rating", "formatted_phone_number", "geometry"],
-  // };
-  // const service = new google.maps.places.PlacesService(map);
-  // service.getDetails(request, callback);
-  // function callback(place, status) {
-  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //     console.log(place);
-  //   }
-  // }
-  //   }
-  // }, [map]);
+  useEffect(() => {
+    if (map) {
+      var request = {
+        placeId: "ChIJW7W8hDrOD4gRjpzHa_bGbaw",
+      };
+      const service = new window.google.maps.places.PlacesService(map);
+      service.getDetails(request, callback);
+      function callback(place, status) {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+          // console.log(place?.photos[0]?.getUrl());
+          console.log({ place });
+        } else {
+          console.log("not ok");
+        }
+      }
+    }
+  }, [map]);
+
   const { pathname } = location;
 
   const { center, zoom, setZoom, containerStyle, mapStyle, setCenter } = props;
