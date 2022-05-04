@@ -46,7 +46,6 @@ const PlacesAutoComplete = () => {
   const [inputValue, setInputValue] = useState("");
   const [drawerOpen, setOpenDrawer] = useState(false);
   // const [showSearchBar, setShowSearchBar] = useState(true);
-
   useEffect(() => {
     if (
       userCoordinatesGeoFormattedAddress &&
@@ -78,6 +77,7 @@ const PlacesAutoComplete = () => {
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
+        console.log({ results });
         resetMapCenter(results);
         setOpenDrawer(true);
       })
@@ -127,17 +127,6 @@ const PlacesAutoComplete = () => {
   // }
   //   }
   // }, [map]);
-
-  useEffect(() => {
-    console.log({ useEffect });
-    console.log({ userCoordinates });
-    console.log({ userCenter });
-    // var request = {
-    //   placeId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-    //   fields: ["name", "rating", "formatted_phone_number", "geometry"],
-    // };
-    // const service = new google.maps.places.PlacesService(map);
-  }, [userCoordinates, userCenter]);
 
   return (
     <div className="user-destination-page">

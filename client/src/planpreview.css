@@ -152,7 +152,8 @@ Not supports in Firefox and IE */
 .plan-preview-map-container {
   height: calc(100vh - 62px);
   transition: width 0.5s linear;
-  position: absolute;
+  /* position: absolute; */
+  position: relative;
   bottom: 0px;
 }
 
