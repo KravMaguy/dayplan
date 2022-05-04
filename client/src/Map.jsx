@@ -12,6 +12,8 @@ const Map = React.memo(function Map({
   placeId,
   setPlace,
   place,
+  clickedLocation,
+  setClickedLocation,
   children,
 }) {
   const [map, setMap] = useState(null);
@@ -69,6 +71,13 @@ const Map = React.memo(function Map({
         if (map.zoom !== zoom && pathname !== "/plan") {
           setZoom(map.zoom);
         }
+      }}
+      onClick={(event) => {
+        if (!map) return;
+        setClickedLocation({
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
+        });
       }}
       onCenterChanged={() => {
         if (map) {

@@ -50,6 +50,7 @@ const PlacesAutoComplete = () => {
   const [drawerOpen, setOpenDrawer] = useState(false);
   const [placeId, setPlaceId] = useState(null);
   const [place, setPlace] = useState(null);
+  const [clickedLocation, setClickedLocation] = useState(null);
   // const [showSearchBar, setShowSearchBar] = useState(true);
   useEffect(() => {
     if (
@@ -320,7 +321,22 @@ const PlacesAutoComplete = () => {
             placeId={placeId}
             setPlace={setPlace}
             place={place}
+            clickedLocation={clickedLocation}
+            setClickedLocation={setClickedLocation}
           >
+            {clickedLocation && (
+              <OverlayView
+                position={clickedLocation}
+                mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+              >
+                <div className="dot-shadow-clicked">
+                  <div className="dot-clicked">
+                    <div className="dot-child-clicked"></div>
+                  </div>
+                </div>
+              </OverlayView>
+            )}
+
             {userCoordinates && (
               <OverlayView
                 position={{

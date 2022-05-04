@@ -55,3 +55,71 @@
     transform: scale(0.8);
   }
 }
+
+.dot-clicked {
+  height: 15px;
+  width: 15px;
+  background-color: rgba(255, 254, 254, 0.87);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: out-clicked 1s ease-out;
+  -webkit-animation-iteration-count: 2;
+  -moz-animation-iteration-count: 2;
+  -ms-animation-iteration-count: 2;
+  -o-animation-iteration-count: 2;
+  animation-iteration-count: 2;
+}
+
+.dot-shadow-clicked {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+
+  box-shadow: 0 0 3px 3px #8b888879;
+}
+@keyframes out-clicked {
+  50% {
+    box-shadow: 0px 0px 0px 0px rgba(24, 25, 28, 0.753);
+  }
+  100% {
+    box-shadow: 0px 0px 0px 15px rgba(255, 255, 255, 0);
+  }
+}
+
+.dot-child-clicked {
+  height: 10px;
+  width: 10px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 50%;
+  animation: pulse-dot-clicked 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s;
+  -webkit-animation-iteration-count: 2;
+  -moz-animation-iteration-count: 2;
+  -ms-animation-iteration-count: 2;
+  -o-animation-iteration-count: 2;
+  animation-iteration-count: 2;
+}
+
+@-webkit-keyframes pulse-dot-clicked {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+@keyframes pulse-dot-clicked {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
