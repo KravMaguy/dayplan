@@ -1,6 +1,5 @@
 import { useState, useEffect, createRef } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import useMediaQuery from "./useMediaQuery";
 import CustomDraggable from "./CustomDraggable";
 import { SkeletonArticle } from "./skeletons";
 const grid = 8;
