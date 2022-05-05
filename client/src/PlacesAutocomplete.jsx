@@ -13,7 +13,6 @@ import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import { getUserPosition } from "./redux/thunks.js";
 // import { FaDirections } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { FaStreetView } from "react-icons/fa";
 
 const PlacesAutoComplete = () => {
   const [height, setHeight] = useState(window.innerHeight);
@@ -53,7 +52,8 @@ const PlacesAutoComplete = () => {
   const [place, setPlace] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
   const [streetViewVisible, setStreetViewVisibility] = useState(false);
-  // const [showSearchBar, setShowSearchBar] = useState(true);
+  const [focused, setFocused] = useState(false);
+
   useEffect(() => {
     if (
       userCoordinatesGeoFormattedAddress &&
@@ -92,7 +92,6 @@ const PlacesAutoComplete = () => {
   };
 
   const runGetUserLocation = () => {
-    slowOpenSetValue(null);
     setZoom(13);
     if (!userCoordinates) {
       return dispatch(getUserPosition());
@@ -112,17 +111,27 @@ const PlacesAutoComplete = () => {
     const formatted_address =
       userCoordinatesGeoFormattedAddress[0].formatted_address;
     setInputValue(formatted_address);
+    slowOpenSetValue(formatted_address);
+
+    if (userCoordinates?.geocodedAddress) {
+      console.log("reached here on click of the thing");
+      const placeId = userCoordinates?.geocodedAddress[0].place_id;
+      setPlaceId(placeId);
+    }
   };
 
   useEffect(() => {
-    if (!userCenter?.geocodedAddress && !userCoordinates?.geocodedAddress) {
+    console.log("the useEffect ran");
+
+    if (!userCoordinates?.geocodedAddress) {
+      console.log("useEffect returned out");
       return;
     }
-    const placeId =
-      userCoordinates?.geocodedAddress[0].place_id ||
-      userCenter?.geocodedAddress[0].place_id;
+    const placeId = userCoordinates?.geocodedAddress[0].place_id;
+    console.log(placeId, "here it is");
+    setOpenDrawer(true);
     setPlaceId(placeId);
-  }, [userCenter?.geocodedAddress, userCoordinates?.geocodedAddress]);
+  }, [userCoordinates?.geocodedAddress]);
 
   function slowOpenSetValue(val) {
     setTimeout(() => {
@@ -130,6 +139,10 @@ const PlacesAutoComplete = () => {
     }, 500);
     setValue(val);
   }
+
+  console.log({ placeId });
+  console.log({ drawerOpen });
+
   return (
     <div className="user-destination-page">
       <div
@@ -140,19 +153,11 @@ const PlacesAutoComplete = () => {
 
       <div id="drawer-nav" className={drawerOpen && "active"}>
         <img
-          loading="lazy"
           src={
             place?.photos
               ? place?.photos[0].getUrl()
               : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
           }
-          // src={
-          // selectedIdx === 0
-          //   ? `https://maps.googleapis.com/maps/api/streetview?size=350x250&location=${startLink}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
-          //   : sharedPlan[selectedIdx].image_url
-          //   ? sharedPlan[selectedIdx].image_url
-          //   : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
-          // }
           className="drawer-image"
         />
         <div className="buisness-details">
@@ -166,7 +171,6 @@ const PlacesAutoComplete = () => {
                   Create Plan
                 </button>
 
-                {/* <img className="yelp-dark-bg" alt="" src="../../google.png" /> */}
                 <a
                   title="Google Inc., Public domain, via Wikimedia Commons"
                   href="https://commons.wikimedia.org/wiki/File:Google_2015_logo.svg"
@@ -273,12 +277,11 @@ const PlacesAutoComplete = () => {
             <div className="search-wrap">
               <GooglePlacesAutocomplete
                 selectProps={{
-                  // onFocus: () => console.log("focused"),
-                  // onBlur: () => console.log("blur"),
+                  onFocus: () => setFocused(true),
+                  onBlur: () => setFocused(false),
                   inputValue,
                   value,
                   onInputChange: (newInputValue, meta) => {
-                    console.log("on input change");
                     setInputValue(newInputValue);
                   },
                   placeholder: "choose location",
@@ -386,7 +389,9 @@ const PlacesAutoComplete = () => {
             {clickedLocation && (
               <div
                 className={`place-preview-wrapper  ${
-                  !drawerOpen ? "visible-placepreview" : "hidden-placepreview"
+                  !drawerOpen && !focused
+                    ? "visible-placepreview"
+                    : "hidden-placepreview"
                 }`}
               >
                 <div className="place-preview-img-container">

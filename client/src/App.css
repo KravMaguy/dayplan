@@ -243,3 +243,9 @@ body {
 .legal-links a {
   display: block;
 }
+
+@media screen and (max-width: 700px) {
+  .logged-in-name {
+    display: none;
+  }
+}

@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
 
 const Map = React.memo(function Map({
   center,
@@ -11,8 +10,6 @@ const Map = React.memo(function Map({
   mapStyle,
   placeId,
   setPlace,
-  place,
-  clickedLocation,
   setClickedLocation,
   children,
 }) {
@@ -35,7 +32,7 @@ const Map = React.memo(function Map({
   }, [map, center]);
 
   useEffect(() => {
-    if (!map || !placeId || place?.place_id === placeId) {
+    if (!map || !placeId) {
       return;
     }
     const request = {
@@ -52,7 +49,7 @@ const Map = React.memo(function Map({
         console.log("not ok");
       }
     }
-  }, [map, placeId, setPlace, place?.place_id]);
+  }, [map, placeId, setPlace]);
 
   return (
     <GoogleMap

@@ -110,7 +110,7 @@ const Header = () => {
                 style={{ borderRadius: "2px" }}
                 className="share-button"
               >
-                Create PLAN! ❯
+                PLAN ❯
               </button>
             )}
             {pathname === "/categories" && categories.length > 0 && (

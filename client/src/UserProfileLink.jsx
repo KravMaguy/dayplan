@@ -16,7 +16,12 @@ const UserProfileLink = ({ name, photo }) => {
               />
             </div>
 
-            <h1 style={{ position: "relative", left: "10px" }}>{name}</h1>
+            <h1
+              className="logged-in-name"
+              style={{ position: "relative", left: "10px" }}
+            >
+              {name}
+            </h1>
           </>
         )}
       </>
