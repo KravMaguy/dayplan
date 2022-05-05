@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { MarkerClusterer, Marker } from "@react-google-maps/api";
+import { GoogleMarkerClusterer, Marker } from "@react-google-maps/api";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import Map from "./Map";
 import mapgreypng from "./images/gmapgrey.png";
@@ -197,7 +197,7 @@ const PlanMap = ({
               />
             )}
             {!getWayPoints() && (
-              <MarkerClusterer options={options}>
+              <GoogleMarkerClusterer options={options}>
                 {(clusterer) =>
                   wayPoints.map((waypoint, idx) => {
                     const letter = String.fromCharCode(
@@ -216,7 +216,7 @@ const PlanMap = ({
                     );
                   })
                 }
-              </MarkerClusterer>
+              </GoogleMarkerClusterer>
             )}
           </Map>
         </main>

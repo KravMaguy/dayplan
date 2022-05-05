@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { MarkerClusterer, Marker } from "@react-google-maps/api";
+import { GoogleMarkerClusterer, Marker } from "@react-google-maps/api";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Map from "./Map";
@@ -188,7 +188,7 @@ const PlanPreview = () => {
               center={{ lat: center.latitude, lng: center.longitude }}
               containerStyle={containerStyle}
             >
-              <MarkerClusterer options={options}>
+              <GoogleMarkerClusterer options={options}>
                 {(clusterer) =>
                   sharedPlan.map((location, idx) => {
                     const letter = String.fromCharCode("A".charCodeAt(0) + idx);
@@ -216,7 +216,7 @@ const PlanPreview = () => {
                     );
                   })
                 }
-              </MarkerClusterer>
+              </GoogleMarkerClusterer>
             </Map>
           </div>
         </>
