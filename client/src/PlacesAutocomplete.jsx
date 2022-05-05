@@ -132,7 +132,7 @@ const PlacesAutoComplete = () => {
   }
 
   console.log({ placeId });
-  console.log({ drawerOpen });
+  console.log({ place });
 
   return (
     <div className="user-destination-page">
@@ -143,14 +143,14 @@ const PlacesAutoComplete = () => {
       ></div>
 
       <div id="drawer-nav" className={drawerOpen && "active"}>
-        {place?.photos[0] ? (
+        {place?.photos && place.photos.length > 0 ? (
           <img src={place.photos[0].getUrl()} className="drawer-image" />
         ) : (
           <SkeletonImage theme="dark" />
         )}
         <div className="buisness-details">
-          <div class={{}}>
-            <div class={{}}>
+          <div>
+            <div>
               <div className="yelp-stars-container">
                 <button
                   onClick={() => navigate("/plan")}
@@ -374,12 +374,10 @@ const PlacesAutoComplete = () => {
               )}
           </Map>
           <div>
-            {clickedLocation && (
+            {clickedLocation && !focused && (
               <div
                 className={`place-preview-wrapper  ${
-                  !drawerOpen && !focused
-                    ? "visible-placepreview"
-                    : "hidden-placepreview"
+                  !drawerOpen ? "visible-placepreview" : "hidden-placepreview"
                 }`}
               >
                 <div className="place-preview-img-container">
