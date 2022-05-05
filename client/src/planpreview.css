@@ -212,8 +212,8 @@ Not supports in Firefox and IE */
 
 .place-preview-wrapper {
   display: flex;
-  position: absolute;
-  bottom: 0px;
+  position: fixed;
+  bottom: 20px;
   left: 15px;
   border-radius: 1px;
   font-size: 12px;

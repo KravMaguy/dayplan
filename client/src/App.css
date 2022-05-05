@@ -147,10 +147,8 @@ body {
 }
 
 .top-container-searchbox {
-  /* margin: 0 auto; */
   z-index: 1;
   position: relative;
-  left: 15px;
   display: flex;
   flex-direction: row-reverse;
   top: 75px;

@@ -140,3 +140,8 @@
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
+.skeleton-wrapper.drawer-image.skeleton-image {
+  border-radius: 0px;
+  background: #3ab35ba6;
+}

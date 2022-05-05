@@ -11,10 +11,8 @@ import Map from "./Map";
 import { StreetViewPanorama } from "@react-google-maps/api";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import { getUserPosition } from "./redux/thunks.js";
-// import { FaDirections } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { SkeletonImage } from "./skeletons";
-
+import PlaceDrawer from "./PlaceDrawer";
 const PlacesAutoComplete = () => {
   const containerStyle = {
     height: "calc(100vh - 60px)",
@@ -45,6 +43,7 @@ const PlacesAutoComplete = () => {
   const [clickedLocation, setClickedLocation] = useState(null);
   const [streetViewVisible, setStreetViewVisibility] = useState(false);
   const [focused, setFocused] = useState(false);
+  const { photos, name, formatted_address, types, website } = place || {};
 
   useEffect(() => {
     if (
@@ -128,9 +127,6 @@ const PlacesAutoComplete = () => {
     setValue(val);
   }
 
-  console.log({ placeId });
-  console.log({ place });
-
   return (
     <div className="user-destination-page">
       <div
@@ -138,114 +134,14 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen && "active"}
       ></div>
-
-      <div id="drawer-nav" className={drawerOpen && "active"}>
-        <img
-          src={
-            place?.photos
-              ? place?.photos[0].getUrl()
-              : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
-          }
-          className="drawer-image"
-        />
-        <div className="buisness-details">
-          <div>
-            <div>
-              <div className="yelp-stars-container">
-                <button
-                  onClick={() => navigate("/plan")}
-                  className="no-link pure-material-button-text green-bg-btn"
-                >
-                  Create Plan
-                </button>
-
-                <a
-                  title="Google Inc., Public domain, via Wikimedia Commons"
-                  href="https://commons.wikimedia.org/wiki/File:Google_2015_logo.svg"
-                >
-                  <img
-                    width="256"
-                    alt="Google 2015 logo"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/256px-Google_2015_logo.svg.png"
-                    className="yelp-dark-bg"
-                  />
-                </a>
-              </div>
-              <h2>{place?.name}</h2>
-              <p>{place?.formatted_address}</p>
-              <div className="pill-categories-container">
-                {place?.types.map((category) => (
-                  <div className="buisness-pills">{category}</div>
-                ))}
-              </div>
-
-              {place?.website && (
-                <div className="external-website">
-                  <a href={place.website}>{place.website}</a>
-                </div>
-              )}
-
-              {/* <p>
-                  {selectedIdx === 0
-                    ? decodeURI(startLink)
-                    : sharedPlan?.[selectedIdx]?.location?.display_address.join(
-                        ", "
-                      )}
-                </p> */}
-              {/* {selectedIdx !== 0 && (
-                  <>
-                    {" "}
-                    <div className="pill-categories-container">
-                      {sharedPlan?.[selectedIdx].categories.map((category) => (
-                        <div className="buisness-pills">{category.title}</div>
-                      ))}
-                    </div>
-                    <div className="reviews-container">
-                      <h4
-                        style={{
-                          textDecoration: "underline",
-                          marginBottom: "5px",
-                        }}
-                      >
-                        Reviews
-                      </h4>
-                      {selectedIdx !== 0 &&
-                      reviews &&
-                      reviews?.reviews.length > 0 ? (
-                        <>
-                          {reviews.reviews.map((review) => {
-                            return (
-                              <div
-                                style={{
-                                  marginTop: "20px",
-                                  marginBottom: "20px",
-                                }}
-                              >
-                                <p>{review.user.name}</p>
-                                <p>
-                                  {review.text}{" "}
-                                  <a
-                                    style={{ color: "#7fafff" }}
-                                    href={review.url}
-                                  >
-                                    (read more)
-                                  </a>
-                                </p>
-                              </div>
-                            );
-                          })}
-                        </>
-                      ) : (
-                        "loading..."
-                      )}
-                    </div>
-                  </>
-                )} */}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <PlaceDrawer
+        photos={photos}
+        drawerOpen={drawerOpen}
+        name={name}
+        formatted_address={formatted_address}
+        types={types}
+        website={website}
+      />
       <div
         className={`plan-preview-map-container ${
           drawerOpen
@@ -310,7 +206,7 @@ const PlacesAutoComplete = () => {
                 key={clickedLocation.lat}
               >
                 <div className="dot-shadow-clicked">
-                  <div className="dot-clicked">
+                  <div className="dot-clicked" title="point of interest">
                     <div className="dot-child-clicked"></div>
                   </div>
                 </div>
@@ -363,8 +259,10 @@ const PlacesAutoComplete = () => {
                 </div>
 
                 <div className="lat-lng-return-controls">
+                  <h3>Point of Interest</h3>
                   <p>{`lat: ${clickedLocation.lat}`}</p>
                   <p>{`lng: ${clickedLocation.lng}`}</p>
+
                   <button
                     onClick={() => {
                       dispatch({
@@ -383,7 +281,7 @@ const PlacesAutoComplete = () => {
                     }}
                     className="no-link pure-material-button-text"
                   >
-                    Center
+                    Go To
                   </button>
                 </div>
               </div>
