@@ -112,10 +112,7 @@ const PlacesAutoComplete = () => {
   };
 
   useEffect(() => {
-    console.log("the useEffect ran");
-
     if (!userCoordinates?.geocodedAddress) {
-      console.log("useEffect returned out");
       return;
     }
     const placeId = userCoordinates?.geocodedAddress[0].place_id;
@@ -143,11 +140,14 @@ const PlacesAutoComplete = () => {
       ></div>
 
       <div id="drawer-nav" className={drawerOpen && "active"}>
-        {place?.photos && place.photos.length > 0 ? (
-          <img src={place.photos[0].getUrl()} className="drawer-image" />
-        ) : (
-          <SkeletonImage theme="dark" />
-        )}
+        <img
+          src={
+            place?.photos
+              ? place?.photos[0].getUrl()
+              : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
+          }
+          className="drawer-image"
+        />
         <div className="buisness-details">
           <div>
             <div>
@@ -291,30 +291,6 @@ const PlacesAutoComplete = () => {
             </div>
           </div>
 
-          {/* {(userCoordinates || userCenter) && (
-            <div
-              className="constrained"
-              style={{
-                position: "absolute",
-                bottom: "30px",
-                zIndex: 1,
-                left: "15px",
-                height: "50px",
-              }}
-            >
-              <button
-                style={{
-                  width: "100%",
-                  fontSize: "x-large",
-                  boxShadow:
-                    "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
-                }}
-                onClick={() => navigate("/plan")}
-              >
-                Create Plan
-              </button>
-            </div>
-          )} */}
           <Map
             containerClass="map-container"
             center={center}
@@ -327,11 +303,6 @@ const PlacesAutoComplete = () => {
             clickedLocation={clickedLocation}
             setClickedLocation={setClickedLocation}
           >
-            {/* <StreetViewPanorama
-              position={clickedLocation && clickedLocation}
-              visible={streetViewVisible}
-            /> */}
-
             {clickedLocation && (
               <OverlayView
                 position={clickedLocation}
