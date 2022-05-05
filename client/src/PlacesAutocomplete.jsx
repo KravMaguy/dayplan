@@ -4,7 +4,6 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { geocodeByAddress } from "react-google-places-autocomplete";
 import { OverlayView } from "@react-google-maps/api";
 import "./Marker.css";
-import "./planpreview.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
