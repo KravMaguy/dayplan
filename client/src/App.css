@@ -146,16 +146,6 @@ body {
   text-align: center;
 }
 
-.top-container-searchbox {
-  z-index: 1;
-  position: relative;
-  display: flex;
-  flex-direction: row-reverse;
-  top: 75px;
-  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
-}
-
 .search-wrap {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   width: 100%;
@@ -245,4 +235,12 @@ body {
   .logged-in-name {
     display: none;
   }
+}
+
+.top-container-searchbox {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  flex-direction: row-reverse;
+  top: 20px;
 }
