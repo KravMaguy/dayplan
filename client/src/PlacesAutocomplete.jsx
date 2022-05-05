@@ -8,10 +8,12 @@ import "./planpreview.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
+import { StreetViewPanorama } from "@react-google-maps/api";
 import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import { getUserPosition } from "./redux/thunks.js";
 // import { FaDirections } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { FaStreetView } from "react-icons/fa";
 
 const PlacesAutoComplete = () => {
   const [height, setHeight] = useState(window.innerHeight);
@@ -43,7 +45,6 @@ const PlacesAutoComplete = () => {
     (state) => state.position?.geocodedAddress
   );
   const userCenter = useSelector((state) => state.userCenter);
-  const menuClosed = useSelector((state) => state.menuClosed);
   const [zoom, setZoom] = useState(10);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -51,6 +52,7 @@ const PlacesAutoComplete = () => {
   const [placeId, setPlaceId] = useState(null);
   const [place, setPlace] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
+  const [streetViewVisible, setStreetViewVisibility] = useState(false);
   // const [showSearchBar, setShowSearchBar] = useState(true);
   useEffect(() => {
     if (
@@ -88,8 +90,6 @@ const PlacesAutoComplete = () => {
       })
       .catch((error) => console.error(error));
   };
-
-  console.log({ placeId });
 
   const runGetUserLocation = () => {
     slowOpenSetValue(null);
@@ -130,7 +130,6 @@ const PlacesAutoComplete = () => {
     }, 500);
     setValue(val);
   }
-
   return (
     <div className="user-destination-page">
       <div
@@ -160,26 +159,39 @@ const PlacesAutoComplete = () => {
           <div class={{}}>
             <div class={{}}>
               <div className="yelp-stars-container">
-                <div>
-                  <img
-                    className="yelp-stars"
-                    alt=""
-                    src="../../web_and_ios/large/large_0@2x.png"
-                  />
-                </div>
+                <button
+                  onClick={() => navigate("/plan")}
+                  className="no-link pure-material-button-text green-bg-btn"
+                >
+                  Create Plan
+                </button>
 
-                <img
-                  className="yelp-dark-bg"
-                  alt=""
-                  src="../../yelp_logo_dark_bg.png"
-                />
+                {/* <img className="yelp-dark-bg" alt="" src="../../google.png" /> */}
+                <a
+                  title="Google Inc., Public domain, via Wikimedia Commons"
+                  href="https://commons.wikimedia.org/wiki/File:Google_2015_logo.svg"
+                >
+                  <img
+                    width="256"
+                    alt="Google 2015 logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/256px-Google_2015_logo.svg.png"
+                    className="yelp-dark-bg"
+                  />
+                </a>
               </div>
-              <h2>
-                {/* {String.fromCharCode("A".charCodeAt(0) + selectedIdx)}
-                  {") "}
-                  {sharedPlan[selectedIdx].name} */}
-                some thing
-              </h2>
+              <h2>{place?.name}</h2>
+              <p>{place?.formatted_address}</p>
+              <div className="pill-categories-container">
+                {place?.types.map((category) => (
+                  <div className="buisness-pills">{category}</div>
+                ))}
+              </div>
+
+              {place?.website && (
+                <div className="external-website">
+                  <a href={place.website}>{place.website}</a>
+                </div>
+              )}
 
               {/* <p>
                   {selectedIdx === 0
@@ -324,10 +336,16 @@ const PlacesAutoComplete = () => {
             clickedLocation={clickedLocation}
             setClickedLocation={setClickedLocation}
           >
+            {/* <StreetViewPanorama
+              position={clickedLocation && clickedLocation}
+              visible={streetViewVisible}
+            /> */}
+
             {clickedLocation && (
               <OverlayView
                 position={clickedLocation}
                 mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+                key={clickedLocation.lat}
               >
                 <div className="dot-shadow-clicked">
                   <div className="dot-clicked">
@@ -346,7 +364,7 @@ const PlacesAutoComplete = () => {
                 mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
               >
                 <div className="dot-shadow">
-                  <div className="dot">
+                  <div className="dot" title="your location">
                     <div className="dot-child"></div>
                   </div>
                 </div>
@@ -364,36 +382,51 @@ const PlacesAutoComplete = () => {
                 />
               )}
           </Map>
-          {/* {userCenter && value && (
-            <div className="place-preview-wrapper">
-              <div className="place-preview-img-container">
-                <img
-                  style={{
-                    boxShadow: "rgb(0 0 0 / 20%) 0px 1px 2px",
-                    height: "65px",
-                    width: "95px",
-                  }}
-                  src={`https://maps.googleapis.com/maps/api/streetview?size=95x65&location=${getLocationStringForAccuracy()}&key=${
-                    process.env.REACT_APP_GOOGLE_MAP_API_KEY
-                  }`}
-                />
+          <div>
+            {clickedLocation && (
+              <div
+                className={`place-preview-wrapper  ${
+                  !drawerOpen ? "visible-placepreview" : "hidden-placepreview"
+                }`}
+              >
+                <div className="place-preview-img-container">
+                  <img
+                    style={{
+                      boxShadow: "rgb(0 0 0 / 20%) 0px 1px 2px",
+                      height: "100px",
+                      width: "150px",
+                    }}
+                    src={`https://maps.googleapis.com/maps/api/streetview?size=150x100&location=${clickedLocation.lat},${clickedLocation.lng}&key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`}
+                  />
+                </div>
+
+                <div className="lat-lng-return-controls">
+                  <p>{`lat: ${clickedLocation.lat}`}</p>
+                  <p>{`lng: ${clickedLocation.lng}`}</p>
+                  <button
+                    onClick={() => {
+                      dispatch({
+                        type: "SET_CENTER",
+                        payload: {
+                          center: {
+                            lat: clickedLocation.lat,
+                            lng: clickedLocation.lng,
+                          },
+                        },
+                      });
+                      setZoom(15);
+                      setTimeout(() => {
+                        setStreetViewVisibility(true);
+                      }, 2000);
+                    }}
+                    className="no-link pure-material-button-text"
+                  >
+                    Center
+                  </button>
+                </div>
               </div>
-  
-              <div>
-                <h3>{value.label.split(",")[0]}</h3>
-                <p>
-                  {value.label.split(",")?.[1]}
-                  <br />
-                  {`${userCenter.center.lat},${userCenter.center.lng}`}
-                </p>
-              </div>
-              <div>
-                <FaDirections
-                  filter={"drop-shadow(2px 3px 1px rgb(0 0 0 / 0.25))"}
-                />
-              </div>
-            </div>
-          )} */}
+            )}
+          </div>
         </div>
       </div>
     </div>

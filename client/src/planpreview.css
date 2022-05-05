@@ -186,11 +186,84 @@ Not supports in Firefox and IE */
 .visible-searchbar {
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.5s linear;
+  transition: opacity 0.6s linear;
 }
 
 .hidden-searchbar {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 0.5s, opacity 0.5s linear;
+  transition: visibility 0s 0.6s, opacity 0.6s linear;
+}
+
+.visible-placepreview {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s linear;
+  transition-delay: 0.4s;
+}
+
+.hidden-placepreview {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.6s linear;
+}
+.lat-lng-return-controls {
+  /* background: silver; */
+}
+
+.place-preview-wrapper {
+  display: flex;
+  position: absolute;
+  bottom: calc(0vh - 40px);
+  left: 15px;
+  border-radius: 1px;
+  font-size: 12px;
+  background: silver;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+div.lat-lng-return-controls > button {
+  width: 100%;
+  margin: 0 auto;
+  background: hsl(0deg 1% 56%);
+  border-radius: 1px;
+  margin-top: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.place-preview-wrapper h3 {
+  font-weight: bold;
+}
+
+.place-preview-wrapper div:nth-of-type(1) {
+  padding: 3px;
+  border-radius: 1px;
+}
+
+.place-preview-wrapper div:nth-of-type(2) {
+  padding: 5px;
+  padding-left: 6px;
+}
+.place-preview-wrapper div:nth-of-type(3) {
+  padding: 7px;
+}
+
+.place-preview-img-container {
+  /* height: 65px;
+  width: 95px; */
+}
+
+div.yelp-stars-container > button {
+  background: rgb(62 169 80);
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 1px 4px;
+}
+
+.external-website {
+  color: white;
+  margin-top: 20px;
+}
+
+div.external-website > a {
+  color: rgb(255, 255, 255);
 }

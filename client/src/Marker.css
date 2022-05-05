@@ -56,6 +56,7 @@
   }
 }
 
+/* clicked dot below */
 .dot-clicked {
   height: 15px;
   width: 15px;
@@ -65,11 +66,11 @@
   justify-content: center;
   align-items: center;
   animation: out-clicked 1s ease-out;
-  -webkit-animation-iteration-count: 2;
-  -moz-animation-iteration-count: 2;
-  -ms-animation-iteration-count: 2;
-  -o-animation-iteration-count: 2;
-  animation-iteration-count: 2;
+  -webkit-animation-iteration-count: 3;
+  -moz-animation-iteration-count: 3;
+  -ms-animation-iteration-count: 3;
+  -o-animation-iteration-count: 3;
+  animation-iteration-count: 3;
 }
 
 .dot-shadow-clicked {
@@ -81,7 +82,7 @@
 }
 @keyframes out-clicked {
   50% {
-    box-shadow: 0px 0px 0px 0px rgba(24, 25, 28, 0.753);
+    box-shadow: 0px 0px 0px 0px rgba(205, 17, 17, 0.753);
   }
   100% {
     box-shadow: 0px 0px 0px 15px rgba(255, 255, 255, 0);
@@ -91,14 +92,14 @@
 .dot-child-clicked {
   height: 10px;
   width: 10px;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #030303;
   border-radius: 50%;
   animation: pulse-dot-clicked 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s;
-  -webkit-animation-iteration-count: 2;
-  -moz-animation-iteration-count: 2;
-  -ms-animation-iteration-count: 2;
-  -o-animation-iteration-count: 2;
-  animation-iteration-count: 2;
+  -webkit-animation-iteration-count: 3;
+  -moz-animation-iteration-count: 3;
+  -ms-animation-iteration-count: 3;
+  -o-animation-iteration-count: 3;
+  animation-iteration-count: 3;
 }
 
 @-webkit-keyframes pulse-dot-clicked {

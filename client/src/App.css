@@ -221,39 +221,6 @@ body {
   border-bottom-left-radius: 0px !important;
 }
 
-.place-preview-wrapper {
-  display: flex;
-  position: absolute;
-  bottom: 25px;
-  left: 15px;
-  transition: bottom 0.1s linear, margin-bottom 0.1s linear;
-  border-radius: 1px;
-  font-size: 12px;
-  background-color: rgb(254, 255, 250);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.place-preview-wrapper h3 {
-  font-weight: bold;
-}
-
-.place-preview-wrapper div:nth-of-type(1) {
-  padding: 3px;
-  border-radius: 1px;
-}
-
-.place-preview-wrapper div:nth-of-type(2) {
-  padding: 5px;
-  padding-left: 6px;
-}
-.place-preview-wrapper div:nth-of-type(3) {
-  padding: 7px;
-}
-
-.place-preview-img-container {
-  /* height: 65px;
-  width: 95px; */
-}
-
 .large-continue-btn {
   position: absolute;
   bottom: 30px;
