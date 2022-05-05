@@ -81,7 +81,7 @@ const DragPlan = () => {
   }, [currIdx, travelMode]);
 
   const mapRef = useRef(null);
-  const logMsg = useCallback(() => {
+  const scrollToMap = useCallback(() => {
     console.log({ mapRef });
     mapRef?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
@@ -89,14 +89,14 @@ const DragPlan = () => {
   useEffect(() => {
     const newCurr = document.getElementById(`panel-${currIdx}`);
     if (newCurr) {
-      newCurr.addEventListener("click", logMsg, true);
+      newCurr.addEventListener("click", scrollToMap, true);
     }
     return {
       if(newCurr) {
-        newCurr.removeEventListener("click", logMsg);
+        newCurr.removeEventListener("click", scrollToMap);
       },
     };
-  }, [currIdx, travelMode, logMsg]);
+  }, [currIdx, travelMode, scrollToMap]);
 
   const performDirections = (index, origin, destination, response) => {
     (index || index === 0) && setIdx(index);
@@ -177,6 +177,7 @@ const DragPlan = () => {
             collapsed={collapsed}
             setCollapsed={setCollapsed}
             performDirections={performDirections}
+            scrollToMap={scrollToMap}
           />
         </div>
         {derivedData.length > 0 ? (
