@@ -213,7 +213,7 @@ Not supports in Firefox and IE */
 .place-preview-wrapper {
   display: flex;
   position: fixed;
-  bottom: 20px;
+  bottom: 25px;
   left: 15px;
   border-radius: 1px;
   font-size: 12px;

@@ -18,19 +18,19 @@ const DragDropContent = ({
   setCollapsed,
   handleSelectBox,
 }) => {
-  const matches = useMediaQuery("(min-width: 600px)");
-
   const [elRefs, setElRefs] = useState([]);
 
   useEffect(() => {
-    if (derivedData.length > 0 && matches) {
-      setElRefs((refs) =>
-        Array(derivedData.length - 1)
-          .fill()
-          .map((_, i) => refs[i] || createRef())
-      );
+    if (window.innerWidth > 600) {
+      if (derivedData.length > 0) {
+        setElRefs((refs) =>
+          Array(derivedData.length - 1)
+            .fill()
+            .map((_, i) => refs[i] || createRef())
+        );
+      }
     }
-  }, [derivedData.length, matches]);
+  }, [derivedData.length]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
