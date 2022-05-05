@@ -242,5 +242,6 @@ body {
   position: absolute;
   display: flex;
   flex-direction: row-reverse;
-  top: 20px;
+  top: 40px;
+  left: 15px;
 }

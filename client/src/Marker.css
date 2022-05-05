@@ -58,8 +58,8 @@
 
 /* clicked dot below */
 .dot-clicked {
-  height: 15px;
-  width: 15px;
+  height: 14px;
+  width: 14px;
   background-color: rgba(255, 254, 254, 0.87);
   border-radius: 50%;
   display: flex;
@@ -74,8 +74,8 @@
 }
 
 .dot-shadow-clicked {
-  height: 15px;
-  width: 15px;
+  height: 12px;
+  width: 12px;
   border-radius: 50%;
 
   box-shadow: 0 0 3px 3px #8b888879;
