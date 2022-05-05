@@ -13,11 +13,13 @@ import { MdLocationOff, MdLocationOn } from "react-icons/md";
 import { getUserPosition } from "./redux/thunks.js";
 // import { FaDirections } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { SkeletonImage } from "./skeletons";
 
 const PlacesAutoComplete = () => {
-  const [height, setHeight] = useState(window.innerHeight);
   const containerStyle = {
-    height: `${height - 60}px`,
+    height: "calc(100vh - 60px)",
+    position: "relative",
+    bottom: "0",
   };
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
@@ -26,16 +28,6 @@ const PlacesAutoComplete = () => {
       navigate("/categories");
     }
   }, [categoryLength, navigate]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setHeight(window.innerHeight);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const dispatch = useDispatch();
   const center = useSelector((state) => state.center);
@@ -114,7 +106,6 @@ const PlacesAutoComplete = () => {
     slowOpenSetValue(formatted_address);
 
     if (userCoordinates?.geocodedAddress) {
-      console.log("reached here on click of the thing");
       const placeId = userCoordinates?.geocodedAddress[0].place_id;
       setPlaceId(placeId);
     }
@@ -152,14 +143,11 @@ const PlacesAutoComplete = () => {
       ></div>
 
       <div id="drawer-nav" className={drawerOpen && "active"}>
-        <img
-          src={
-            place?.photos
-              ? place?.photos[0].getUrl()
-              : `https://via.placeholder.com/350x250.png?text=Click+Yelp+Link+below+for+more+info`
-          }
-          className="drawer-image"
-        />
+        {place?.photos[0] ? (
+          <img src={place.photos[0].getUrl()} className="drawer-image" />
+        ) : (
+          <SkeletonImage theme="dark" />
+        )}
         <div className="buisness-details">
           <div class={{}}>
             <div class={{}}>

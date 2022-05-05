@@ -4,3 +4,4 @@ export { default as SkeletonLinks } from "./SkeletonLinks";
 export { default as SkeletonMap } from "./SkeletonMap";
 
 export { default as SkeletonArticle } from "./SkeletonArticle";
+export { default as SkeletonImage } from "./SkeletonImage";
