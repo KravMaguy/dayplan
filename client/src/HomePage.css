@@ -32,5 +32,7 @@
 .homepage-title-inner {
   background: rgba(166, 161, 161, 0.854);
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
 }

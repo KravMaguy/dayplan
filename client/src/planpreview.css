@@ -153,10 +153,10 @@ Not supports in Firefox and IE */
   min-height: 100vh;
   width: 90%;
   direction: ltr;
+  min-height: -webkit-fill-available;
 }
 
 .plan-preview-map-container {
-  /* height: calc(100vh - 62px); */
   transition: width 0.5s linear;
   position: absolute;
   bottom: 0px;

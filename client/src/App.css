@@ -220,13 +220,12 @@ body {
 }
 
 .large-continue-btn {
-  position: absolute;
-  bottom: 30px;
   width: 100%;
-  border-radius: 0px;
+  border-radius: 2px;
   font-size: x-large;
   color: black;
   padding: 20px;
+  margin-top: 10px;
 }
 
 .legal-links a {

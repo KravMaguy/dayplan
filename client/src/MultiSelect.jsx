@@ -52,7 +52,7 @@ export default function MultiSelectAsync() {
         position: "relative",
         top: "90px",
         margin: "0 auto",
-        minHeight: "calc(100vh - 90px)",
+        // minHeight: "calc(100vh - 90px)",
       }}
     >
       <h1 className="homepage-title">
