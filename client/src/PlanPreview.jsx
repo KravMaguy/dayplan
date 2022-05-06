@@ -8,7 +8,7 @@ import "./planpreview.css";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import { options } from "./planUtils";
 import { SkeletonMap } from "./skeletons";
-import mapgreypng from "./images/gmapgrey.png";
+import PlanPreviewControls from "./PlanPreviewControls";
 
 const containerStyle = {
   height: "100%",
@@ -55,13 +55,11 @@ const PlanPreview = () => {
       setReviews(data);
     };
     fetchBuisnessReviews();
-  }, [selectedIdx]);
+  }, [selectedIdx, sharedPlan]);
 
   const setNewCenter = (latitude, longitude) => {
     setCenter({ latitude, longitude });
   };
-
-  // console.log({ sharedPlan });
 
   return (
     <>
@@ -74,7 +72,10 @@ const PlanPreview = () => {
       {center && sharedPlan.length > 0 ? (
         <>
           {selectedIdx !== null && (
-            <div id="drawer-nav" className={drawerOpen && "active"}>
+            <div
+              id="drawer-nav"
+              className={`plan-preview-nav  ${drawerOpen ? "active" : ""}`}
+            >
               <img
                 loading="lazy"
                 src={
@@ -183,64 +184,15 @@ const PlanPreview = () => {
                 : "open-preview-map-control-size"
             }`}
           >
-            {/* <button className="plans-preview-controls">hi this is stuff</button> */}
-            <div className="map-card-controls plans-preview-controls">
-              <div style={{ display: "flex" }}>
-                <button
-                  className="map-controls"
-                  // style={currIdx <= 0 ? dimStyle : null}
-                  // disabled={currIdx <= 0 ? true : false}
-                  // onClick={() => prevDestination()}
-                >
-                  {/* {currIdx === startingSearchIndex + 1 ? "Full Plan" : "Previous"} */}
-                  Previous
-                </button>
-                <button
-                  // style={currIdx >= derivedData.length - 1 ? dimStyle : null}
-                  className="map-controls plan-next-btn"
-                  // disabled={currIdx >= derivedData.length - 1 ? true : false}
-                  // onClick={() => nextDestination()}
-                  onClick={() => {
-                    setZoom(14);
-
-                    if (!selectedIdx && selectedIdx !== 0) {
-                      setSelectedIdx(0);
-                      console.clear();
-
-                      const { latitude, longitude } = sharedPlan[0].coordinates;
-                      console.log({ latitude });
-                      setNewCenter(latitude, longitude);
-                    } else {
-                      setSelectedIdx(selectedIdx + 1);
-                      const { latitude, longitude } =
-                        sharedPlan[selectedIdx + 1].coordinates;
-                      setNewCenter(latitude, longitude);
-                    }
-                    setOpenDrawer(true);
-                  }}
-                >
-                  {/* {currIdx === startingSearchIndex ? "Start" : "Next"} */}
-                  Next
-                </button>
-              </div>
-
-              <button className="pure-material-button-text pink-bg">
-                <a
-                  alt="view this plan on google maps"
-                  target="blank"
-                  style={{ display: "flex" }}
-                  // href={`https://www.google.com/maps/dir/${getLocStr()}`}
-                >
-                  <span className="map-link-text-hide">View plan on</span>
-                  <img
-                    alt="google directions link"
-                    style={{ height: "31px" }}
-                    src={mapgreypng}
-                  />
-                </a>
-              </button>
-            </div>
-
+            <PlanPreviewControls
+              selectedIdx={selectedIdx}
+              setSelectedIdx={setSelectedIdx}
+              sharedPlan={sharedPlan}
+              setNewCenter={setNewCenter}
+              setOpenDrawer={setOpenDrawer}
+              setZoom={setZoom}
+              drawerOpen={drawerOpen}
+            />
             <Map
               zoom={zoom}
               setZoom={setZoom}
