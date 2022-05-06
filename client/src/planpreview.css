@@ -270,3 +270,16 @@ div.yelp-stars-container > button {
 div.external-website > a {
   color: rgb(255, 255, 255);
 }
+
+.plans-preview-controls {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  color: white;
+  z-index: 1;
+  column-gap: 0.875rem;
+}
+
+.map-card-controls.plans-preview-controls > div > button:first-child {
+  border: radius top right 0px, radius bottom right 0px;
+}

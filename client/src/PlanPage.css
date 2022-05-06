@@ -465,7 +465,7 @@ div[role="button"].css-mod-xb97g8:hover {
   border-radius: 4px;
   padding: 0 8px;
   min-width: 64px;
-  height: 36px;
+  height: 40px;
   vertical-align: middle;
   text-align: center;
   text-overflow: ellipsis;
@@ -482,6 +482,7 @@ div[role="button"].css-mod-xb97g8:hover {
 
 .pure-material-button-text.pink-bg {
   background-color: #6e407724;
+  border-radius: 1px;
 }
 
 .pure-material-button-text::-moz-focus-inner {

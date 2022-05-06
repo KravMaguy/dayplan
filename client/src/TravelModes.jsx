@@ -1,4 +1,4 @@
-import { IoIosBicycle, IoIosCar, IoIosBus, IoIosWalk } from "react-icons/io";
+import { RiBikeLine, RiCarLine, RiBusLine, RiWalkLine } from "react-icons/ri";
 const TravelModes = ({
   travelMode,
   checkBicycling,
@@ -13,19 +13,6 @@ const TravelModes = ({
   return (
     <form className="bg-grey-plan-controls">
       <div className="radio-wrapper">
-        <label htmlFor="DRIVING">
-          <input
-            type="radio"
-            name="DRIVING"
-            id="DRIVING"
-            className="driving"
-            checked={travelMode === "DRIVING"}
-            onChange={checkDriving}
-            value="DRIVING"
-          />
-          <IoIosCar className="travel-modes" />
-        </label>
-
         <label htmlFor="BICYCLING">
           <input
             type="radio"
@@ -36,7 +23,7 @@ const TravelModes = ({
             onChange={checkBicycling}
             value="BICYCLING"
           />
-          <IoIosBicycle className="travel-modes" />
+          <RiBikeLine className="travel-modes" />
         </label>
 
         <label htmlFor="TRANSIT">
@@ -50,7 +37,7 @@ const TravelModes = ({
             onChange={checkTransit}
             value="TRANSIT"
           />
-          <IoIosBus className="travel-modes" />
+          <RiBusLine className="travel-modes" />
         </label>
 
         <label htmlFor="WALKING">
@@ -63,7 +50,20 @@ const TravelModes = ({
             onChange={checkWalking}
             value="WALKING"
           />
-          <IoIosWalk className="travel-modes" />
+          <RiWalkLine className="travel-modes" />
+        </label>
+
+        <label htmlFor="DRIVING">
+          <input
+            type="radio"
+            name="DRIVING"
+            id="DRIVING"
+            className="driving"
+            checked={travelMode === "DRIVING"}
+            onChange={checkDriving}
+            value="DRIVING"
+          />
+          <RiCarLine className="travel-modes" />
         </label>
       </div>
       <div>
