@@ -176,7 +176,7 @@ const PlanPreview = () => {
           )}
 
           <div
-            className={`plan-preview-map-container ${
+            className={`plan-preview-map-container plans-page ${
               drawerOpen
                 ? "closed-preview-map-control-size"
                 : "open-preview-map-control-size"

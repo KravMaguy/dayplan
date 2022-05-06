@@ -162,6 +162,10 @@ Not supports in Firefox and IE */
   bottom: 0px;
 }
 
+.plan-preview-map-container.plans-page {
+  height: 100vh;
+}
+
 .closed-preview-map-control-size {
   width: calc(100% - 350px);
 }
