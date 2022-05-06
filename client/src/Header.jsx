@@ -23,6 +23,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isSavingPlan = useSelector((state) => state.isSavingPlan);
   const planLink = useSelector((state) => state.planLink);
+  const [isShowingLoginDialog, setIsShowingLoginDialog] = useState(false);
 
   useEffect(() => {
     if (!planLink || !user) {
@@ -53,9 +54,12 @@ const Header = () => {
   return (
     <>
       <div
-        id="overlay"
-        onClick={() => setIsShowingShare(false)}
-        className={isShowingShare ? "active" : ""}
+        id="share-plan-overlay"
+        onClick={() => {
+          setIsShowingShare(false);
+          setIsShowingLoginDialog(false);
+        }}
+        className={isShowingShare || isShowingLoginDialog ? "active" : ""}
       ></div>
       <div className="header header-fixed shadow">
         <div className="navbar container">
@@ -98,12 +102,14 @@ const Header = () => {
                   )}
                 </>
               ) : (
-                <button className="share-button">
-                  <a className="share-button" href="/auth/google">
-                    Save
-                  </a>
+                <button
+                  className="share-button"
+                  onClick={() => setIsShowingLoginDialog(true)}
+                >
+                  save
                 </button>
               ))}
+
             {(userCenter || userCoordinates) && pathname === "/location" && (
               <button
                 onClick={() => navigate("/plan")}
@@ -173,6 +179,36 @@ const Header = () => {
             </nav>
           </div>
         </div>
+      </div>
+
+      <div
+        style={{ padding: "50px" }}
+        className={
+          isShowingLoginDialog ? "share-dialog is-open" : "share-dialog"
+        }
+      >
+        <header>
+          <h3 className="dialog-title">Share this plan</h3>
+          <button
+            style={{ position: "absolute", top: 0, right: 0 }}
+            className="close-button"
+            onClick={() => setIsShowingLoginDialog(false)}
+          >
+            <svg>
+              <use href="#close"></use>
+            </svg>
+          </button>
+        </header>
+        Log in with your google account to save and share your plan with your
+        friends and family
+        <form action="/auth/google">
+          <button
+            style={{ padding: "0px", marginTop: "40px", paddingRight: "5px" }}
+          >
+            <img className="" alt="" src="../../btn_google.svg" />
+            Log in with Google
+          </button>
+        </form>
       </div>
 
       <div className={isShowingShare ? "share-dialog is-open" : "share-dialog"}>
