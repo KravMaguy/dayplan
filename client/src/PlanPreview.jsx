@@ -61,7 +61,7 @@ const PlanPreview = () => {
     setCenter({ latitude, longitude });
   };
 
-  console.log({ sharedPlan });
+  // console.log({ sharedPlan });
 
   return (
     <>
@@ -201,10 +201,20 @@ const PlanPreview = () => {
                   // disabled={currIdx >= derivedData.length - 1 ? true : false}
                   // onClick={() => nextDestination()}
                   onClick={() => {
+                    setZoom(14);
+
                     if (!selectedIdx && selectedIdx !== 0) {
                       setSelectedIdx(0);
+                      console.clear();
+
+                      const { latitude, longitude } = sharedPlan[0].coordinates;
+                      console.log({ latitude });
+                      setNewCenter(latitude, longitude);
                     } else {
                       setSelectedIdx(selectedIdx + 1);
+                      const { latitude, longitude } =
+                        sharedPlan[selectedIdx + 1].coordinates;
+                      setNewCenter(latitude, longitude);
                     }
                     setOpenDrawer(true);
                   }}
