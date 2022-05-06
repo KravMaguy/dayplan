@@ -189,10 +189,9 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.post("/get_shared_plan", (req, res) => {
-  const { body } = req;
-  const { params } = body;
-  const { email, id } = params;
+app.get("/get_shared_plan", (req, res) => {
+  const { query } = req;
+  const { email, id } = query;
   User.findOne({ "google.email": email }, function (err, doc) {
     if (err) {
       return res.status(err.response.status).send(err.message);

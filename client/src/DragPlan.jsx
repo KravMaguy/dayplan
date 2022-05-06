@@ -187,7 +187,7 @@ const DragPlan = () => {
           />
         ) : (
           <div className="links-holder">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
+            {new Array(6).fill(null).map((n) => (
               <SkeletonLinks key={n} theme="light" />
             ))}
           </div>

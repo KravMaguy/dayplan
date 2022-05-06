@@ -26,7 +26,7 @@ const PlanPreview = () => {
   const [reviews, setReviews] = useState(null);
   useEffect(() => {
     const getUserData = async () => {
-      const { data } = await axios.post("/get_shared_plan", { params });
+      const { data } = await axios.get("/get_shared_plan", { params });
       const { derivedData } = data;
       setSharedPlan(derivedData);
       const center = {
@@ -221,18 +221,6 @@ const PlanPreview = () => {
           </div>
         </>
       ) : (
-        // <div
-        //   className="when-do-i-show"
-        //   style={{
-        //     position: "absolute",
-        //     bottom: "0px",
-        //     fontSize: "50px",
-        //     background: "green",
-        //   }}
-        // >
-        //   Map loading...
-        // </div>
-
         <SkeletonMap theme="light" />
       )}
     </>

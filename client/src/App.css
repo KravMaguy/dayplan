@@ -220,12 +220,7 @@ body {
 }
 
 .legal-links a {
-  /* margin-left: 3px;
-  color: rgb(58, 55, 55); */
-}
-
-.legal-links a:first-child {
-  /*margin-left: 0px;  limits the scope of the previous rule */
+  color: #5c258e;
 }
 
 .legal-links a {
