@@ -9,7 +9,24 @@ const PlanPreviewControls = ({
   setNewCenter,
   setOpenDrawer,
   setZoom,
+  drawerOpen,
 }) => {
+  const getLocStr = () => {
+    const latlongArr = sharedPlan.map((x) => {
+      return [x.coordinates.latitude, x.coordinates.longitude];
+    });
+    return latlongArr.map((e) => e.join(",")).join("/");
+
+    // if (!drawerOpen) {
+    //   return latlongArr.map((e) => e.join(",")).join("/");
+    // }
+    // return (
+    //   latlongArr[selectedIdx - 1].join(",") +
+    //   "/" +
+    //   latlongArr[selectedIdx].join(",")
+    // );
+  };
+
   return (
     <div className={`map-card-controls plans-preview-controls`}>
       <div style={{ display: "flex" }}>
@@ -52,9 +69,9 @@ const PlanPreviewControls = ({
           alt="view this plan on google maps"
           target="blank"
           style={{ display: "flex" }}
-          // href={`https://www.google.com/maps/dir/${getLocStr()}`}
+          href={`https://www.google.com/maps/dir/${getLocStr()}`}
         >
-          <span className="map-link-text-hide">View plan on</span>
+          <span className="map-link-text-hide">View full plan</span>
           <img
             alt="google directions link"
             style={{ height: "31px" }}
