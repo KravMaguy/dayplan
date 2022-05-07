@@ -5,9 +5,7 @@
 }
 
 body {
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto", sans-serif;
   /* max-height: 100vh; */
 }
 
@@ -239,4 +237,10 @@ body {
   flex-direction: row-reverse;
   top: 80px;
   left: 15px;
+}
+
+.user-destination-page {
+  height: 100vh;
+  padding-top: 58px;
+  position: relative;
 }

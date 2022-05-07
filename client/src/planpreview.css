@@ -1,16 +1,17 @@
 #drawer-nav {
-  z-index: 1;
-  height: calc(100vh - 62px);
-  width: 350px;
-  background-color: #4b4141;
-  color: rgb(255, 255, 255);
   position: fixed;
+  z-index: 1;
+  top: 60px;
+  width: 350px;
   right: 0;
   bottom: 0;
   transform: translateX(100%);
+  background-color: #4b4141;
+  color: rgb(255, 255, 255);
   transition: transform 0.5s linear;
   margin-left: 200px;
   border-left: 3px solid grey;
+  overflow-y: auto;
 }
 
 @media screen and (max-width: 400px) {
@@ -41,8 +42,7 @@
   position: relative;
   top: 0;
   left: 50%;
-  width: 347px;
-  height: 200px;
+  width: 100%;
   transform: translateY(0%) translateX(-50%);
   box-shadow: rgba(0, 0, 0, 0.65) 1.95px 1.95px 2.6px;
 }
@@ -102,6 +102,8 @@ div.buisness-details > p {
 .pill-categories-container {
   display: flex;
   margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .reviews-container {
@@ -180,9 +182,6 @@ Not supports in Firefox and IE */
   }
   .closed-preview-map-control-size {
     width: calc(100% - 280px);
-  }
-  .drawer-image {
-    width: 276px;
   }
 }
 
@@ -265,6 +264,7 @@ div.yelp-stars-container > button {
 .external-website {
   color: white;
   margin-top: 20px;
+  word-wrap: break-word;
 }
 
 div.external-website > a {

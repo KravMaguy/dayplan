@@ -109,7 +109,9 @@ const CustomSearchBar = ({
             onInputChange: (newInputValue, meta) => {
               setInputValue(newInputValue);
             },
-            placeholder: "choose location",
+            placeholder: (
+              <span style={{ fontWeight: 100 }}>choose location</span>
+            ),
             onChange: (val) => handleSelect(val),
           }}
           apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
