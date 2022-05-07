@@ -23,7 +23,7 @@ const PlaceDrawer = ({
             <div className="yelp-stars-container">
               <button
                 onClick={() => navigate("/plan")}
-                className="no-link pure-material-button-text green-bg-btn"
+                className="no-link pure-material-button-text green-bg-btn generate-plan-link"
               >
                 Create Plan
               </button>

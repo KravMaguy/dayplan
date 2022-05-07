@@ -14,7 +14,7 @@ const HomePage = () => {
           <h1 className="homepage-title">
             <span className="homepage-title-inner">
               Create a day plan based around popular activities, festivals,
-              local buisnesses, or whatever you feel like.{" "}
+              local buisnesses, or whatever you feel.{" "}
               <Link to={"/categories"}>Get Started</Link>
             </span>
           </h1>
