@@ -12,11 +12,14 @@ const PlaceDrawer = ({
   const navigate = useNavigate();
   return (
     <div id="drawer-nav" className={drawerOpen && "active"}>
-      {photos && photos.length > 0 && photos[0].getUrl() ? (
-        <img alt="place" src={photos[0].getUrl()} className="drawer-image" />
-      ) : (
-        <SkeletonImage />
-      )}
+      <div className="cls-image-container">
+        {photos && photos.length > 0 && photos[0].getUrl() ? (
+          <img alt="place" src={photos[0].getUrl()} className="drawer-image" />
+        ) : (
+          <SkeletonImage />
+        )}
+      </div>
+
       <div className="buisness-details">
         <div>
           <div>

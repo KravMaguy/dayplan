@@ -28,8 +28,8 @@
   height: 100px;
 }
 .skeleton-wrapper {
-  margin: 20px auto;
-  padding: 10px 15px;
+  /* margin: 20px auto;
+  padding: 10px 15px; */
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -144,4 +144,11 @@
 .skeleton-wrapper.drawer-image.skeleton-image {
   border-radius: 0px;
   background: #3ab35ba6;
+  height: 200px;
+}
+.drawer-image {
+  height: 200px;
+}
+.cls-image-container {
+  height: 200px;
 }
