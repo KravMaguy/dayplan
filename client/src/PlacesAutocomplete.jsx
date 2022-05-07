@@ -65,7 +65,6 @@ const PlacesAutoComplete = () => {
   const [focused, setFocused] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [run, setRun] = useState(true);
-  const [hasSeenThis, setHasSeenThis] = useState(false);
   const { photos, name, formatted_address, types, website } = place || {};
 
   useEffect(() => {
@@ -76,12 +75,13 @@ const PlacesAutoComplete = () => {
     setOpenDrawer(true);
     setPlaceId(placeId);
   }, [userCoordinates?.geocodedAddress]);
+
   const didMount = useRef(false);
+  const hasSeenThis = useRef(false);
 
   useEffect(() => {
-    console.log("uef");
-    if (didMount.current && drawerOpen && !hasSeenThis) {
-      setHasSeenThis(true);
+    if (didMount.current && drawerOpen && !hasSeenThis.current) {
+      hasSeenThis.current = true;
       setRun(false);
       const timeout = setTimeout(() => {
         setStepIndex(3);
@@ -120,7 +120,7 @@ const PlacesAutoComplete = () => {
         steps={steps}
         continuous={true}
         run={run}
-        hideBackButton={stepIndex === 3}
+        hideBackButton={stepIndex >= 3}
         styles={{
           options: {
             arrowColor: "#e3ffeb",
