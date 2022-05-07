@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Marker.css";
 import { useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
@@ -9,6 +9,13 @@ import PlacePreview from "./PlacePreview";
 import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
 import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+
+const containerStyle = {
+  height: "calc(100vh - 60px)",
+  position: "relative",
+  bottom: "0",
+};
+
 const steps = [
   {
     target: ".my-first-step",
@@ -18,28 +25,33 @@ const steps = [
   {
     target: ".second-step",
     content:
-      "You can also use geolocation if youd like to set the start of the plan to your current location",
+      "You can also use geolocation if youd like to set the start of the plan to your current location, you'll see a big purple dot representing your location",
+  },
+  {
+    target: ".destination-page-map-container",
+    content:
+      "click anywhere on the map to scope out an area, we'll show you a photo if we have one, this won't set your starting location for your created plan though, for that youll have to use the searchbar or geolocation",
   },
   {
     target: ".generate-plan-link",
     content: "you can create a plan using this location",
   },
+  {
+    target: "#header_plan_btn",
+    content: "look for this button to also create a plan",
+  },
 ];
-
-const containerStyle = {
-  height: "calc(100vh - 60px)",
-  position: "relative",
-  bottom: "0",
-};
 
 const PlacesAutoComplete = () => {
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!categoryLength) {
-  //     navigate("/categories");
-  //   }
-  // }, [categoryLength, navigate]);
+  const flag = "developPage";
+  useEffect(() => {
+    if (flag) return;
+    if (!categoryLength) {
+      navigate("/categories");
+    }
+  }, [categoryLength, navigate]);
 
   const center = useSelector((state) => state.center);
   const userCoordinates = useSelector((state) => state.position);
@@ -53,7 +65,7 @@ const PlacesAutoComplete = () => {
   const [focused, setFocused] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [run, setRun] = useState(true);
-
+  const [hasSeenThis, setHasSeenThis] = useState(false);
   const { photos, name, formatted_address, types, website } = place || {};
 
   useEffect(() => {
@@ -64,23 +76,35 @@ const PlacesAutoComplete = () => {
     setOpenDrawer(true);
     setPlaceId(placeId);
   }, [userCoordinates?.geocodedAddress]);
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    console.log("uef");
+    if (didMount.current && drawerOpen && !hasSeenThis) {
+      setHasSeenThis(true);
+      setRun(false);
+      const timeout = setTimeout(() => {
+        setStepIndex(3);
+        setRun(true);
+      }, 700);
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      didMount.current = true;
+    }
+  }, [drawerOpen]);
 
   const handleJoyrideCallback = (data) => {
     const { action, index, status, type } = data;
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
-      console.log("in here");
-      console.log("index: ", index);
-      if (index <= 1 && drawerOpen) {
-        console.log("reached");
-        // setRun(false);
+      if (index >= 2 && !drawerOpen) {
+        setRun(false);
       }
       setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
-      console.log({ action });
     } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      // Need to set our running state to false, so we can restart if we click start again.
       setRun(false);
     }
-    console.log({ data }); //eslint-disable-line no-console
   };
 
   return (
@@ -96,6 +120,18 @@ const PlacesAutoComplete = () => {
         steps={steps}
         continuous={true}
         run={run}
+        hideBackButton={stepIndex === 3}
+        styles={{
+          options: {
+            arrowColor: "#e3ffeb",
+            backgroundColor: "#e3ffeb",
+            overlayColor: "rgba(79, 26, 0, 0.4)",
+            primaryColor: "#000",
+            textColor: "#004a14",
+            width: 900,
+            zIndex: 1000,
+          },
+        }}
       />
 
       <PlaceDrawer
