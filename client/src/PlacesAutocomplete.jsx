@@ -74,6 +74,13 @@ const PlacesAutoComplete = () => {
     }
   }, [drawerOpen]);
 
+  useEffect(() => {
+    if (!drawerOpen && stepIndex === 4) {
+      console.log("reached in here");
+      setRun(false);
+    }
+  }, [drawerOpen, stepIndex]);
+
   const handleJoyrideCallback = (data) => {
     const { action, index, status, type } = data;
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {

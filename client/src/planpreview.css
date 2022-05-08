@@ -14,6 +14,10 @@
   overflow-y: auto;
 }
 
+.user-destination-page {
+  overflow-x: hidden !important;
+}
+
 @media screen and (max-width: 400px) {
   #drawer-nav {
     width: 280px;
@@ -310,3 +314,7 @@ div.external-website > a {
     display: flex;
   }
 } */
+
+#drawer-nav.plan-preview-nav {
+  position: fixed;
+}

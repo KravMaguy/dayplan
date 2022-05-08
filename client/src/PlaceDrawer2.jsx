@@ -9,7 +9,7 @@ const PlaceDrawer2 = ({
   return (
     <div
       id="drawer-nav"
-      className={`plan-preview-nav  ${drawerOpen ? "active" : ""}`}
+      className={`plan-preview-nav ${drawerOpen ? "active" : ""}`}
     >
       <img
         src={
