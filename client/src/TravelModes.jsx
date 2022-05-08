@@ -11,7 +11,7 @@ const TravelModes = ({
 }) => {
   return (
     <form className="bg-grey-plan-controls">
-      <div id="travel_radio_wrapper" className="radio-wrapper">
+      <div className="radio-wrapper">
         <label htmlFor={travelModeValues.BICYCLING}>
           <input
             type="radio"
@@ -65,7 +65,7 @@ const TravelModes = ({
           <RiCarLine className="travel-modes" />
         </label>
       </div>
-      <div>
+      <div id="open_reset_controls">
         <button
           onClick={(e) => {
             e.preventDefault();

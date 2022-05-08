@@ -1,6 +1,6 @@
 const DestinationLinks = ({ derivedData, removeLocation }) => {
   return (
-    <div className="map-destination-links-container">
+    <div id="delete_location_links" className="map-destination-links-container">
       {derivedData.map((x, idx) => {
         return (
           idx > 0 && (

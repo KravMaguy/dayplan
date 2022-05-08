@@ -30,15 +30,16 @@ const steps = [
   {
     target: ".destination-page-map-container",
     content:
-      "click anywhere on the map to scope out an area, we'll show you a photo if we have one, this won't set your starting location for your created plan though, for that youll have to use the searchbar or geolocation",
+      "Click anywhere on the map to scope out an area, we'll show you a photo if we have one, this won't set your starting location for your created plan though, for that youll have to use the searchbar or geolocation",
   },
   {
     target: ".generate-plan-link",
-    content: "you can create a plan using this location",
+    content: "You can create a plan using this location",
   },
   {
     target: "#header_plan_btn",
-    content: "look for this button to also create a plan",
+    content:
+      "Look for this button in the header to also create a plan using your selected location",
   },
 ];
 
