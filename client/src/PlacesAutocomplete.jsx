@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Marker.css";
 import { useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
@@ -8,15 +8,47 @@ import PlaceDrawer from "./PlaceDrawer";
 import PlacePreview from "./PlacePreview";
 import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
+import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+
 const containerStyle = {
   height: "calc(100vh - 60px)",
   position: "relative",
   bottom: "0",
 };
+
+const steps = [
+  {
+    target: ".my-first-step",
+    content:
+      "Here is where youll set the starting location for your plan, try looking for a popular spot near you i.e. the walmart down the block or a popular neighborhood or local spot",
+  },
+  {
+    target: ".second-step",
+    content:
+      "You can also use geolocation if youd like to set the start of the plan to your current location, you'll see a big purple dot representing your location",
+  },
+  {
+    target: ".destination-page-map-container",
+    content:
+      "Click anywhere on the map to scope out an area, we'll show you a photo if we have one, this won't set your starting location for your created plan though, for that youll have to use the searchbar or geolocation",
+  },
+  {
+    target: ".generate-plan-link",
+    content: "You can create a plan using this location",
+  },
+  {
+    target: "#header_plan_btn",
+    content:
+      "Look for this button in the header to also create a plan using your selected location",
+  },
+];
+
 const PlacesAutoComplete = () => {
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
+  const flag = "";
   useEffect(() => {
+    if (flag) return;
     if (!categoryLength) {
       navigate("/categories");
     }
@@ -32,7 +64,8 @@ const PlacesAutoComplete = () => {
   const [place, setPlace] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
   const [focused, setFocused] = useState(false);
-
+  const [stepIndex, setStepIndex] = useState(0);
+  const [run, setRun] = useState(true);
   const { photos, name, formatted_address, types, website } = place || {};
 
   useEffect(() => {
@@ -44,6 +77,37 @@ const PlacesAutoComplete = () => {
     setPlaceId(placeId);
   }, [userCoordinates?.geocodedAddress]);
 
+  const didMount = useRef(false);
+  const hasSeenThis = useRef(false);
+
+  useEffect(() => {
+    if (didMount.current && drawerOpen && !hasSeenThis.current) {
+      hasSeenThis.current = true;
+      setRun(false);
+      const timeout = setTimeout(() => {
+        setStepIndex(3);
+        setRun(true);
+      }, 700);
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      didMount.current = true;
+    }
+  }, [drawerOpen]);
+
+  const handleJoyrideCallback = (data) => {
+    const { action, index, status, type } = data;
+    if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].includes(type)) {
+      if (index >= 2 && !drawerOpen) {
+        setRun(false);
+      }
+      setStepIndex(index + (action === ACTIONS.PREV ? -1 : 1));
+    } else if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setRun(false);
+    }
+  };
+
   return (
     <div className="user-destination-page">
       <div
@@ -51,6 +115,26 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen && "active"}
       ></div>
+      <Joyride
+        stepIndex={stepIndex}
+        callback={handleJoyrideCallback}
+        steps={steps}
+        continuous={true}
+        run={run}
+        hideBackButton={stepIndex >= 3}
+        styles={{
+          options: {
+            arrowColor: "#e3ffeb",
+            backgroundColor: "#e3ffeb",
+            overlayColor: "rgba(79, 26, 0, 0.4)",
+            primaryColor: "#000",
+            textColor: "#004a14",
+            width: 900,
+            zIndex: 1000,
+          },
+        }}
+      />
+
       <PlaceDrawer
         photos={photos}
         drawerOpen={drawerOpen}

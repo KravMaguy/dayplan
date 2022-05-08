@@ -106,7 +106,11 @@ const PlanMap = ({
   return (
     <div className="col col-left side-p-10">
       <div className="plan-map-container">
-        <div className="map-card-controls">
+        <div
+          id="plan_map_card_controls"
+          className="map-card-controls"
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
           <div style={{ display: "flex" }}>
             <button
               className="map-controls"
@@ -126,14 +130,17 @@ const PlanMap = ({
             </button>
           </div>
 
-          <button className="pure-material-button-text pink-bg">
+          <button
+            id="gmap_route_link"
+            className="pure-material-button-text pink-bg"
+          >
             <a
               alt="view this plan on google maps"
               target="blank"
               style={{ display: "flex" }}
               href={`https://www.google.com/maps/dir/${getLocStr()}`}
             >
-              <span className="map-link-text-hide">on</span>
+              {/* <span className="map-link-text-hide">on</span> */}
               <img
                 alt="google-directions-link"
                 style={{ height: "31px" }}

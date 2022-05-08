@@ -112,6 +112,7 @@ const Header = () => {
 
             {(userCenter || userCoordinates) && pathname === "/location" && (
               <button
+                id="header_plan_btn"
                 onClick={() => navigate("/plan")}
                 style={{ borderRadius: "2px" }}
                 className="share-button"

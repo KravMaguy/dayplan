@@ -99,7 +99,7 @@ const CustomSearchBar = ({
         !drawerOpen ? "visible-searchbar" : "hidden-searchbar"
       }`}
     >
-      <div className="search-wrap">
+      <div className="search-wrap my-first-step">
         <GooglePlacesAutocomplete
           selectProps={{
             onFocus: () => setFocused(true),
@@ -120,7 +120,9 @@ const CustomSearchBar = ({
 
       <div
         onClick={() => runGetUserLocation()}
-        className={`${userCoordinates ? "icon icon-bg-green" : "icon"}`}
+        className={`second-step ${
+          userCoordinates ? "icon icon-bg-green" : "icon"
+        }`}
       >
         {!userCoordinates ? (
           <MdLocationOff className="location-icon" fill={"#d3d3d3"} />

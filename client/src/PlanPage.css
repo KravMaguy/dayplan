@@ -613,7 +613,7 @@ a.pill:active {
 /* end drag styles */
 
 /* cellphone responsive layout 600 px and under */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 601px) {
   button.small-ui {
     display: none;
   }
