@@ -22,10 +22,7 @@ const DragPlanDirections = ({
   setDerivedData,
   travelMode,
   setTravelMode,
-  checkBicycling,
-  checkWalking,
-  checkTransit,
-  checkDriving,
+  checkMode,
   collapsed,
   setCollapsed,
   open,
@@ -140,10 +137,7 @@ const DragPlanDirections = ({
         <div className="plan-inner-container">
           <TravelModes
             travelMode={travelMode}
-            checkBicycling={checkBicycling}
-            checkDriving={checkDriving}
-            checkWalking={checkWalking}
-            checkTransit={checkTransit}
+            checkMode={checkMode}
             currIdx={currIdx}
             setIsOpen={setIsOpen}
             resetForm={resetForm}

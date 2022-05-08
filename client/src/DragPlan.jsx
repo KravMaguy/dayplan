@@ -26,23 +26,10 @@ const DragPlan = () => {
   const [travelMode, setTravelMode] = useState("DRIVING");
   const [collapsed, setCollapsed] = useState(null);
 
-  const checkDriving = ({ target: { checked } }) => {
-    checked && setTravelMode("DRIVING");
-    setResponse(null);
-  };
-
-  const checkBicycling = ({ target: { checked } }) => {
-    checked && setTravelMode("BICYCLING");
-    setResponse(null);
-  };
-
-  const checkTransit = ({ target: { checked } }) => {
-    checked && setTravelMode("TRANSIT");
-    setResponse(null);
-  };
-
-  const checkWalking = ({ target: { checked } }) => {
-    checked && setTravelMode("WALKING");
+  const checkMode = (e, mode) => {
+    const { target } = e;
+    const { checked } = target;
+    checked && setTravelMode(mode);
     setResponse(null);
   };
 
@@ -169,10 +156,7 @@ const DragPlan = () => {
             derivedData={derivedData}
             travelMode={travelMode}
             setTravelMode={setTravelMode}
-            checkBicycling={checkBicycling}
-            checkWalking={checkWalking}
-            checkTransit={checkTransit}
-            checkDriving={checkDriving}
+            checkMode={checkMode}
             setDerivedData={setDerivedData}
             collapsed={collapsed}
             setCollapsed={setCollapsed}

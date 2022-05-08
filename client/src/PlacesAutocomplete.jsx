@@ -45,7 +45,7 @@ const steps = [
 const PlacesAutoComplete = () => {
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
-  const flag = "developPage";
+  const flag = "";
   useEffect(() => {
     if (flag) return;
     if (!categoryLength) {

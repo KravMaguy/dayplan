@@ -27,4 +27,11 @@ export const travelModeStrings = {
   TRANSIT: "Commute",
 };
 
+export const travelModeValues = {
+  DRIVING: "DRIVING",
+  BICYCLING: "BICYCLING",
+  WALKING: "WALKING",
+  TRANSIT: "TRANSIT",
+};
+
 export const highlightedColor = "#8d7fbf";
