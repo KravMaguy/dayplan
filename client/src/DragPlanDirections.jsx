@@ -128,7 +128,6 @@ const DragPlanDirections = ({
   return (
     <div className="col plan-col-right">
       <div
-        id="right_col_drag"
         className={`${
           !open
             ? "plan-directions-container"

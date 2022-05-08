@@ -9,7 +9,10 @@ import PlacePreview from "./PlacePreview";
 import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
 import CustomRide from "./CustomRide";
-import { locationSteps, locationTourStyles } from "./TourUtils";
+import {
+  locationSteps,
+  dragPlanTourStyle as locationTourStyles,
+} from "./TourUtils";
 import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 const containerStyle = {
@@ -56,6 +59,8 @@ const PlacesAutoComplete = () => {
   const hasSeenThis = useRef(false);
 
   useEffect(() => {
+    const visitedTrain = localStorage.getItem("hasSeenLocationsTour");
+    if (visitedTrain) return;
     if (didMount.current && drawerOpen && !hasSeenThis.current) {
       hasSeenThis.current = true;
       setRun(false);
@@ -82,6 +87,15 @@ const PlacesAutoComplete = () => {
       setRun(false);
     }
   };
+
+  useEffect(() => {
+    const visitedTrain = localStorage.getItem("hasSeenLocationsTour");
+    if (!visitedTrain) {
+      localStorage.setItem("hasSeenLocationsTour", "been here");
+      return;
+    }
+    setRun(false);
+  }, []);
 
   return (
     <div className="user-destination-page">

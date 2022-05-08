@@ -1,11 +1,12 @@
 export const DragPlanSteps = [
   {
-    target: "#right_col_drag",
-    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan, just drag the cards into the right spot. open a card for directions, or click the link in the card to view the location on google maps`,
-  },
-  {
     target: "#plan_map_card_controls",
     content: `Use the controls to advance from step to step in your plan view your route progress`,
+    disableBeacon: true,
+  },
+  {
+    target: ".plan-col-right",
+    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan, just drag the cards into the right spot. open a card for directions, or click the link in the card to view the location on google maps`,
   },
   {
     target: "#gmap_route_link",
@@ -51,19 +52,5 @@ export const dragPlanTourStyle = {
     overlayColor: "rgba(79, 26, 0, 0.4)",
     primaryColor: "#000",
     textColor: "#004a14",
-    width: "40vw",
-    zIndex: 1,
-  },
-};
-
-export const locationTourStyles = {
-  options: {
-    arrowColor: "#e3ffeb",
-    backgroundColor: "#e3ffeb",
-    overlayColor: "rgba(79, 26, 0, 0.4)",
-    primaryColor: "#000",
-    textColor: "#004a14",
-    width: "40vw",
-    zIndex: 1,
   },
 };

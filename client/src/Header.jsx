@@ -155,13 +155,6 @@ const Header = () => {
             </label>
             <nav className="menu">
               <ul>
-                <li>
-                  {isAuthenticated ? (
-                    <a href="/auth/logout">Logout</a>
-                  ) : (
-                    <a href="/auth/google">login with google</a>
-                  )}
-                </li>
                 <li onClick={() => setIsChecked(false)}>
                   <Link to="/categories">Categories</Link>
                 </li>
@@ -171,11 +164,20 @@ const Header = () => {
                 <li onClick={() => setIsChecked(false)}>
                   <Link to="/plan">Plan</Link>
                 </li>
+
                 {planLink && (
                   <li onClick={() => setIsChecked(false)}>
                     <Link to={`${makeLink()}`}>Live Link</Link>
                   </li>
                 )}
+
+                <li>
+                  {isAuthenticated ? (
+                    <a href="/auth/logout">Logout</a>
+                  ) : (
+                    <a href="/auth/google">login</a>
+                  )}
+                </li>
               </ul>
             </nav>
           </div>
