@@ -70,13 +70,20 @@ const Header = () => {
           )}
 
           <div style={{ display: "flex" }}>
-            {pathname.split("/")[1] === "plans" && (
+            {pathname.split("/")[1] === "plans" && user ? (
               <button
                 onClick={() => {
                   setIsShowingShare(true);
                 }}
                 className="share-button"
                 title="Share this plan"
+              >
+                Share
+              </button>
+            ) : (
+              <button
+                className="share-button"
+                onClick={() => setIsShowingLoginDialog(true)}
               >
                 Share
               </button>
@@ -202,8 +209,8 @@ const Header = () => {
             </svg>
           </button>
         </header>
-        Log in with your google account to save and share your plan with your
-        friends and family
+        Log in with your google account to create, save and share your own plan
+        with your friends and family
         <form action="/auth/google">
           <button
             style={{ padding: "0px", marginTop: "40px", paddingRight: "5px" }}
