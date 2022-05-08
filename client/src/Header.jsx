@@ -80,14 +80,15 @@ const Header = () => {
               >
                 Share
               </button>
-            ) : (
+            ) : pathname.split("/")[1] === "plans" ? (
               <button
                 className="share-button"
                 onClick={() => setIsShowingLoginDialog(true)}
               >
                 Share
               </button>
-            )}
+            ) : null}
+
             {pathname === "/plan" &&
               (isAuthenticated ? (
                 <>
