@@ -43,7 +43,7 @@ const DragPlan = () => {
       localStorage.setItem("hasSeenDragPlanTour", "been here");
       const timeout = setTimeout(() => {
         setRun(true);
-      }, 1200);
+      }, 500);
       return () => {
         clearTimeout(timeout);
       };

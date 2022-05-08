@@ -65,7 +65,7 @@ const PlacesAutoComplete = () => {
       const timeout = setTimeout(() => {
         setStepIndex(3);
         setRun(true);
-      }, 700);
+      }, 1000);
       return () => {
         clearTimeout(timeout);
       };
