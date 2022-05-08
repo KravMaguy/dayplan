@@ -8,28 +8,11 @@ import { useNavigate } from "react-router";
 import DestinationLinks from "./DestinationLinks";
 import PlanMap from "./PlanMap";
 import { SkeletonLinks } from "./skeletons";
-import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+import { DragPlanSteps, dragPlanTourStyle } from "./TourUtils";
+import CustomRide from "./CustomRide";
 const viewWidth = window.innerWidth;
 console.log({ viewWidth });
-const steps = [
-  {
-    target: "#right_col_drag",
-    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan, just drag the cards into the right spot. open a card for directions, or click the link in the card to view the location on google maps`,
-  },
-  {
-    target: "#plan_map_card_controls",
-    content: `Use the controls to advance from step to step in your plan view your route progress`,
-  },
-  {
-    target: "#gmap_route_link",
-    content: `You can view what you currently see in the map at any step on google maps by clicking here`,
-  },
-  {
-    target: "#delete_location_links",
-    content: `Check out these buisnesses on yelp that matched your search catergories, in this area you can also delete a location, dont worry you can always reset your plan by clicking the reset button on top of the draggable directions panel`,
-  },
-];
-console.log(window.innerWidth);
+
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
   const data = useSelector((state) => state.data);
@@ -160,23 +143,12 @@ const DragPlan = () => {
     <>
       <div className="whole-page" style={{ position: "relative", top: "60px" }}>
         <div className="row map-plan-row">
-          <Joyride
-            styles={{
-              options: {
-                arrowColor: "#e3ffeb",
-                backgroundColor: "#e3ffeb",
-                overlayColor: "rgba(79, 26, 0, 0.4)",
-                primaryColor: "#000",
-                textColor: "#004a14",
-                width: 900,
-                zIndex: 1000,
-              },
-            }}
-            steps={steps}
+          <CustomRide
+            styles={dragPlanTourStyle}
+            steps={DragPlanSteps}
             run={run}
             continuous={true}
           />
-
           <PlanMap
             origin={origin}
             destination={destination}

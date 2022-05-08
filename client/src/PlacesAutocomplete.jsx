@@ -8,40 +8,15 @@ import PlaceDrawer from "./PlaceDrawer";
 import PlacePreview from "./PlacePreview";
 import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
-import Joyride, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+import CustomRide from "./CustomRide";
+import { locationSteps, locationTourStyles } from "./TourUtils";
+import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 const containerStyle = {
   height: "calc(100vh - 60px)",
   position: "relative",
   bottom: "0",
 };
-
-const steps = [
-  {
-    target: ".my-first-step",
-    content:
-      "Here is where youll set the starting location for your plan, try looking for a popular spot near you i.e. the walmart down the block or a popular neighborhood or local spot",
-  },
-  {
-    target: ".second-step",
-    content:
-      "You can also use geolocation if youd like to set the start of the plan to your current location, you'll see a big purple dot representing your location",
-  },
-  {
-    target: ".destination-page-map-container",
-    content:
-      "Click anywhere on the map to scope out an area, we'll show you a photo if we have one, this won't set your starting location for your created plan though, for that youll have to use the searchbar or geolocation",
-  },
-  {
-    target: ".generate-plan-link",
-    content: "You can create a plan using this location",
-  },
-  {
-    target: "#header_plan_btn",
-    content:
-      "Look for this button in the header to also create a plan using your selected location",
-  },
-];
 
 const PlacesAutoComplete = () => {
   const categoryLength = useSelector((state) => state.categories.length);
@@ -115,24 +90,14 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen && "active"}
       ></div>
-      <Joyride
+      <CustomRide
         stepIndex={stepIndex}
         callback={handleJoyrideCallback}
-        steps={steps}
         continuous={true}
         run={run}
         hideBackButton={stepIndex >= 3}
-        styles={{
-          options: {
-            arrowColor: "#e3ffeb",
-            backgroundColor: "#e3ffeb",
-            overlayColor: "rgba(79, 26, 0, 0.4)",
-            primaryColor: "#000",
-            textColor: "#004a14",
-            width: 900,
-            zIndex: 1000,
-          },
-        }}
+        styles={locationTourStyles}
+        steps={locationSteps}
       />
 
       <PlaceDrawer
@@ -158,10 +123,7 @@ const PlacesAutoComplete = () => {
           setPlaceId={setPlaceId}
           setOpenDrawer={setOpenDrawer}
         />
-        <div
-          className="destination-page-map-container"
-          style={{ width: "100%" }}
-        >
+        <div style={{ width: "100%" }}>
           <Map
             containerClass="map-container"
             center={center}
