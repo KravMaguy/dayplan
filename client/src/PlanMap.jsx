@@ -107,11 +107,10 @@ const PlanMap = ({
     <div className="col col-left side-p-10">
       <div className="plan-map-container">
         <div
-          id="plan_map_card_controls"
           className="map-card-controls"
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <div style={{ display: "flex" }}>
+          <div id="plan_map_card_controls" style={{ display: "flex" }}>
             <button
               className="map-controls"
               style={currIdx <= 0 ? dimStyle : null}

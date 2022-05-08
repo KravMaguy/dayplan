@@ -38,11 +38,18 @@ const DragPlan = () => {
     setResponse(null);
   };
   useEffect(() => {
-    if (derivedData.length > 0) {
-      setRun(true);
+    const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
+    if (derivedData.length > 0 && !visitedPage) {
+      localStorage.setItem("hasSeenDragPlanTour", "been here");
+      const timeout = setTimeout(() => {
+        setRun(true);
+      }, 1200);
+      return () => {
+        clearTimeout(timeout);
+      };
     }
   }, [derivedData.length]);
-  console.log("run is here it should at some point turn true :", run);
+
   useEffect(() => {
     dispatch(getLocationDataByCategories());
   }, [dispatch]);
@@ -79,7 +86,6 @@ const DragPlan = () => {
 
   const mapRef = useRef(null);
   const scrollToMap = useCallback(() => {
-    console.log({ mapRef });
     mapRef?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 

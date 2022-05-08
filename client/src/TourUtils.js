@@ -6,7 +6,7 @@ export const DragPlanSteps = [
   },
   {
     target: ".plan-col-right",
-    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan, just drag the cards into the right spot. open a card for directions, or click the link in the card to view the location on google maps`,
+    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan, this area is Draggable, you can drag the cards into the correct order you'd like to plan it. open a card for directions, or click the link in the card to view the location on google maps`,
   },
   {
     target: "#gmap_route_link",
@@ -30,9 +30,10 @@ export const locationSteps = [
       "You can also use geolocation if youd like to set the start of the plan to your current location, you'll see a big purple dot representing your location",
   },
   {
-    target: ".destination-page-map-container",
+    target: ".top-container-searchbox",
     content:
-      "Click anywhere on the map to scope out an area, we'll show you a photo if we have one, this won't set your starting location for your created plan though, for that youll have to use the searchbar or geolocation",
+      "To set the starting point of your plan, youll have to use these controls, but you can click anywhere on the map to scope out an area, and we'll show you a photo if we have one, clicking on the map won't set your starting location for created plan though, for that youll have to use the searchbar or geolocation we just showed",
+    disableBeacon: true,
   },
   {
     target: ".generate-plan-link",
@@ -42,6 +43,7 @@ export const locationSteps = [
     target: "#header_plan_btn",
     content:
       "Look for this button in the header to also create a plan using your selected location",
+    disableBeacon: true,
   },
 ];
 

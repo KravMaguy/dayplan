@@ -59,8 +59,6 @@ const PlacesAutoComplete = () => {
   const hasSeenThis = useRef(false);
 
   useEffect(() => {
-    const visitedTrain = localStorage.getItem("hasSeenLocationsTour");
-    if (visitedTrain) return;
     if (didMount.current && drawerOpen && !hasSeenThis.current) {
       hasSeenThis.current = true;
       setRun(false);
@@ -89,8 +87,8 @@ const PlacesAutoComplete = () => {
   };
 
   useEffect(() => {
-    const visitedTrain = localStorage.getItem("hasSeenLocationsTour");
-    if (!visitedTrain) {
+    const visitedPage = localStorage.getItem("hasSeenLocationsTour");
+    if (!visitedPage) {
       localStorage.setItem("hasSeenLocationsTour", "been here");
       return;
     }
