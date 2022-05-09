@@ -1,13 +1,10 @@
 import { useEffect, useRef } from "react";
 import { SkeletonImage } from "./skeletons";
 const PerfectImage = ({ photos }) => {
-  const ref = useRef({
-    imgLink: "",
-  });
-
+  let ref = useRef(null);
   useEffect(() => {
-    if (photos && photos.length > 0 && photos[0].getUrl()) {
-      ref.current.imgLink = photos[0].getUrl();
+    if (photos[0].getUrl()) {
+      ref.current = photos[0].getUrl();
     }
   }, [photos]);
 
@@ -15,11 +12,10 @@ const PerfectImage = ({ photos }) => {
     photos &&
     photos.length > 0 &&
     photos[0].getUrl() &&
-    ref.current.imgLink &&
-    ref.current.imgLink === photos[0].getUrl()
+    ref.current === photos[0].getUrl()
   ) {
     return (
-      <img alt="place" src={ref.current.imgLink} className="drawer-image" />
+      <img alt="place" src={photos[0].getUrl()} className="drawer-image" />
     );
   } else {
     return <SkeletonImage />;
