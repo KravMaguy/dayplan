@@ -50,9 +50,9 @@ export const locationSteps = [
 export const dragPlanTourStyle = {
   options: {
     arrowColor: "#e3ffeb",
-    backgroundColor: "#e3ffeb",
+    backgroundColor: "white",
     overlayColor: "rgba(79, 26, 0, 0.4)",
-    primaryColor: "#000",
-    textColor: "#004a14",
+    primaryColor: "rgb(255 0 26 / 69%)",
+    textColor: "navy",
   },
 };

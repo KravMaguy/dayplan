@@ -26,10 +26,10 @@ const CustomSearchBar = ({
     setZoom(13);
     if (!userCoordinates) {
       setShowToast(true);
-      return setTimeout(() => {
-        dispatch(getUserPosition());
-      }, 7000);
-      // return dispatch(getUserPosition());
+      // return setTimeout(() => {
+      //   dispatch(getUserPosition());
+      // }, 7000);
+      return dispatch(getUserPosition());
     }
     const newCenter = {
       lat: userCoordinates.center.lat,

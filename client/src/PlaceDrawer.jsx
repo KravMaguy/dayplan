@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
-import { SkeletonImage } from "./skeletons";
-
+import PerfectImage from "./PerfectImage";
 const PlaceDrawer = ({
   photos,
   drawerOpen,
@@ -13,11 +12,7 @@ const PlaceDrawer = ({
   return (
     <div id="drawer-nav" className={drawerOpen ? "active" : ""}>
       <div className="cls-image-container">
-        {photos && photos.length > 0 && photos[0].getUrl() ? (
-          <img alt="place" src={photos[0].getUrl()} className="drawer-image" />
-        ) : (
-          <SkeletonImage />
-        )}
+        <PerfectImage photos={photos} />
       </div>
 
       <div className="buisness-details">
