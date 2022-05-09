@@ -12,6 +12,7 @@ const CustomSearchBar = ({
   userCoordinates,
   setPlaceId,
   setOpenDrawer,
+  setShowToast,
 }) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(null);
@@ -24,7 +25,11 @@ const CustomSearchBar = ({
   const runGetUserLocation = () => {
     setZoom(13);
     if (!userCoordinates) {
-      return dispatch(getUserPosition());
+      setShowToast(true);
+      return setTimeout(() => {
+        dispatch(getUserPosition());
+      }, 7000);
+      // return dispatch(getUserPosition());
     }
     const newCenter = {
       lat: userCoordinates.center.lat,

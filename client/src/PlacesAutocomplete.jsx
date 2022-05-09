@@ -49,6 +49,7 @@ const PlacesAutoComplete = () => {
   const [stepIndex, setStepIndex] = useState(0);
   const [run, setRun] = useState(true);
   const { photos, name, formatted_address, types, website } = place || {};
+  const [showingToast, setShowToast] = useState(false);
 
   useEffect(() => {
     if (!userCoordinates?.geocodedAddress) {
@@ -56,6 +57,7 @@ const PlacesAutoComplete = () => {
     }
     const placeId = userCoordinates?.geocodedAddress[0].place_id;
     setOpenDrawer(true);
+    setShowToast(false);
     setPlaceId(placeId);
   }, [userCoordinates?.geocodedAddress]);
 
@@ -106,8 +108,6 @@ const PlacesAutoComplete = () => {
     setRun(false);
   }, []);
 
-  const [showingToast, setShowToast] = useState(false);
-
   useEffect(() => {
     if (showingToast) {
       const toastTimeout = setTimeout(() => {
@@ -124,12 +124,6 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen ? "active" : ""}
       ></div>
-      <button
-        style={{ position: "absolute", background: "grey", zIndex: 3 }}
-        onClick={() => setShowToast(true)}
-      >
-        show toast
-      </button>
 
       <div className={`yasdfasdf$$ ${showingToast ? "show" : ""}`} id="toast">
         <div id="img">
@@ -164,6 +158,7 @@ const PlacesAutoComplete = () => {
         }`}
       >
         <CustomSearchBar
+          setShowToast={setShowToast}
           drawerOpen={drawerOpen}
           setFocused={setFocused}
           userCoordinates={userCoordinates}
