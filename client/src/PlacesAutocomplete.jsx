@@ -122,7 +122,7 @@ const PlacesAutoComplete = () => {
       <div
         id="overlay"
         onClick={() => setOpenDrawer(false)}
-        className={drawerOpen && "active"}
+        className={drawerOpen ? "active" : ""}
       ></div>
       <button
         style={{ position: "absolute", background: "grey", zIndex: 3 }}

@@ -11,7 +11,7 @@ const PlaceDrawer = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div id="drawer-nav" className={drawerOpen && "active"}>
+    <div id="drawer-nav" className={drawerOpen ? "active" : ""}>
       <div className="cls-image-container">
         {photos && photos.length > 0 && photos[0].getUrl() ? (
           <img alt="place" src={photos[0].getUrl()} className="drawer-image" />
@@ -49,7 +49,9 @@ const PlaceDrawer = ({
               {types &&
                 types.length > 0 &&
                 types.map((category) => (
-                  <div className="buisness-pills">{category}</div>
+                  <div className="buisness-pills" key={category}>
+                    {category}
+                  </div>
                 ))}
             </div>
 
