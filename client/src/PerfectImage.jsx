@@ -3,7 +3,7 @@ import { SkeletonImage } from "./skeletons";
 const PerfectImage = ({ photos }) => {
   let ref = useRef(null);
   useEffect(() => {
-    if (photos[0].getUrl()) {
+    if (photos && photos.length > 0 && photos[0].getUrl()) {
       ref.current = photos[0].getUrl();
     }
   }, [photos]);
