@@ -32,7 +32,7 @@ export const locationSteps = [
   {
     target: ".top-container-searchbox",
     content:
-      "To set the starting point of your plan, youll have to use these controls, but you can click anywhere on the map to scope out an area, and we'll show you a photo if we have one, clicking on the map won't set your starting location for created plan though, for that youll have to use the searchbar or geolocation we just showed",
+      "These controls set the start of your plan, but you can click anywhere on map and well show you a photo if we have",
     disableBeacon: true,
   },
   {
@@ -52,7 +52,7 @@ export const dragPlanTourStyle = {
     arrowColor: "#e3ffeb",
     backgroundColor: "white",
     overlayColor: "rgba(79, 26, 0, 0.4)",
-    primaryColor: "rgb(255 0 26 / 69%)",
-    textColor: "navy",
+    primaryColor: "#3e7cc9e0",
+    textColor: "black",
   },
 };

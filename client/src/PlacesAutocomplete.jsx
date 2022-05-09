@@ -28,7 +28,7 @@ const containerStyle = {
 const PlacesAutoComplete = () => {
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
-  const flag = "";
+  const flag = "gfjkhjg";
   useEffect(() => {
     if (flag) return;
     if (!categoryLength) {
@@ -50,16 +50,25 @@ const PlacesAutoComplete = () => {
   const [run, setRun] = useState(true);
   const { photos, name, formatted_address, types, website } = place || {};
   const [showingToast, setShowToast] = useState(false);
-
+  const [exactDate, setExactDate] = useState(Date.now());
+  console.log({ drawerOpen });
   useEffect(() => {
     if (!userCoordinates?.geocodedAddress) {
       return;
     }
     const placeId = userCoordinates?.geocodedAddress[0].place_id;
-    setOpenDrawer(true);
-    setShowToast(false);
+    let clearAble;
+    if (Date.now() - exactDate < 2200) {
+      const animationTimeDifference = 2200 - (Date.now() - exactDate);
+      console.log({ animationTimeDifference });
+      clearAble = slowOpenSetValue(null, animationTimeDifference);
+    } else {
+      clearAble = slowOpenSetValue(null, 0);
+    }
     setPlaceId(placeId);
-  }, [userCoordinates?.geocodedAddress]);
+    console.log({ clearAble });
+    return () => window.clearTimeout(clearAble);
+  }, [userCoordinates?.geocodedAddress, exactDate]);
 
   const didMount = useRef(false);
   const hasSeenThis = useRef(false);
@@ -72,6 +81,7 @@ const PlacesAutoComplete = () => {
         setStepIndex(3);
         setRun(true);
       }, 1000);
+      console.log({ timeout });
       return () => {
         clearTimeout(timeout);
       };
@@ -82,7 +92,6 @@ const PlacesAutoComplete = () => {
 
   useEffect(() => {
     if (!drawerOpen && stepIndex === 4) {
-      console.log("reached in here");
       setRun(false);
     }
   }, [drawerOpen, stepIndex]);
@@ -100,23 +109,32 @@ const PlacesAutoComplete = () => {
   };
 
   useEffect(() => {
-    const visitedPage = localStorage.getItem("hasSeenLocationsTour");
-    if (!visitedPage) {
-      localStorage.setItem("hasSeenLocationsTour", "been here");
-      return;
-    }
-    setRun(false);
+    // const visitedPage = localStorage.getItem("hasSeenLocationsTour");
+    // if (!visitedPage) {
+    //   localStorage.setItem("hasSeenLocationsTour", "been here");
+    //   return;
+    // }
+    // setRun(false);
+    localStorage.removeItem("hasSeenLocationsTour");
   }, []);
 
   useEffect(() => {
     if (showingToast) {
       const toastTimeout = setTimeout(() => {
         setShowToast(false);
-      }, 4700);
+      }, 2100);
       return () => clearTimeout(toastTimeout);
     }
   }, [showingToast]);
+  const [value, setValue] = useState(null);
 
+  function slowOpenSetValue(val, timeout) {
+    console.log("i open the drawer with a timeout of :", timeout);
+    setTimeout(() => {
+      setOpenDrawer(true);
+    }, timeout);
+    val && setValue(val);
+  }
   return (
     <div className="user-destination-page">
       <div
@@ -124,13 +142,20 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen ? "active" : ""}
       ></div>
-
-      <div className={`yasdfasdf$$ ${showingToast ? "show" : ""}`} id="toast">
+      {/* <div
+        className={`constrained ${
+          !drawerOpen ? "visible-searchbar" : "hidden-searchbar"
+        }`}
+      > */}
+      <div className={`toastify$$ ${showingToast ? "show" : ""}`} id="toast">
         <div id="img">
           <MdLocationOn className="toast-location-icon" />
         </div>
-        <div id="desc">Loading Geolocation..</div>
+        <div className={`someclass ${showingToast ? "description" : "nopad"}`}>
+          Loading Geolocation
+        </div>
       </div>
+      {/* </div> */}
 
       <CustomRide
         stepIndex={stepIndex}
@@ -149,6 +174,7 @@ const PlacesAutoComplete = () => {
         formatted_address={formatted_address}
         types={types}
         website={website}
+        setExactDate={setExactDate}
       />
       <div
         className={`plan-preview-map-container ${
@@ -164,7 +190,10 @@ const PlacesAutoComplete = () => {
           userCoordinates={userCoordinates}
           setZoom={setZoom}
           setPlaceId={setPlaceId}
-          setOpenDrawer={setOpenDrawer}
+          setExactDate={setExactDate}
+          exactDate={exactDate}
+          value={value}
+          slowOpenSetValue={slowOpenSetValue}
         />
         <div style={{ width: "100%" }}>
           <Map

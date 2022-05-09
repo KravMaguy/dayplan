@@ -11,11 +11,12 @@ const CustomSearchBar = ({
   setZoom,
   userCoordinates,
   setPlaceId,
-  setOpenDrawer,
   setShowToast,
+  setExactDate,
+  slowOpenSetValue,
+  value,
 }) => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
 
   const userCoordinatesGeoFormattedAddress = useSelector(
@@ -23,12 +24,13 @@ const CustomSearchBar = ({
   );
 
   const runGetUserLocation = () => {
+    setExactDate(Date.now());
     setZoom(13);
     if (!userCoordinates) {
       setShowToast(true);
       // return setTimeout(() => {
       //   dispatch(getUserPosition());
-      // }, 7000);
+      // }, 1000);
       return dispatch(getUserPosition());
     }
     const newCenter = {
@@ -46,8 +48,8 @@ const CustomSearchBar = ({
     const formatted_address =
       userCoordinatesGeoFormattedAddress[0].formatted_address;
     setInputValue(formatted_address);
-    slowOpenSetValue(formatted_address);
-
+    console.log("reached in customSearch bar open the drawer:");
+    slowOpenSetValue(formatted_address, 500);
     if (userCoordinates?.geocodedAddress) {
       const placeId = userCoordinates?.geocodedAddress[0].place_id;
       setPlaceId(placeId);
@@ -80,7 +82,7 @@ const CustomSearchBar = ({
   };
 
   const handleSelect = (val) => {
-    slowOpenSetValue(val);
+    slowOpenSetValue(val, 500);
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
@@ -90,13 +92,6 @@ const CustomSearchBar = ({
       })
       .catch((error) => console.error(error));
   };
-
-  function slowOpenSetValue(val) {
-    setTimeout(() => {
-      setOpenDrawer(true);
-    }, 500);
-    setValue(val);
-  }
 
   return (
     <div

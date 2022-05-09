@@ -38,18 +38,22 @@ const DragPlan = () => {
     setResponse(null);
   };
   useEffect(() => {
-    const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
-    if (derivedData.length > 0 && !visitedPage) {
-      localStorage.setItem("hasSeenDragPlanTour", "been here");
-      // const timeout = setTimeout(() => {
-      //   setRun(true);
-      // }, 0);
-      // return () => {
-      //   clearTimeout(timeout);
-      // };
-      setRun(true);
-    }
+    localStorage.removeItem("hasSeenLocationsTour");
+    derivedData.length && setRun(true);
   }, [derivedData.length]);
+  // useEffect(() => {
+  //   const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
+  //   if (derivedData.length > 0 && !visitedPage) {
+  //     localStorage.setItem("hasSeenDragPlanTour", "been here");
+  //     // const timeout = setTimeout(() => {
+  //     //   setRun(true);
+  //     // }, 0);
+  //     // return () => {
+  //     //   clearTimeout(timeout);
+  //     // };
+  //     setRun(true);
+  //   }
+  // }, [derivedData.length]);
 
   useEffect(() => {
     dispatch(getLocationDataByCategories());
