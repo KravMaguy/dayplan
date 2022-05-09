@@ -7,6 +7,7 @@
 body {
   font-family: "Roboto", sans-serif;
   /* max-height: 100vh; */
+  overflow-y: hidden;
 }
 
 .App {

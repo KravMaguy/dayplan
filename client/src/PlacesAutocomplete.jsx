@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Marker.css";
+import "./toast.css";
+
 import { useSelector } from "react-redux";
 import { Marker } from "@react-google-maps/api";
 import Map from "./Map";
@@ -9,6 +11,8 @@ import PlacePreview from "./PlacePreview";
 import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
 import CustomRide from "./CustomRide";
+import { MdLocationOn } from "react-icons/md";
+
 import {
   locationSteps,
   dragPlanTourStyle as locationTourStyles,
@@ -102,6 +106,17 @@ const PlacesAutoComplete = () => {
     setRun(false);
   }, []);
 
+  const [showingToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (showingToast) {
+      const toastTimeout = setTimeout(() => {
+        setShowToast(false);
+      }, 4700);
+      return () => clearTimeout(toastTimeout);
+    }
+  }, [showingToast]);
+
   return (
     <div className="user-destination-page">
       <div
@@ -109,6 +124,20 @@ const PlacesAutoComplete = () => {
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen && "active"}
       ></div>
+      <button
+        style={{ position: "absolute", background: "grey", zIndex: 3 }}
+        onClick={() => setShowToast(true)}
+      >
+        show toast
+      </button>
+
+      <div className={`yasdfasdf$$ ${showingToast ? "show" : ""}`} id="toast">
+        <div id="img">
+          <MdLocationOn className="toast-location-icon" />
+        </div>
+        <div id="desc">Loading Geolocation..</div>
+      </div>
+
       <CustomRide
         stepIndex={stepIndex}
         callback={handleJoyrideCallback}

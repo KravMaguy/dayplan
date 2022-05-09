@@ -41,12 +41,13 @@ const DragPlan = () => {
     const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
     if (derivedData.length > 0 && !visitedPage) {
       localStorage.setItem("hasSeenDragPlanTour", "been here");
-      const timeout = setTimeout(() => {
-        setRun(true);
-      }, 500);
-      return () => {
-        clearTimeout(timeout);
-      };
+      // const timeout = setTimeout(() => {
+      //   setRun(true);
+      // }, 0);
+      // return () => {
+      //   clearTimeout(timeout);
+      // };
+      setRun(true);
     }
   }, [derivedData.length]);
 

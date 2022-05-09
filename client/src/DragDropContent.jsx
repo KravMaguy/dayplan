@@ -17,19 +17,19 @@ const DragDropContent = ({
   setCollapsed,
   handleSelectBox,
 }) => {
-  const [elRefs, setElRefs] = useState([]);
+  // const [elRefs, setElRefs] = useState([]);
 
-  useEffect(() => {
-    if (window.innerWidth > 600) {
-      if (derivedData.length > 0) {
-        setElRefs((refs) =>
-          Array(derivedData.length - 1)
-            .fill()
-            .map((_, i) => refs[i] || createRef())
-        );
-      }
-    }
-  }, [derivedData.length]);
+  // useEffect(() => {
+  //   if (window.innerWidth > 600) {
+  //     if (derivedData.length > 0) {
+  //       setElRefs((refs) =>
+  //         Array(derivedData.length - 1)
+  //           .fill()
+  //           .map((_, i) => refs[i] || createRef())
+  //       );
+  //     }
+  //   }
+  // }, [derivedData.length]);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -51,7 +51,7 @@ const DragDropContent = ({
                       previous={previous}
                       collapsed={collapsed}
                       setCollapsed={setCollapsed}
-                      refProp={elRefs[idx]}
+                      // refProp={elRefs[idx]}
                       handleSelectBox={handleSelectBox}
                     />
                   );

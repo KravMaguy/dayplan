@@ -32,12 +32,12 @@ const CustomDraggable = ({
       index={idx}
     >
       {(provided, snapshot) => {
-        if (idx + 1 === currIdx) {
-          refProp?.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-          });
-        }
+        // if (idx + 1 === currIdx && window.innerWidth >= 600) {
+        //   refProp?.current?.scrollIntoView({
+        //     behavior: "smooth",
+        //     block: "nearest",
+        //   });
+        // }
         return (
           <div
             ref={provided.innerRef}

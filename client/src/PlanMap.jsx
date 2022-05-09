@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { GoogleMarkerClusterer, Marker } from "@react-google-maps/api";
+import { Marker } from "@react-google-maps/api";
 import { DirectionsService, DirectionsRenderer } from "@react-google-maps/api";
 import Map from "./Map";
 import mapgreypng from "./images/gmapgrey.png";
@@ -33,7 +33,8 @@ const PlanMap = ({
   const wayPoints = [origin, destination];
   const [path, setPath] = useState(null);
 
-  const prevDestination = () => {
+  const prevDestination = (e) => {
+    e.preventDefault();
     if (currIdx === startingSearchIndex + 1) {
       travelMode === "TRANSIT" && setTravelMode("DRIVING");
       const startingDestination = {
@@ -59,7 +60,8 @@ const PlanMap = ({
     }
   };
 
-  const nextDestination = () => {
+  const nextDestination = (e) => {
+    e.preventDefault();
     if (currIdx !== startingSearchIndex) {
       setOrigin(destination);
     }
@@ -115,7 +117,7 @@ const PlanMap = ({
               className="map-controls"
               style={currIdx <= 0 ? dimStyle : null}
               disabled={currIdx <= 0 ? true : false}
-              onClick={() => prevDestination()}
+              onClick={(e) => prevDestination(e)}
             >
               {currIdx === startingSearchIndex + 1 ? "Full Plan" : "Previous"}
             </button>
@@ -123,7 +125,7 @@ const PlanMap = ({
               style={currIdx >= derivedData.length - 1 ? dimStyle : null}
               className="map-controls plan-next-btn"
               disabled={currIdx >= derivedData.length - 1 ? true : false}
-              onClick={() => nextDestination()}
+              onClick={(e) => nextDestination(e)}
             >
               {currIdx === startingSearchIndex ? "Start" : "Next"}
             </button>
@@ -202,28 +204,22 @@ const PlanMap = ({
                 panel={document.getElementById(`panel-${currIdx}`)}
               />
             )}
-            {!getWayPoints() && (
-              <GoogleMarkerClusterer options={options}>
-                {(clusterer) =>
-                  wayPoints.map((waypoint, idx) => {
-                    const letter = String.fromCharCode(
-                      "A".charCodeAt(0) + currIdx + idx - 1
-                    );
-                    return (
-                      <Marker
-                        key={idx}
-                        position={{
-                          lat: waypoint.lat,
-                          lng: waypoint.lng,
-                        }}
-                        label={{ text: letter, color: "white" }}
-                        clusterer={clusterer}
-                      />
-                    );
-                  })
-                }
-              </GoogleMarkerClusterer>
-            )}
+            {!getWayPoints() &&
+              wayPoints.map((waypoint, idx) => {
+                const letter = String.fromCharCode(
+                  "A".charCodeAt(0) + currIdx + idx - 1
+                );
+                return (
+                  <Marker
+                    key={idx}
+                    position={{
+                      lat: waypoint.lat,
+                      lng: waypoint.lng,
+                    }}
+                    label={{ text: letter, color: "white" }}
+                  />
+                );
+              })}
           </Map>
         </main>
       </div>
