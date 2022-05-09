@@ -19,7 +19,7 @@ const HomePage = () => {
             </span>
           </h1>
           <div
-            class="legal-links"
+            className="legal-links"
             style={{ position: "absolute", bottom: "20px" }}
           >
             <Link to={"/terms-of-service"}>Terms of Service</Link>
