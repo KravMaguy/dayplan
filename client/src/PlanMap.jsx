@@ -151,7 +151,7 @@ const PlanMap = ({
           </button>
         </div>
         <main
-          ref={mapRef}
+          // ref={mapRef}
           className={`map-wrapper ${
             open ? "closed-map-control-size" : "open-map-control-size"
           }`}

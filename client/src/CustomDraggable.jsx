@@ -58,7 +58,7 @@ const CustomDraggable = ({
                   idx + 1 === currIdx ? "1px 1px 2px #000000" : "none",
               }}
               className="plan-card"
-              ref={refProp}
+              // ref={refProp}
             >
               <div
                 className={

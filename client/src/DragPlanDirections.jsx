@@ -28,7 +28,7 @@ const DragPlanDirections = ({
   open,
   setIsOpen,
   performDirections,
-  scrollToMap,
+  // scrollToMap,
 }) => {
   const [distance, setDistance] = useState(null);
   const [time, setTime] = useState(null);
@@ -58,7 +58,7 @@ const DragPlanDirections = ({
     };
 
     performDirections(0, origin, destination, null);
-    scrollToMap();
+    // scrollToMap();
   };
 
   useEffect(() => {

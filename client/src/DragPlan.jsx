@@ -85,22 +85,22 @@ const DragPlan = () => {
     }
   }, [currIdx, travelMode]);
 
-  const mapRef = useRef(null);
-  const scrollToMap = useCallback(() => {
-    mapRef?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+  // const mapRef = useRef(null);
+  // const scrollToMap = useCallback(() => {
+  //   mapRef?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // }, []);
 
-  useEffect(() => {
-    const newCurr = document.getElementById(`panel-${currIdx}`);
-    if (newCurr) {
-      newCurr.addEventListener("click", scrollToMap, true);
-    }
-    return {
-      if(newCurr) {
-        newCurr.removeEventListener("click", scrollToMap);
-      },
-    };
-  }, [currIdx, travelMode, scrollToMap]);
+  // useEffect(() => {
+  //   const newCurr = document.getElementById(`panel-${currIdx}`);
+  //   if (newCurr) {
+  //     newCurr.addEventListener("click", scrollToMap, true);
+  //   }
+  //   return {
+  //     if(newCurr) {
+  //       newCurr.removeEventListener("click", scrollToMap);
+  //     },
+  //   };
+  // }, [currIdx, travelMode, scrollToMap]);
 
   const performDirections = (index, origin, destination, response) => {
     (index || index === 0) && setIdx(index);
@@ -167,7 +167,7 @@ const DragPlan = () => {
             setResponse={setResponse}
             response={response}
             open={open}
-            mapRef={mapRef}
+            // mapRef={mapRef}
             performDirections={performDirections}
           />
           <DragPlanDirections
@@ -184,7 +184,7 @@ const DragPlan = () => {
             collapsed={collapsed}
             setCollapsed={setCollapsed}
             performDirections={performDirections}
-            scrollToMap={scrollToMap}
+            // scrollToMap={scrollToMap}
           />
         </div>
         {derivedData.length > 0 ? (
