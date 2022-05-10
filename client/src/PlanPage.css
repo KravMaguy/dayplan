@@ -597,6 +597,13 @@ a.pill:active {
   display: flex;
 }
 
+.dnd-text.dnd-title {
+  background: #5491fe;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  font-size: large;
+}
+
 .seconddiv.coolclass {
   max-height: 100%;
   overflow: visible;

@@ -107,7 +107,7 @@ const CustomSearchBar = ({
           selectProps={{
             onFocus: () => {
               setFocused(true);
-              setRun(false);
+              // setRun(false);
             },
             onBlur: () => {
               setFocused(false);

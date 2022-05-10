@@ -184,6 +184,9 @@ const DragPlanDirections = ({
             <SkeletonAddress theme="dark" />
           )}
           <div className={open ? "hidden" : ""}>
+            <div className="dnd-text dnd-title">
+              <div className="demo-card__title">dᵣₐg ₙd dᵣₒₚ</div>
+            </div>
             <DragDropContent
               onDragEnd={onDragEnd}
               derivedData={derivedData}

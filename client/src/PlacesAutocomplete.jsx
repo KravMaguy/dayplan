@@ -19,7 +19,7 @@ import {
 } from "./TourUtils";
 import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
-const flag = "stay";
+const flag = "";
 const containerStyle = {
   position: "relative",
   top: "0",
@@ -43,7 +43,7 @@ const PlacesAutoComplete = () => {
   const [clickedLocation, setClickedLocation] = useState(null);
   const [focused, setFocused] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
-  const [run, setRun] = useState(true);
+  const [run, setRun] = useState(false);
   const { photos, name, formatted_address, types, website } = place || {};
   const [showingToast, setShowToast] = useState(false);
   const [exactDate, setExactDate] = useState(Date.now());
@@ -78,6 +78,7 @@ const PlacesAutoComplete = () => {
     if (didMount.current && drawerOpen && !hasSeenThis.current) {
       hasSeenThis.current = true;
       setRun(false);
+      console.log("reached here");
       const timeout = setTimeout(() => {
         setStepIndex(3);
         setRun(true);
@@ -92,6 +93,9 @@ const PlacesAutoComplete = () => {
   }, [drawerOpen]);
 
   useEffect(() => {
+    if (stepIndex === 4) {
+      locationTourStyles.options.primaryColor = "silver";
+    }
     if (!drawerOpen && stepIndex === 4) {
       setRun(false);
     }
@@ -122,19 +126,18 @@ const PlacesAutoComplete = () => {
   useEffect(() => {
     if (flag) return;
     if (!categoryLength) {
-      navigate("/categories");
+      return navigate("/categories");
     }
+    const visitedPage = localStorage.getItem("hasSeenLocationsTour");
+    if (!visitedPage) {
+      const timer = setTimeout(() => {
+        setRun(true);
+      }, 2000);
+      localStorage.setItem("hasSeenLocationsTour", "been here");
+      return () => clearTimeout(timer);
+    }
+    return setRun(false);
   }, [categoryLength, navigate]);
-
-  useEffect(() => {
-    // const visitedPage = localStorage.getItem("hasSeenLocationsTour");
-    // if (!visitedPage) {
-    //   localStorage.setItem("hasSeenLocationsTour", "been here");
-    //   return;
-    // }
-    // setRun(false);
-    localStorage.removeItem("hasSeenLocationsTour");
-  }, []);
 
   function slowOpenSetValue(val, timeout) {
     setTimeout(() => {
@@ -203,7 +206,7 @@ const PlacesAutoComplete = () => {
         }`}
       >
         <CustomSearchBar
-          setRun={setRun}
+          // setRun={setRun}
           setShowToast={setShowToast}
           drawerOpen={drawerOpen}
           setFocused={setFocused}

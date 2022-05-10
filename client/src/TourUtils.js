@@ -23,6 +23,7 @@ export const locationSteps = [
     target: ".my-first-step",
     content:
       "Here is where youll set the starting location for your plan, try looking for a popular spot near you i.e. the walmart down the block or a popular neighborhood or local spot",
+    disableBeacon: "true",
   },
   {
     target: ".second-step",
@@ -32,7 +33,7 @@ export const locationSteps = [
   {
     target: "body",
     content:
-      "The search bar controls set the start of your plan, but you can click anywhere on map and well show you a photo if we have",
+      "The search bar controls set the start of your plan, but you can click anywhere on map and well show you a photo if we have one",
     disableBeacon: true,
   },
   {
@@ -40,11 +41,12 @@ export const locationSteps = [
     content:
       "Look for this button in the header to also create a plan using your selected location",
     disableBeacon: true,
+    primaryColor: "rgb(213 218 97)",
   },
-  // {
-  //   target: ".generate-plan-link",
-  //   content: "Or click create plan link here",
-  // },
+  {
+    target: ".generate-plan-link",
+    content: "Or click create plan link here",
+  },
 ];
 
 export const dragPlanTourStyle = {
@@ -52,8 +54,7 @@ export const dragPlanTourStyle = {
     arrowColor: "#e3ffeb",
     backgroundColor: "white",
     overlayColor: "rgba(79, 26, 0, 0.4)",
-    primaryColor: "#5491f5",
+    primaryColor: "#da6161",
     textColor: "navy",
-    zIndex: 1,
   },
 };

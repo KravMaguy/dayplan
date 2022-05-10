@@ -37,28 +37,20 @@ const DragPlan = () => {
     checked && setTravelMode(mode);
     setResponse(null);
   };
+
   useEffect(() => {
-    localStorage.removeItem("hasSeenLocationsTour");
-    if (derivedData.length) {
-      const timer = setTimeout(() => {
+    const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
+    if (derivedData.length > 0 && !visitedPage) {
+      localStorage.setItem("hasSeenDragPlanTour", "been here");
+      const timeout = setTimeout(() => {
         setRun(true);
-      }, 2000);
-      return () => window.clearTimeout(timer);
+      }, 3000);
+      return () => {
+        clearTimeout(timeout);
+      };
     }
+    return setRun(false);
   }, [derivedData.length]);
-  // useEffect(() => {
-  //   const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
-  //   if (derivedData.length > 0 && !visitedPage) {
-  //     localStorage.setItem("hasSeenDragPlanTour", "been here");
-  //     // const timeout = setTimeout(() => {
-  //     //   setRun(true);
-  //     // }, 0);
-  //     // return () => {
-  //     //   clearTimeout(timeout);
-  //     // };
-  //     setRun(true);
-  //   }
-  // }, [derivedData.length]);
 
   useEffect(() => {
     dispatch(getLocationDataByCategories());
