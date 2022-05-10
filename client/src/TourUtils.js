@@ -1,6 +1,6 @@
 export const DragPlanSteps = [
   {
-    target: "#plan_map_card_controls",
+    target: "#plan_map",
     content: `Use the controls to advance from step to step in your plan view your route progress`,
     disableBeacon: true,
   },

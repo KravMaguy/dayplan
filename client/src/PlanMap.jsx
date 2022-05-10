@@ -107,7 +107,7 @@ const PlanMap = ({
 
   return (
     <div className="col col-left side-p-10">
-      <div className="plan-map-container">
+      <div id="plan_map" className="plan-map-container">
         <div
           className="map-card-controls"
           style={{ display: "flex", justifyContent: "space-between" }}

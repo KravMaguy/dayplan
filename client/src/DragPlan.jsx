@@ -39,7 +39,12 @@ const DragPlan = () => {
   };
   useEffect(() => {
     localStorage.removeItem("hasSeenLocationsTour");
-    derivedData.length && setRun(true);
+    if (derivedData.length) {
+      const timer = setTimeout(() => {
+        setRun(true);
+      }, 2000);
+      return () => window.clearTimeout(timer);
+    }
   }, [derivedData.length]);
   // useEffect(() => {
   //   const visitedPage = localStorage.getItem("hasSeenDragPlanTour");
