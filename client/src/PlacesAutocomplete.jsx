@@ -44,7 +44,7 @@ const PlacesAutoComplete = () => {
   };
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
-  const flag = "gfjkhjg";
+  const flag = "";
   useEffect(() => {
     if (flag) return;
     if (!categoryLength) {

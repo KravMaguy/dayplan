@@ -155,7 +155,7 @@ const DragPlan = () => {
       <div className="whole-page" style={{ position: "relative", top: "60px" }}>
         <div className="row map-plan-row">
           <CustomRide
-            styles={dragPlanTourStyle}
+            styles={{}}
             steps={DragPlanSteps}
             run={run}
             continuous={true}

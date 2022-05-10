@@ -173,17 +173,17 @@ const DragPlanDirections = ({
               </div>
             </div>
           </div>
-          <div className={open ? "hidden" : ""}>
-            {derivedData.length > 0 ? (
-              <div className="dnd-text">
-                <div className="demo-card__title">
-                  <div className="numberCircle red-bg white-border">A</div>
-                  <span className="text">{startLink}</span>
-                </div>
+          {derivedData.length > 0 ? (
+            <div className="dnd-text">
+              <div className="demo-card__title">
+                <div className="numberCircle red-bg white-border">A</div>
+                <span className="text">{startLink}</span>
               </div>
-            ) : (
-              <SkeletonAddress theme="dark" />
-            )}
+            </div>
+          ) : (
+            <SkeletonAddress theme="dark" />
+          )}
+          <div className={open ? "hidden" : ""}>
             <DragDropContent
               onDragEnd={onDragEnd}
               derivedData={derivedData}

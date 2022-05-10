@@ -630,7 +630,7 @@ a.pill:active {
   }
   .row.map-plan-row {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
   .map-destination-links-container {

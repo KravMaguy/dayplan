@@ -6,7 +6,7 @@ export const DragPlanSteps = [
   },
   {
     target: ".plan-col-right",
-    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan, this area is Draggable, you can drag the cards into the correct order you'd like to plan it. open a card for directions, or click the link in the card to view the location on google maps`,
+    content: `Set the travel modes, you can walk, drive, bike or take public transit, to change the order of your plan,  cards are 🤏 DRAGGABLE!! drag the cards however you like to REORDER your plan. open a card for directions, or click the link in the card to view the location on google maps`,
   },
   {
     target: "#gmap_route_link",
