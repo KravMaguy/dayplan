@@ -173,7 +173,7 @@ const DragPlanDirections = ({
               </div>
             </div>
           </div>
-          {derivedData.length > 0 ? (
+          {false && derivedData.length > 0 ? (
             <div className="dnd-text">
               <div className="demo-card__title">
                 <div className="numberCircle red-bg white-border">A</div>
@@ -184,8 +184,8 @@ const DragPlanDirections = ({
             <SkeletonAddress theme="dark" />
           )}
           <div className={open ? "hidden" : ""}>
-            {derivedData.length === 0 || !derivedData ? (
-              <SkeletonLinks theme="dark" />
+            {true || derivedData.length === 0 || !derivedData ? (
+              <SkeletonLinks theme="dark" titleClass="draggable-title" />
             ) : (
               <div className="dnd-text dnd-title">
                 <div className="demo-card__title" style={{ display: "flex" }}>

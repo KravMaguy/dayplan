@@ -39,7 +39,7 @@ const DragDropContent = ({
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
           >
-            {derivedData.length > 0
+            {false && derivedData.length > 0
               ? derivedData.slice(1).map((location, idx, arr) => {
                   let previous = arr[idx - 1];
                   return (
@@ -57,7 +57,9 @@ const DragDropContent = ({
                   );
                 })
               : [1, 2, 3, 4, 5, 6].map((n) => (
-                  <SkeletonArticle key={n} theme="light" />
+                  <div class="card-spacing">
+                    <SkeletonArticle key={n} theme="light" />
+                  </div>
                 ))}
 
             {provided.placeholder}

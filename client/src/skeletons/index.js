@@ -5,3 +5,4 @@ export { default as SkeletonMap } from "./SkeletonMap";
 
 export { default as SkeletonArticle } from "./SkeletonArticle";
 export { default as SkeletonImage } from "./SkeletonImage";
+export { default as SkeletonPlaceDetails } from "./SkeletonPlaceDetails";

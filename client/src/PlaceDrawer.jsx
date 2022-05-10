@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import PerfectImage from "./PerfectImage";
+import { SkeletonPlaceDetails } from "./skeletons";
 const PlaceDrawer = ({
   photos,
   drawerOpen,
@@ -42,22 +43,27 @@ const PlaceDrawer = ({
                 />
               </a>
             </div>
-            <h2>{name}</h2>
-            <p>{formatted_address}</p>
-            <div className="pill-categories-container">
-              {types &&
-                types.length > 0 &&
-                types.map((category) => (
-                  <div className="buisness-pills" key={category}>
-                    {category}
+            {!name ? (
+              <SkeletonPlaceDetails theme={"dark"} />
+            ) : (
+              <>
+                <h2>{name}</h2>
+                <p>{formatted_address}</p>
+                <div className="pill-categories-container">
+                  {types &&
+                    types.length > 0 &&
+                    types.map((category) => (
+                      <div className="buisness-pills" key={category}>
+                        {category}
+                      </div>
+                    ))}
+                </div>
+                {website && (
+                  <div className="external-website">
+                    <a href={website}>{website}</a>
                   </div>
-                ))}
-            </div>
-
-            {website && (
-              <div className="external-website">
-                <a href={website}>{website}</a>
-              </div>
+                )}
+              </>
             )}
           </div>
         </div>

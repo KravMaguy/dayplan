@@ -1,19 +1,20 @@
 import React from "react";
 import Shimmer from "./Shimmer";
 import SkeletonElement from "./SkeletonElement";
-
-const SkeletonArticle = ({ theme }) => {
+const SkeletonPlaceDetails = ({ theme }) => {
   const themeClass = theme || "light";
 
   return (
-    <div className={`skeleton-wrapper ${themeClass}`}>
+    <div className={`skeleton-wrapper ${themeClass} skeleton-place-details`}>
       <div className="skeleton-article">
         <SkeletonElement type="title" />
-        <SkeletonElement type="text" />
+        {new Array(7).fill(null).map((_, idx) => (
+          <SkeletonElement type="text" />
+        ))}
       </div>
       <Shimmer />
     </div>
   );
 };
 
-export default SkeletonArticle;
+export default SkeletonPlaceDetails;

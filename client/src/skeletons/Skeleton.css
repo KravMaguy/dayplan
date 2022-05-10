@@ -44,6 +44,15 @@
 }
 
 /* themes */
+
+.skeleton-wrapper {
+  padding: 10px;
+}
+
+.card-spacing > .skeleton-wrapper {
+  margin: 5px;
+}
+
 .skeleton-wrapper.light {
   background: #f2f2f2;
 }
@@ -52,6 +61,11 @@
 }
 .skeleton-wrapper.dark .skeleton {
   background: rgb(186, 186, 186);
+}
+
+.skeleton-wrapper.dark.skeleton-place-details {
+  background: hsl(0deg 6% 54% / 28%);
+  padding: 10px;
 }
 
 /* animation effects */
@@ -105,6 +119,14 @@
   padding: 6px 15px;
 }
 
+.skeleton-wrapper.skeleton-links.dark.draggable-title {
+  border-radius: 0px;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+  margin: 0;
+  margin-bottom: 2px;
+}
+
 .skeleton-wrapper.skeleton-links.skeleton.title {
   width: 84%;
   height: 20px;
@@ -121,6 +143,7 @@
 .skeleton-wrapper.skeleton-address {
   margin: 0px;
   border-radius: 0px;
+  padding: 10px;
 }
 
 .skeleton-wrapper.skeleton-map {
