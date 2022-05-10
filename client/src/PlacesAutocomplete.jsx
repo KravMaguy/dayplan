@@ -30,7 +30,7 @@ const PlacesAutoComplete = () => {
 
   useEffect(() => {
     if (height < initialHeight) {
-      const newHeight = x + (initialHeight - height);
+      const newHeight = initialHeight - height - headerHeight;
       setX(newHeight);
     }
   }, [x, height]);
@@ -152,10 +152,7 @@ const PlacesAutoComplete = () => {
     val && setValue(val);
   }
   return (
-    <div
-      className="user-destination-page"
-      style={{ height: `calc(100vh + ${x + 60}px)` }}
-    >
+    <div className="user-destination-page">
       <div
         id="overlay"
         onClick={() => setOpenDrawer(false)}
