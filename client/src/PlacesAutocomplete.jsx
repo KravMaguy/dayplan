@@ -30,7 +30,7 @@ const PlacesAutoComplete = () => {
 
   useEffect(() => {
     if (height < initialHeight) {
-      const newHeight = headerHeight + (initialHeight - height);
+      const newHeight = x + (initialHeight - height);
       setX(newHeight);
     }
   }, [x, height]);
