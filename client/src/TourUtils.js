@@ -41,10 +41,10 @@ export const locationSteps = [
       "Look for this button in the header to also create a plan using your selected location",
     disableBeacon: true,
   },
-  {
-    target: ".generate-plan-link",
-    content: "Or click create plan link here",
-  },
+  // {
+  //   target: ".generate-plan-link",
+  //   content: "Or click create plan link here",
+  // },
 ];
 
 export const dragPlanTourStyle = {

@@ -152,7 +152,10 @@ const PlacesAutoComplete = () => {
     val && setValue(val);
   }
   return (
-    <div className="user-destination-page">
+    <div
+      className="user-destination-page"
+      style={{ height: `calc(100vh + ${x + 60}px)` }}
+    >
       <div
         id="overlay"
         onClick={() => setOpenDrawer(false)}
