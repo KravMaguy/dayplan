@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserPosition } from "./redux/thunks.js";
 
 const CustomSearchBar = ({
+  setOpenFullSearch,
   drawerOpen,
   setFocused,
   setZoom,
@@ -15,6 +16,7 @@ const CustomSearchBar = ({
   setExactDate,
   slowOpenSetValue,
   value,
+  setRun,
 }) => {
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
@@ -101,9 +103,15 @@ const CustomSearchBar = ({
     >
       <div className="search-wrap my-first-step">
         <GooglePlacesAutocomplete
+          disabled={drawerOpen}
           selectProps={{
-            onFocus: () => setFocused(true),
-            onBlur: () => setFocused(false),
+            onFocus: () => {
+              setFocused(true);
+              setRun(false);
+            },
+            onBlur: () => {
+              setFocused(false);
+            },
             inputValue,
             value,
             onInputChange: (newInputValue, meta) => {

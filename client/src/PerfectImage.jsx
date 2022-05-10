@@ -10,9 +10,10 @@ const PerfectImage = ({ photos }) => {
 
   if (
     photos &&
-    photos.length > 0 &&
-    photos[0].getUrl() &&
-    ref.current === photos[0].getUrl()
+    photos.length > 0
+    // &&
+    // photos[0].getUrl() &&
+    // ref.current === photos[0].getUrl()
   ) {
     return (
       <img alt="place" src={photos[0].getUrl()} className="drawer-image" />

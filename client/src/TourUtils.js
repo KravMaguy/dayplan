@@ -52,7 +52,8 @@ export const dragPlanTourStyle = {
     arrowColor: "#e3ffeb",
     backgroundColor: "white",
     overlayColor: "rgba(79, 26, 0, 0.4)",
-    primaryColor: " #e30b5d",
+    primaryColor: "#5491f5",
     textColor: "navy",
+    zIndex: 1,
   },
 };

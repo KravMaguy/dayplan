@@ -12,7 +12,7 @@ import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
 import CustomRide from "./CustomRide";
 import { MdLocationOn } from "react-icons/md";
-import { useMediaHeight } from "./useMediaQuery";
+// import { useMediaHeight } from "./useMediaQuery";
 
 import {
   locationSteps,
@@ -20,41 +20,25 @@ import {
 } from "./TourUtils";
 import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
-const initialHeight = window.innerHeight;
+const flag = "stay";
+// const initialHeight = window.innerHeight;
+// const headerHeight = 60;
+const containerStyle = {
+  position: "relative",
+  top: "0",
+};
+
 const PlacesAutoComplete = () => {
-  const headerHeight = 60;
-  const [x, setX] = useState(-headerHeight);
-
-  const currentQuery = useMediaHeight();
-  const { height } = currentQuery;
-
-  useEffect(() => {
-    if (height < initialHeight) {
-      const newHeight = initialHeight - height - headerHeight;
-      setX(newHeight);
-    }
-  }, [x, height]);
-  console.log(x, "the curr x");
-  console.log("so the query is: ", `calc(100vh + ${x}px)`);
-  const containerStyle = {
-    height: `calc(100vh + ${x}px)`,
-    // position: "sticky",
-    position: "relative",
-    top: "0",
-  };
-  const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
-  const flag = "";
-  useEffect(() => {
-    if (flag) return;
-    if (!categoryLength) {
-      navigate("/categories");
-    }
-  }, [categoryLength, navigate]);
+  // const currentQuery = useMediaHeight();
+  // const { height } = currentQuery;
 
+  const didMount = useRef(false);
+  const hasSeenThis = useRef(false);
+
+  const categoryLength = useSelector((state) => state.categories.length);
   const center = useSelector((state) => state.center);
   const userCoordinates = useSelector((state) => state.position);
-
   const userCenter = useSelector((state) => state.userCenter);
   const [zoom, setZoom] = useState(10);
   const [drawerOpen, setOpenDrawer] = useState(false);
@@ -67,7 +51,20 @@ const PlacesAutoComplete = () => {
   const { photos, name, formatted_address, types, website } = place || {};
   const [showingToast, setShowToast] = useState(false);
   const [exactDate, setExactDate] = useState(Date.now());
-  console.log({ drawerOpen });
+
+  // const [x, setX] = useState(-headerHeight);
+  // useEffect(() => {
+  //   if (height < initialHeight) {
+  //     const newHeight = initialHeight - height - headerHeight;
+  //     setX(newHeight);
+  //   }
+  // }, [x, height]);
+
+  // containerStyle.height = `calc(100vh + ${x}px)`;
+
+  const clonedStyle = { ...containerStyle };
+  clonedStyle.height = `100vh`;
+
   useEffect(() => {
     if (!userCoordinates?.geocodedAddress) {
       return;
@@ -85,9 +82,6 @@ const PlacesAutoComplete = () => {
     console.log({ clearAble });
     return () => window.clearTimeout(clearAble);
   }, [userCoordinates?.geocodedAddress, exactDate]);
-
-  const didMount = useRef(false);
-  const hasSeenThis = useRef(false);
 
   useEffect(() => {
     if (didMount.current && drawerOpen && !hasSeenThis.current) {
@@ -125,16 +119,6 @@ const PlacesAutoComplete = () => {
   };
 
   useEffect(() => {
-    // const visitedPage = localStorage.getItem("hasSeenLocationsTour");
-    // if (!visitedPage) {
-    //   localStorage.setItem("hasSeenLocationsTour", "been here");
-    //   return;
-    // }
-    // setRun(false);
-    localStorage.removeItem("hasSeenLocationsTour");
-  }, []);
-
-  useEffect(() => {
     if (showingToast) {
       const toastTimeout = setTimeout(() => {
         setShowToast(false);
@@ -144,34 +128,61 @@ const PlacesAutoComplete = () => {
   }, [showingToast]);
   const [value, setValue] = useState(null);
 
+  useEffect(() => {
+    if (flag) return;
+    if (!categoryLength) {
+      navigate("/categories");
+    }
+  }, [categoryLength, navigate]);
+
+  useEffect(() => {
+    // const visitedPage = localStorage.getItem("hasSeenLocationsTour");
+    // if (!visitedPage) {
+    //   localStorage.setItem("hasSeenLocationsTour", "been here");
+    //   return;
+    // }
+    // setRun(false);
+    localStorage.removeItem("hasSeenLocationsTour");
+  }, []);
+
   function slowOpenSetValue(val, timeout) {
-    console.log("i open the drawer with a timeout of :", timeout);
     setTimeout(() => {
       setOpenDrawer(true);
     }, timeout);
     val && setValue(val);
   }
+
   return (
     <div className="user-destination-page">
+      {!drawerOpen && (
+        <div
+          id="overlay2"
+          // onClick={() => setOpenFullSearch(false)}
+          className={focused ? "active" : ""}
+        ></div>
+      )}
+
       <div
         id="overlay"
         onClick={() => setOpenDrawer(false)}
         className={drawerOpen ? "active" : ""}
       ></div>
-      {/* <div
+      <div
         className={`constrained ${
           !drawerOpen ? "visible-searchbar" : "hidden-searchbar"
         }`}
-      > */}
-      <div className={`toastify$$ ${showingToast ? "show" : ""}`} id="toast">
-        <div id="img">
-          <MdLocationOn className="toast-location-icon" />
-        </div>
-        <div className={`someclass ${showingToast ? "description" : "nopad"}`}>
-          Loading Geolocation
+      >
+        <div className={`toastify$$ ${showingToast ? "show" : ""}`} id="toast">
+          <div id="img">
+            <MdLocationOn className="toast-location-icon" />
+          </div>
+          <div
+            className={`someclass ${showingToast ? "description" : "nopad"}`}
+          >
+            Loading Geolocation
+          </div>
         </div>
       </div>
-      {/* </div> */}
       <CustomRide
         stepIndex={stepIndex}
         callback={handleJoyrideCallback}
@@ -198,6 +209,7 @@ const PlacesAutoComplete = () => {
         }`}
       >
         <CustomSearchBar
+          setRun={setRun}
           setShowToast={setShowToast}
           drawerOpen={drawerOpen}
           setFocused={setFocused}
@@ -214,7 +226,7 @@ const PlacesAutoComplete = () => {
           center={center}
           zoom={zoom}
           setZoom={setZoom}
-          containerStyle={containerStyle}
+          containerStyle={clonedStyle}
           placeId={placeId}
           setPlace={setPlace}
           place={place}
