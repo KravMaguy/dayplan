@@ -9,7 +9,7 @@ const SkeletonPlaceDetails = ({ theme }) => {
       <div className="skeleton-article">
         <SkeletonElement type="title" />
         {new Array(7).fill(null).map((_, idx) => (
-          <SkeletonElement type="text" />
+          <SkeletonElement type="text" key={idx} />
         ))}
       </div>
       <Shimmer />

@@ -31,6 +31,7 @@ const PlacesAutoComplete = () => {
 
   const didMount = useRef(false);
   const hasSeenThis = useRef(false);
+  const idRef = useRef();
 
   const categoryLength = useSelector((state) => state.categories.length);
   const center = useSelector((state) => state.center);
@@ -61,15 +62,16 @@ const PlacesAutoComplete = () => {
       return;
     }
     const placeId = userCoordinates?.geocodedAddress[0].place_id;
-    let clearAble;
     if (Date.now() - exactDate < 2200) {
       const animationTimeDifference = 2200 - (Date.now() - exactDate);
       console.log({ animationTimeDifference });
-      clearAble = slowOpenSetValue(null, animationTimeDifference);
+      slowOpenSetValue(null, animationTimeDifference);
     } else {
-      clearAble = slowOpenSetValue(null, 0);
+      slowOpenSetValue(null, 0);
     }
     setPlaceId(placeId);
+    const clearAble = idRef.current;
+    console.log("cleanup");
     console.log({ clearAble });
     return () => window.clearTimeout(clearAble);
   }, [userCoordinates?.geocodedAddress, exactDate]);
@@ -144,9 +146,10 @@ const PlacesAutoComplete = () => {
   }, [categoryLength, navigate]);
 
   function slowOpenSetValue(val, timeout) {
-    setTimeout(() => {
+    const id = setTimeout(() => {
       setOpenDrawer(true);
     }, timeout);
+    idRef.current = id;
     val && setValue(val);
   }
 
