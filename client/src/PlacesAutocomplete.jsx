@@ -12,7 +12,6 @@ import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
 import CustomRide from "./CustomRide";
 import { MdLocationOn } from "react-icons/md";
-// import { useMediaHeight } from "./useMediaQuery";
 
 import {
   locationSteps,
@@ -21,8 +20,6 @@ import {
 import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 const flag = "stay";
-// const initialHeight = window.innerHeight;
-// const headerHeight = 60;
 const containerStyle = {
   position: "relative",
   top: "0",
@@ -31,8 +28,6 @@ const innerHeight = window.innerHeight;
 
 const PlacesAutoComplete = () => {
   const navigate = useNavigate();
-  // const currentQuery = useMediaHeight();
-  // const { height } = currentQuery;
 
   const didMount = useRef(false);
   const hasSeenThis = useRef(false);
@@ -53,19 +48,10 @@ const PlacesAutoComplete = () => {
   const [showingToast, setShowToast] = useState(false);
   const [exactDate, setExactDate] = useState(Date.now());
 
-  // const [x, setX] = useState(-headerHeight);
-  // useEffect(() => {
-  //   if (height < initialHeight) {
-  //     const newHeight = initialHeight - height - headerHeight;
-  //     setX(newHeight);
-  //   }
-  // }, [x, height]);
-
-  // containerStyle.height = `calc(100vh + ${x}px)`;
-
+  const innerpixels = innerHeight + "px";
   const clonedStyle = { ...containerStyle };
   if (window.innerWidth < 600) {
-    clonedStyle.height = innerHeight;
+    clonedStyle.height = innerpixels;
   } else {
     clonedStyle.height = `100vh`;
   }

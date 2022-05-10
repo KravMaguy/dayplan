@@ -69,8 +69,21 @@ const Map = React.memo(function Map({
           setZoom(map.zoom);
         }
       }}
+      onDblClick={(event) => {
+        console.log("sadf clisdf");
+        if (window.innerWidth > 600) {
+          return;
+        }
+        setClickedLocation({
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
+        });
+      }}
       onClick={(event) => {
         if (!map) return;
+        if (window.innerWidth < 600) {
+          return;
+        }
         setClickedLocation({
           lat: event.latLng.lat(),
           lng: event.latLng.lng(),
