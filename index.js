@@ -117,7 +117,6 @@ app.post("/saveplan", checkAuthMiddleware, async (req, res) => {
   const user = await User.findById(req.user.id);
   const body = req.body;
   if (user) {
-    console.log("reached save plan user exists");
     const { id, derivedData } = body;
     user.plans.push({ id, derivedData });
     await user.save();
@@ -153,13 +152,11 @@ app.post("/api/", (req, res) => {
       "&longitude=" +
       lng +
       `&sort_by=distance&limit=${max / categories.length}`;
-    // console.log({ url });
     return axios.get(url).catch((e) => console.log(e));
   });
 
   Promise.all(mappedCategories)
     .then((values) => {
-      console.log({ values });
       const data = values.map((val) => val.data);
       res.json(data);
     })

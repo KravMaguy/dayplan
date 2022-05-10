@@ -50,7 +50,6 @@ const CustomSearchBar = ({
     const formatted_address =
       userCoordinatesGeoFormattedAddress[0].formatted_address;
     setInputValue(formatted_address);
-    console.log("reached in customSearch bar open the drawer:");
     slowOpenSetValue(formatted_address, 500);
     if (userCoordinates?.geocodedAddress) {
       const placeId = userCoordinates?.geocodedAddress[0].place_id;
@@ -88,7 +87,6 @@ const CustomSearchBar = ({
     const { label } = val;
     geocodeByAddress(label)
       .then((results) => {
-        console.log({ results });
         setPlaceId(results[0].place_id);
         resetMapCenter(results);
       })

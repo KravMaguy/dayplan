@@ -42,8 +42,6 @@ const Map = React.memo(function Map({
     service.getDetails(request, callback);
     function callback(place, status) {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        // console.log(place?.photos[0]?.getUrl());
-        console.log({ place });
         setPlace(place);
       } else {
         console.log("not ok");
@@ -70,7 +68,6 @@ const Map = React.memo(function Map({
         }
       }}
       onDblClick={(event) => {
-        console.log("sadf clisdf");
         if (window.innerWidth > 600) {
           return;
         }
@@ -91,7 +88,6 @@ const Map = React.memo(function Map({
       }}
       onCenterChanged={() => {
         if (map) {
-          // console.log(map.getCenter());
           return;
         }
       }}

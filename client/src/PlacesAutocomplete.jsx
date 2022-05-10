@@ -64,15 +64,12 @@ const PlacesAutoComplete = () => {
     const placeId = userCoordinates?.geocodedAddress[0].place_id;
     if (Date.now() - exactDate < 2200) {
       const animationTimeDifference = 2200 - (Date.now() - exactDate);
-      console.log({ animationTimeDifference });
       slowOpenSetValue(null, animationTimeDifference);
     } else {
       slowOpenSetValue(null, 0);
     }
     setPlaceId(placeId);
     const clearAble = idRef.current;
-    console.log("cleanup");
-    console.log({ clearAble });
     return () => window.clearTimeout(clearAble);
   }, [userCoordinates?.geocodedAddress, exactDate]);
 
@@ -84,12 +81,10 @@ const PlacesAutoComplete = () => {
     if (didMount.current && drawerOpen && !hasSeenThis.current) {
       hasSeenThis.current = true;
       setRun(false);
-      console.log("reached here");
       const timeout = setTimeout(() => {
         setStepIndex(3);
         setRun(true);
       }, 1000);
-      console.log({ timeout });
       return () => {
         clearTimeout(timeout);
       };

@@ -5,7 +5,6 @@ const HomePageLink = ({ navigate }) => {
     <div
       className="logo"
       onClick={() => {
-        console.log("cicked");
         navigate("/");
       }}
     >

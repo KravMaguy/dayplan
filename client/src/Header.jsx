@@ -50,7 +50,6 @@ const Header = () => {
   }
 
   const [isChecked, setIsChecked] = useState(false);
-  // console.log("planLink :", planLink);
   return (
     <>
       <div

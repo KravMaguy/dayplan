@@ -44,7 +44,6 @@ export default function MultiSelectAsync() {
     );
   };
 
-  console.log("length of categories ", categories.length);
   return (
     <div
       className="constrained"

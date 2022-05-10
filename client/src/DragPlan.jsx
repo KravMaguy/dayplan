@@ -8,10 +8,8 @@ import { useNavigate } from "react-router";
 import DestinationLinks from "./DestinationLinks";
 import PlanMap from "./PlanMap";
 import { SkeletonLinks } from "./skeletons";
-import { DragPlanSteps, dragPlanTourStyle } from "./TourUtils";
+import { DragPlanSteps } from "./TourUtils";
 import CustomRide from "./CustomRide";
-const viewWidth = window.innerWidth;
-console.log({ viewWidth });
 
 const DragPlan = () => {
   const center = useSelector((state) => state.center);
