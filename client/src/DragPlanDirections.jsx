@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { RiDragMove2Line } from "react-icons/ri";
 import { formatDuration, intervalToDuration } from "date-fns";
 import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
@@ -185,7 +185,18 @@ const DragPlanDirections = ({
           )}
           <div className={open ? "hidden" : ""}>
             <div className="dnd-text dnd-title">
-              <div className="demo-card__title">dᵣₐg ₙd dᵣₒₚ</div>
+              <div className="demo-card__title" style={{ display: "flex" }}>
+                <RiDragMove2Line
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    marginRight: "3px",
+                    filter: "drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4))",
+                  }}
+                />
+
+                <div>dᵣₐg ₙd dᵣₒₚ</div>
+              </div>
             </div>
             <DragDropContent
               onDragEnd={onDragEnd}

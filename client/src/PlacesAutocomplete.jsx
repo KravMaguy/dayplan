@@ -75,6 +75,10 @@ const PlacesAutoComplete = () => {
   }, [userCoordinates?.geocodedAddress, exactDate]);
 
   useEffect(() => {
+    const visitedPage = localStorage.getItem("hasSeenLocationsTour");
+    if (visitedPage) {
+      return setRun(false);
+    }
     if (didMount.current && drawerOpen && !hasSeenThis.current) {
       hasSeenThis.current = true;
       setRun(false);

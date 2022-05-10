@@ -1,23 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { SkeletonImage } from "./skeletons";
-const PerfectImage = ({ photos }) => {
-  let ref = useRef(null);
+const PerfectImage = ({ photos, drawerOpen }) => {
+  const [featuredPhoto, setFeaturedPhoto] = useState("");
   useEffect(() => {
     if (photos && photos.length > 0 && photos[0].getUrl()) {
-      ref.current = photos[0].getUrl();
+      setFeaturedPhoto(photos[0].getUrl());
     }
   }, [photos]);
 
-  if (
-    photos &&
-    photos.length > 0
-    // &&
-    // photos[0].getUrl() &&
-    // ref.current === photos[0].getUrl()
-  ) {
-    return (
-      <img alt="place" src={photos[0].getUrl()} className="drawer-image" />
-    );
+  useEffect(() => {
+    if (!drawerOpen) {
+      const timer = setTimeout(() => {
+        setFeaturedPhoto("");
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [drawerOpen]);
+
+  if (featuredPhoto) {
+    return <img alt="" src={featuredPhoto} className="drawer-image" />;
   } else {
     return <SkeletonImage />;
   }

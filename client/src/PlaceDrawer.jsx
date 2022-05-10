@@ -12,7 +12,7 @@ const PlaceDrawer = ({
   return (
     <div id="drawer-nav" tabindex="-1" className={drawerOpen ? "active" : ""}>
       <div className="cls-image-container">
-        <PerfectImage photos={photos} />
+        <PerfectImage photos={photos} drawerOpen={drawerOpen} />
       </div>
 
       <div className="buisness-details">
