@@ -209,7 +209,7 @@ body {
 }
 
 .user-destination-page {
-  height: 100vh;
+  /* height: 100vh; */
   padding-top: 58px;
   position: relative;
 }

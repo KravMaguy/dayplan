@@ -10,7 +10,7 @@ const PlaceDrawer = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div id="drawer-nav" className={drawerOpen ? "active" : ""}>
+    <div id="drawer-nav" tabindex="-1" className={drawerOpen ? "active" : ""}>
       <div className="cls-image-container">
         <PerfectImage photos={photos} />
       </div>

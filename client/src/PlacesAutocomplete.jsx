@@ -27,6 +27,7 @@ const containerStyle = {
   position: "relative",
   top: "0",
 };
+const innerHeight = window.innerHeight;
 
 const PlacesAutoComplete = () => {
   const navigate = useNavigate();
@@ -63,7 +64,11 @@ const PlacesAutoComplete = () => {
   // containerStyle.height = `calc(100vh + ${x}px)`;
 
   const clonedStyle = { ...containerStyle };
-  clonedStyle.height = `100vh`;
+  if (window.innerWidth < 600) {
+    clonedStyle.height = innerHeight;
+  } else {
+    clonedStyle.height = `100vh`;
+  }
 
   useEffect(() => {
     if (!userCoordinates?.geocodedAddress) {
@@ -153,7 +158,10 @@ const PlacesAutoComplete = () => {
   }
 
   return (
-    <div className="user-destination-page">
+    <div
+      style={{ height: clonedStyle.height }}
+      className="user-destination-page"
+    >
       {!drawerOpen && (
         <div
           id="overlay2"
