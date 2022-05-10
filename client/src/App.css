@@ -6,7 +6,13 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
+}
+
+@media only screen and (max-width: 500px) {
+  body {
+    overscroll-behavior: contain;
+  }
 }
 
 .App {

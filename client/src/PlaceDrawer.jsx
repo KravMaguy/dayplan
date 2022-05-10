@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 import PerfectImage from "./PerfectImage";
 const PlaceDrawer = ({
   photos,
@@ -9,6 +10,8 @@ const PlaceDrawer = ({
   website,
 }) => {
   const navigate = useNavigate();
+  const userCoordinates = useSelector((state) => state.position);
+  const userCenter = useSelector((state) => state.userCenter);
   return (
     <div id="drawer-nav" tabindex="-1" className={drawerOpen ? "active" : ""}>
       <div className="cls-image-container">
@@ -20,6 +23,7 @@ const PlaceDrawer = ({
           <div>
             <div className="yelp-stars-container">
               <button
+                disabled={!userCenter && !userCoordinates}
                 onClick={() => navigate("/plan")}
                 className="no-link pure-material-button-text generate-plan-link"
               >

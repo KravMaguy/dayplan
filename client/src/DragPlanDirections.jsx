@@ -5,7 +5,7 @@ import TravelModes from "./TravelModes";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
 import DragDropContent from "./DragDropContent";
 import { highlightedColor, travelModeStrings } from "./planUtils";
-import { SkeletonAddress } from "./skeletons";
+import { SkeletonAddress, SkeletonLinks } from "./skeletons";
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -184,20 +184,25 @@ const DragPlanDirections = ({
             <SkeletonAddress theme="dark" />
           )}
           <div className={open ? "hidden" : ""}>
-            <div className="dnd-text dnd-title">
-              <div className="demo-card__title" style={{ display: "flex" }}>
-                <RiDragMove2Line
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    marginRight: "3px",
-                    filter: "drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4))",
-                  }}
-                />
+            {derivedData.length === 0 || !derivedData ? (
+              <SkeletonLinks theme="dark" />
+            ) : (
+              <div className="dnd-text dnd-title">
+                <div className="demo-card__title" style={{ display: "flex" }}>
+                  <RiDragMove2Line
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      marginRight: "3px",
+                      filter: "drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.4))",
+                    }}
+                  />
 
-                <div>dᵣₐg ₙd dᵣₒₚ</div>
+                  <div>dᵣₐg ₙd dᵣₒₚ</div>
+                </div>
               </div>
-            </div>
+            )}
+
             <DragDropContent
               onDragEnd={onDragEnd}
               derivedData={derivedData}
