@@ -188,7 +188,7 @@ const DragPlan = () => {
             scrollToMap={scrollToMap}
           />
         </div>
-        {false && derivedData.length > 0 ? (
+        {derivedData.length > 0 ? (
           <DestinationLinks
             derivedData={derivedData}
             removeLocation={removeLocation}

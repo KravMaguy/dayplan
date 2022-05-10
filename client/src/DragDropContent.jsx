@@ -39,7 +39,7 @@ const DragDropContent = ({
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
           >
-            {false && derivedData.length > 0
+            {derivedData.length > 0
               ? derivedData.slice(1).map((location, idx, arr) => {
                   let previous = arr[idx - 1];
                   return (
