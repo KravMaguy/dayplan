@@ -30,9 +30,9 @@ export const locationSteps = [
       "You can also use geolocation if youd like to set the start of the plan to your current location, you'll see a big purple dot representing your location",
   },
   {
-    target: ".top-container-searchbox",
+    target: "body",
     content:
-      "These controls set the start of your plan, but you can click anywhere on map and well show you a photo if we have",
+      "The search bar controls set the start of your plan, but you can click anywhere on map and well show you a photo if we have",
     disableBeacon: true,
   },
   {
@@ -52,7 +52,7 @@ export const dragPlanTourStyle = {
     arrowColor: "#e3ffeb",
     backgroundColor: "white",
     overlayColor: "rgba(79, 26, 0, 0.4)",
-    primaryColor: "#3e7cc9e0",
-    textColor: "black",
+    primaryColor: " #e30b5d",
+    textColor: "navy",
   },
 };
