@@ -12,6 +12,7 @@ import CustomSearchBar from "./CustomSearchBar";
 import CustomLocationOverlay from "./CustomLocationOverlay";
 import CustomRide from "./CustomRide";
 import { MdLocationOn } from "react-icons/md";
+import { useMediaHeight } from "./useMediaQuery";
 
 import {
   locationSteps,
@@ -19,13 +20,27 @@ import {
 } from "./TourUtils";
 import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
-const containerStyle = {
-  height: "calc(100vh - 60px)",
-  position: "relative",
-  bottom: "0",
-};
-
+const initialHeight = window.innerHeight;
 const PlacesAutoComplete = () => {
+  //header is a set height
+  let x = useRef(-60);
+
+  const currentQuery = useMediaHeight();
+  const { height } = currentQuery;
+  console.log("the current query height", height);
+  console.log("the initial heig :", initialHeight);
+  useEffect(() => {
+    if (height < initialHeight) {
+      x.current = x.current + (initialHeight - height);
+    }
+  }, [height]);
+  console.log(x.current, "the curr x");
+  const containerStyle = {
+    height: `calc(100vh + ${x.current}px)`,
+    position: "sticky",
+    //position: "relative",
+    top: "0",
+  };
   const categoryLength = useSelector((state) => state.categories.length);
   const navigate = useNavigate();
   const flag = "gfjkhjg";
@@ -195,56 +210,62 @@ const PlacesAutoComplete = () => {
           value={value}
           slowOpenSetValue={slowOpenSetValue}
         />
-        <div style={{ width: "100%" }}>
-          <Map
-            containerClass="map-container"
-            center={center}
-            zoom={zoom}
-            setZoom={setZoom}
-            containerStyle={containerStyle}
-            placeId={placeId}
-            setPlace={setPlace}
-            place={place}
-            clickedLocation={clickedLocation}
-            setClickedLocation={setClickedLocation}
-          >
-            {clickedLocation && (
-              <CustomLocationOverlay
-                title={"point of interest"}
-                position={clickedLocation}
-                classes={"clicked"}
-                keyId={clickedLocation.lat}
-              />
-            )}
-            {userCoordinates && (
-              <CustomLocationOverlay
-                title={"your location"}
+        <Map
+          containerClass="map-container"
+          center={center}
+          zoom={zoom}
+          setZoom={setZoom}
+          containerStyle={containerStyle}
+          placeId={placeId}
+          setPlace={setPlace}
+          place={place}
+          clickedLocation={clickedLocation}
+          setClickedLocation={setClickedLocation}
+        >
+          {clickedLocation && (
+            <CustomLocationOverlay
+              title={"point of interest"}
+              position={clickedLocation}
+              classes={"clicked"}
+              keyId={clickedLocation.lat}
+            />
+          )}
+          {userCoordinates && (
+            <CustomLocationOverlay
+              title={"your location"}
+              position={{
+                lat: userCoordinates.center.lat,
+                lng: userCoordinates.center.lng,
+              }}
+            />
+          )}
+          {userCenter &&
+            userCenter.center.lat !== userCoordinates?.center.lat &&
+            userCenter.center.lng !== userCoordinates?.center.lng && (
+              <Marker
                 position={{
-                  lat: userCoordinates.center.lat,
-                  lng: userCoordinates.center.lng,
+                  lat: userCenter.center.lat,
+                  lng: userCenter.center.lng,
                 }}
+                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
             )}
-            {userCenter &&
-              userCenter.center.lat !== userCoordinates?.center.lat &&
-              userCenter.center.lng !== userCoordinates?.center.lng && (
-                <Marker
-                  position={{
-                    lat: userCenter.center.lat,
-                    lng: userCenter.center.lng,
-                  }}
-                  icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-                />
-              )}
-          </Map>
-          {clickedLocation && !focused && (
+        </Map>
+
+        {clickedLocation && (
+          <div
+            className={`constrained ${
+              !drawerOpen ? "visible-searchbar" : "hidden-searchbar"
+            }`}
+          >
             <PlacePreview
               drawerOpen={drawerOpen}
               clickedLocation={clickedLocation}
               setZoom={setZoom}
+              focused={focused}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

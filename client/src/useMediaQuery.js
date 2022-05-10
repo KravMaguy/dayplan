@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useMediaQuery = (query) => {
+export const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
 
   useEffect(() => {
@@ -16,4 +16,23 @@ const useMediaQuery = (query) => {
   return matches;
 };
 
-export default useMediaQuery;
+export const useMediaHeight = () => {
+  const [dimensions, setDimensions] = useState({
+    height: window.innerHeight,
+    width: window.innerWidth,
+  });
+  useEffect(() => {
+    function handleResize() {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+  const { height, width } = dimensions;
+  return { height, width };
+};

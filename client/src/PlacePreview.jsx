@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 
-const PlacePreview = ({ drawerOpen, clickedLocation, setZoom }) => {
+const PlacePreview = ({ drawerOpen, clickedLocation, setZoom, focused }) => {
   const dispatch = useDispatch();
   return (
     <div
       className={`place-preview-wrapper  ${
-        !drawerOpen ? "visible-placepreview" : "hidden-placepreview"
+        !drawerOpen && !focused ? "visible-placepreview" : "hidden-placepreview"
       }`}
     >
       <div className="place-preview-img-container">

@@ -228,6 +228,16 @@ Not supports in Firefox and IE */
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+@media screen and (max-width: 600px) {
+  .place-preview-wrapper {
+    height: 110px;
+    /* position: absolute; */
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+  }
+}
+
 div.lat-lng-return-controls > button {
   width: 100%;
   margin: 0 auto;
