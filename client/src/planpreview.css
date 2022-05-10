@@ -324,7 +324,3 @@ div.external-website > a {
     display: flex;
   }
 } */
-
-#drawer-nav.plan-preview-nav {
-  position: fixed;
-}
