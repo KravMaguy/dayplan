@@ -22,23 +22,24 @@ import { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
 const initialHeight = window.innerHeight;
 const PlacesAutoComplete = () => {
-  //header is a set height
-  let x = useRef(-60);
+  const headerHeight = 60;
+  const [x, setX] = useState(-headerHeight);
 
   const currentQuery = useMediaHeight();
   const { height } = currentQuery;
-  console.log("the current query height", height);
-  console.log("the initial heig :", initialHeight);
+
   useEffect(() => {
     if (height < initialHeight) {
-      x.current = x.current + (initialHeight - height);
+      const newHeight = headerHeight + (initialHeight - height);
+      setX(newHeight);
     }
-  }, [height]);
-  console.log(x.current, "the curr x");
+  }, [x, height]);
+  console.log(x, "the curr x");
+  console.log("so the query is: ", `calc(100vh + ${x}px)`);
   const containerStyle = {
-    height: `calc(100vh + ${x.current}px)`,
-    position: "sticky",
-    //position: "relative",
+    height: `calc(100vh + ${x}px)`,
+    // position: "sticky",
+    position: "relative",
     top: "0",
   };
   const categoryLength = useSelector((state) => state.categories.length);
@@ -171,7 +172,6 @@ const PlacesAutoComplete = () => {
         </div>
       </div>
       {/* </div> */}
-
       <CustomRide
         stepIndex={stepIndex}
         callback={handleJoyrideCallback}
@@ -181,7 +181,6 @@ const PlacesAutoComplete = () => {
         styles={locationTourStyles}
         steps={locationSteps}
       />
-
       <PlaceDrawer
         photos={photos}
         drawerOpen={drawerOpen}
