@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import HomePageLink from "./HomePageLink";
 import UserProfileLink from "./UserProfileLink";
-import { useFetchUser } from "./useMediaQuery";
+import { useFetchUser } from "./hooks";
 import "./Header.css";
 
 import { saveThisPlan } from "./redux/thunks";

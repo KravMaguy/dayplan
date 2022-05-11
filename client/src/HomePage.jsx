@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./HomePage.css";
-import { useFetchUser } from "./useMediaQuery";
+import { useFetchUser } from "./hooks";
 // import redux from "./images/redux.png";
 // import node from "./images/node.png";
 // import react from "./images/react.png";
