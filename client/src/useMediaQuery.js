@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 export const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
@@ -35,4 +36,23 @@ export const useMediaHeight = () => {
   });
   const { height, width } = dimensions;
   return { height, width };
+};
+
+export const useFetchUser = () => {
+  const [user, setUser] = useState(null);
+  const [cookies] = useCookies();
+  const isAuthenticated = cookies.isAuthenticated === "true";
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetch("/api/users")
+        .then((res) => res.json())
+        .then((user) => {
+          setUser(user);
+        })
+        .catch(console.error);
+    }
+  }, [isAuthenticated]);
+
+  return user;
 };

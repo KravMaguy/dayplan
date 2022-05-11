@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./HomePage.css";
+import { useFetchUser } from "./useMediaQuery";
 // import redux from "./images/redux.png";
 // import node from "./images/node.png";
 // import react from "./images/react.png";
@@ -7,14 +8,18 @@ import "./HomePage.css";
 // import mongodb from "./images/mongodb.png";
 
 const HomePage = () => {
+  const user = useFetchUser();
+  console.log("user :", user);
   return (
     <>
       <div className="my-homepage">
         <div style={{ marginTop: "90px", marginLeft: "20px" }}>
           <h1 className="homepage-title">
             <span className="homepage-title-inner">
-              Create a day plan based around popular activities, festivals,
-              local buisnesses, or whatever you feel.{" "}
+              {user
+                ? `Welcome to the day plan generator ${user?.username}, lets get started creating your custom plan based off your interests and location of your choosing.`
+                : "Create a day plan based around popular activities, festivals, local buisnesses, or whatever you feel."}
+
               <Link to={"/categories"}>Get Started</Link>
             </span>
           </h1>

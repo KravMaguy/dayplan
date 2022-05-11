@@ -2,9 +2,9 @@
 import React, { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import HomePageLink from "./HomePageLink";
 import UserProfileLink from "./UserProfileLink";
+import { useFetchUser } from "./useMediaQuery";
 import "./Header.css";
 
 import { saveThisPlan } from "./redux/thunks";
@@ -15,16 +15,15 @@ const Header = () => {
   const categories = useSelector((state) => state.categories);
   const location = useLocation();
   const { pathname } = location;
-  const [user, setUser] = useState(null);
-  const [cookies] = useCookies();
   const [shareUrl, setShareUrl] = useState("");
   const [isShowingShare, setIsShowingShare] = useState(false);
-  const isAuthenticated = cookies.isAuthenticated === "true";
   const dispatch = useDispatch();
   const isSavingPlan = useSelector((state) => state.isSavingPlan);
   const planLink = useSelector((state) => state.planLink);
   const [isShowingLoginDialog, setIsShowingLoginDialog] = useState(false);
 
+  const user = useFetchUser();
+  console.log({ user });
   useEffect(() => {
     if (!planLink || !user) {
       return;
@@ -33,17 +32,6 @@ const Header = () => {
       window.location.origin + "/plans/" + user.email + "/" + planLink.id
     );
   }, [isSavingPlan, planLink]);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetch("/api/users")
-        .then((res) => res.json())
-        .then((user) => {
-          setUser(user);
-        })
-        .catch(console.error);
-    }
-  }, [isAuthenticated]);
 
   function makeLink() {
     return shareUrl.slice(window.location.origin.length);
@@ -62,7 +50,7 @@ const Header = () => {
       ></div>
       <div className="header header-fixed shadow">
         <div className="navbar container">
-          {isAuthenticated ? (
+          {user ? (
             <UserProfileLink name={user?.username} photo={user?.photo} />
           ) : (
             <HomePageLink navigate={navigate} />
@@ -89,7 +77,7 @@ const Header = () => {
             ) : null}
 
             {pathname === "/plan" &&
-              (isAuthenticated ? (
+              (user ? (
                 <>
                   {shareUrl ? (
                     <button className="share-button" title="See your plan live">
@@ -179,7 +167,7 @@ const Header = () => {
                 )}
 
                 <li>
-                  {isAuthenticated ? (
+                  {user ? (
                     <a href="/auth/logout">Logout</a>
                   ) : (
                     <a href="/auth/google">login</a>
