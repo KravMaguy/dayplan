@@ -27,7 +27,7 @@ const PlaceDrawer = ({
   }, [name, drawerOpen]);
 
   return (
-    <div id="drawer-nav" tabindex="-1" className={drawerOpen ? "active" : ""}>
+    <div id="drawer-nav" tabIndex="-1" className={drawerOpen ? "active" : ""}>
       <div className="cls-image-container">
         <PerfectImage photos={photos} drawerOpen={drawerOpen} />
       </div>

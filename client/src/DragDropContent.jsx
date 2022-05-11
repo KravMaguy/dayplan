@@ -1,4 +1,3 @@
-import { useState, useEffect, createRef } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import CustomDraggable from "./CustomDraggable";
 import { SkeletonArticle } from "./skeletons";
@@ -56,9 +55,9 @@ const DragDropContent = ({
                     />
                   );
                 })
-              : [1, 2, 3, 4, 5, 6].map((n) => (
-                  <div class="card-spacing">
-                    <SkeletonArticle key={n} theme="light" />
+              : [1, 2, 3, 4, 5, 6].map((_, idx) => (
+                  <div className="card-spacing" key={idx}>
+                    <SkeletonArticle theme="light" />
                   </div>
                 ))}
 

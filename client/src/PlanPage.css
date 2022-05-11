@@ -521,6 +521,9 @@ div[role="button"].css-mod-xb97g8:hover {
   transition: opacity 1s, transform 0.5s;
 }
 
+.no-link.pure-material-button-text > svg {
+}
+
 /* Hover, Focus */
 .pure-material-button-text:hover::before {
   opacity: 0.04;
