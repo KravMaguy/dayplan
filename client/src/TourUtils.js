@@ -29,6 +29,7 @@ export const locationSteps = [
     target: ".second-step",
     content:
       "You can also use geolocation if youd like to set the start of the plan to your current location, you'll see a big purple dot representing your location",
+    disableBeacon: "true",
   },
   {
     target: "body",
