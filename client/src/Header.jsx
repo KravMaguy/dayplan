@@ -23,7 +23,6 @@ const Header = () => {
   const [isShowingLoginDialog, setIsShowingLoginDialog] = useState(false);
 
   const user = useFetchUser();
-  console.log({ user });
   useEffect(() => {
     if (!planLink || !user) {
       return;

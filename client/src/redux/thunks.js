@@ -27,7 +27,7 @@ export function getUserPosition() {
     if (getState().position) return;
     try {
       dispatch({ type: "location/seeking" });
-      const position = await getPosition();
+      const position = await getPosition(dispatch);
       const newCenter = { lat: position[0], lng: position[1] };
       dispatch({
         type: "SET_CENTER",

@@ -9,7 +9,6 @@ import { useFetchUser } from "./hooks";
 
 const HomePage = () => {
   const user = useFetchUser();
-  console.log("user :", user);
   return (
     <>
       <div className="my-homepage">
