@@ -18,6 +18,13 @@ export function getPosition(dispatch) {
         }
         result.onchange = function () {
           console.log("onchange ", result.state);
+          if (result.state === "granted") {
+            console.log("dispatch action");
+            dispatch({
+              type: "GEOLOCATION_PERMISSION_GRANTED",
+              payload: result.state,
+            });
+          }
         };
       });
   });

@@ -25,10 +25,17 @@ const CustomSearchBar = ({
     (state) => state.position?.geocodedAddress
   );
 
+  const geoLocationStatus = useSelector((state) => state.geolocation_status);
+  useEffect(() => {
+    if (userCoordinates) return;
+    if (geoLocationStatus === "granted") {
+      return setShowToast(true);
+    }
+  }, [geoLocationStatus, userCoordinates, setShowToast]);
+
   const runGetUserLocation = () => {
     setExactDate(Date.now());
     setZoom(13);
-    console.log("run getuserlocation");
     if (!userCoordinates) {
       return dispatch(getUserPosition());
     }

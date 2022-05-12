@@ -129,7 +129,7 @@ const PlacesAutoComplete = () => {
     if (!visitedPage) {
       const timer = setTimeout(() => {
         setRun(true);
-      }, 2000);
+      }, 1000);
       localStorage.setItem("hasSeenLocationsTour", "been here");
       return () => clearTimeout(timer);
     }
@@ -143,7 +143,6 @@ const PlacesAutoComplete = () => {
     idRef.current = id;
     val && setValue(val);
   }
-
   return (
     <div
       style={{ height: clonedStyle.height }}

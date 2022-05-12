@@ -23,10 +23,13 @@ const initialState = {
   userCenter: null,
   categories: [],
   planLink: "",
+  geolocation_status: "",
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case "GEOLOCATION_PERMISSION_GRANTED":
+      return { ...state, geolocation_status: action.payload };
     case "SET_DATA":
       return { ...state, data: action.payload };
     case "SET_CATEGORIES":
