@@ -29,12 +29,12 @@ const CustomSearchBar = ({
   useEffect(() => {
     if (userCoordinates) return;
     if (geoLocationStatus === "granted") {
+      setExactDate(Date.now());
       return setShowToast(true);
     }
-  }, [geoLocationStatus, userCoordinates, setShowToast]);
+  }, [geoLocationStatus, userCoordinates, setShowToast, setExactDate]);
 
   const runGetUserLocation = () => {
-    setExactDate(Date.now());
     setZoom(13);
     if (!userCoordinates) {
       return dispatch(getUserPosition());
