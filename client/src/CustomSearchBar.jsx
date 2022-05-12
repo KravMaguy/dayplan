@@ -25,22 +25,11 @@ const CustomSearchBar = ({
     (state) => state.position?.geocodedAddress
   );
 
-  const geoPermission = useSelector((state) => state.geoPermission);
-
-  console.log({ geoPermission });
   const runGetUserLocation = () => {
     setExactDate(Date.now());
     setZoom(13);
     console.log("run getuserlocation");
     if (!userCoordinates) {
-      console.log("no user coordinates inside");
-      console.log("geopermission inside this function here:", geoPermission);
-      if (geoPermission) {
-        setShowToast(true);
-      }
-      // return setTimeout(() => {
-      //   dispatch(getUserPosition());
-      // }, 1000);
       return dispatch(getUserPosition());
     }
     const newCenter = {

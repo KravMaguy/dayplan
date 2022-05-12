@@ -3,15 +3,22 @@ export function getPosition(dispatch) {
     if (!navigator.geolocation) {
       reject("Geoloaction not available");
     }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        dispatch({
-          type: "GRANTED_GEO_PERMISSION",
-          payload: true,
-        });
-        resolve([position.coords.latitude, position.coords.longitude]);
-      },
-      (e) => reject(e)
-    );
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        if (result.state === "prompt" || result.state === "granted") {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              resolve([position.coords.latitude, position.coords.longitude]);
+            },
+            (e) => reject(e)
+          );
+        } else if (result.state === "denied") {
+          console.log(result.state);
+        }
+        result.onchange = function () {
+          console.log("onchange ", result.state);
+        };
+      });
   });
 }

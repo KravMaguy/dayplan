@@ -46,6 +46,7 @@ export const locationSteps = [
   {
     target: ".generate-plan-link",
     content: "Or click create plan link here",
+    disableBeacon: true,
   },
 ];
 
