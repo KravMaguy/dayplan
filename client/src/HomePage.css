@@ -22,6 +22,7 @@
 }
 
 .homepage-title {
+  margin-top: 90px;
   font: bold 30px;
   letter-spacing: -1px;
   color: #000;
@@ -35,4 +36,8 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
   -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+}
+
+.image-gallery-slide .image-gallery-image {
+  object-fit: initial !important;
 }
