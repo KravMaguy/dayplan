@@ -55,7 +55,7 @@ const HomePage = () => {
               <Link to={"/categories"}>Get Started</Link>
             </span>
           </h1>
-          <div
+          {/* <div
             style={{
               marginTop: "60px",
               marginBottom: "60px",
@@ -93,7 +93,7 @@ const HomePage = () => {
             </div>
 
             <ImageGallery {...properties} onSlide={(e) => setCurrEvent(e)} />
-          </div>
+          </div> */}
 
           <div className="legal-links" style={{}}>
             <Link to={"/terms-of-service"}>Terms of Service</Link>
